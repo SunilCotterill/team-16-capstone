@@ -1,0 +1,22 @@
+<h1>Quiz Submission for {{first_name}} {{last_name}}</h1>
+
+<form disabled>
+    {% csrf_token %}
+   
+    {% for question in latest_questions_list %}
+      <legend><h2>{{ question.question_text }}</h2></legend>
+
+        {% for answer in latest_answers_list %}
+            {% if answer.question_id == question.id%}
+                {% if answer.id in answered %}
+                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
+                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                {% else %}
+                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" disabled>
+                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                {% endif %}
+
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</form>

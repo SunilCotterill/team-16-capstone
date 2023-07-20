@@ -1,0 +1,16 @@
+<h1>Submissions</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Response</th>
+  </tr>
+  {% for user in unique_users %}
+  <tr>
+    <td>{{user.first_name}} {{user.last_name}}</td>
+    <td>{{user.email}}</td>
+    <td><a href="{% url 'submitter:result' listing_id user.id%}">Click here</a></td>
+  </tr>
+  {% endfor %}
+</table>
