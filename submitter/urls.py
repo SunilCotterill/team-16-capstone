@@ -10,4 +10,5 @@ urlpatterns = [
     path("<int:listing_id>/submit/", views.submit, name="submit"),
     path("<int:listing_id>/results", views.results, name="results"),
     path("<int:listing_id>/results/<int:user_id>", views.result, name="result"),
+    path("<int:listing_id>/submission_complete", views.submission_complete, name ="submission_complete")
 ]
