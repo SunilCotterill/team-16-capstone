@@ -38,7 +38,7 @@ def results(request, listing_id):
 def result(request, listing_id, user_id):
     answered_ids = Response.objects.filter(listing_id=listing_id).filter(user_id=user_id).values_list('answer_id', flat=True).distinct()
     answered = Answer.objects.filter(id__in=answered_ids).values_list('id', flat=True)
-    submitter = User.objects.get(pk = user_id)    
+    submitter = User.objects.get(pk = user_id)
 
     latest_questions_list = Question.objects.order_by("id")
     latest_answers_list = Answer.objects.order_by("id")
@@ -71,6 +71,11 @@ def submit(request, listing_id):
             new_response.answer = Answer.objects.get(pk = selected_answer_id)
             new_response.user = User.objects.get(pk = 1)
             new_response.save()
-    results_url = reverse("submitter:results", args=[listing_id])
- 
-    return redirect(results_url)
+    # results_url = reverse("submitter:results", args=[listing_id])
+    redirect_url = reverse("submitter:submission_complete", args = [listing_id])
+    return redirect(redirect_url)
+
+def submission_complete(request, listing_id):
+    template = loader.get_template("submitter/submission_complete.html")
+    context = {"listing_id": listing_id}
+    return HttpResponse(template.render(context, request))
