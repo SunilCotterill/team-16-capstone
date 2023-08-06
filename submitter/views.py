@@ -84,6 +84,11 @@ def submission_complete(request, listing_id):
     context = {"listing_id": listing_id}
     return HttpResponse(template.render(context, request))
 
+def new_listing(request, user_id):
+    template = loader.get_template("submitter/new_listing.html")
+    context = {"user_id": user_id}
+    return HttpResponse(template.render(context, request))
+
 def registerPage(request):
     if not request.user.is_authenticated:
         form = CreateUserForm()
@@ -93,7 +98,7 @@ def registerPage(request):
             if form.is_valid():
                 form.save()
                 return redirect('submitter:home')
-        
+
         context = {'form': form}
         return render(request, "submitter/register.html", context)
     else:
@@ -102,7 +107,7 @@ def registerPage(request):
 def loginPage(request):
     form = CustomAuthenticationForm()
 
-    if request.method =="POST": 
+    if request.method =="POST":
         form = CustomAuthenticationForm(request, data=request.POST)
         if request.POST['email'] and request.POST['password']:
             email = form['email'].value()
@@ -125,4 +130,3 @@ def homePage(request):
         return render(request, "submitter/homepage.html", context)
     else:
         return redirect('submitter:register')
-    

@@ -17,4 +17,5 @@ urlpatterns = [
     path('login/', views.loginPage, name = "login"),
 
     path('home/', views.homePage, name = "home")
+    path('home/new_listing', views.new_listing, name = "new_listing")
 ]
