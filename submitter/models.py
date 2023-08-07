@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 
 def validate_substring(value):
-    if "uwaterloo.ca" not in value and "wlu.ca" not in value:
+    if "@uwaterloo.ca" not in value and "@wlu.ca" not in value:
         raise ValidationError("Must be UWaterloo or ULaurier email")
 
 class UserManager(BaseUserManager):

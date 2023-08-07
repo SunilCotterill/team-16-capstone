@@ -26,26 +26,54 @@ def submission(request, listing_id):
     return HttpResponse(template.render(context, request))
 
 def results(request, listing_id):
+    filters = []
+    
+    if request.method == "POST":
+        for key in request.POST.keys():
+            if key.startswith('question_'):
+                filters.append(int(request.POST.get(key)))
+        
+    
     template = loader.get_template("submitter/results.html")
     responses = Response.objects.filter(listing_id=listing_id)
     unique_emails = responses.values_list('email', flat=True).distinct()
-    # unique_users = CustomUser.objects.filter(id__in=unique_user_ids)
-    name = Listing.objects.get(id=listing_id).name
+    emails = []
+    
+    latest_questions_list = Question.objects.order_by("id")
+    latest_answers_list = Answer.objects.order_by("id")
+    
+    if filters:
+        for email in unique_emails:
+            flag = True
+            responses_for_email = Response.objects.filter(listing_id=listing_id, email=email)
+            for filter in filters:
+                if filter not in responses_for_email.values_list('answer_id', flat=True):
+                    flag = False
+                    break
+            if flag:
+                emails.append(email)
+    else:
+        emails = unique_emails
 
+    
+
+    # Name for title
+    name = Listing.objects.get(id=listing_id).name
     context = {
         "listing_id": listing_id,
-        "unique_users": unique_emails,
-        "listing_name": name
+        "unique_users": emails,
+        "listing_name": name,
+        "latest_questions_list": latest_questions_list,
+        "latest_answers_list": latest_answers_list,
+        "filtered_answers": filters
     }
 
-    print(unique_emails)
     return HttpResponse(template.render(context, request))
 
 
 def result(request, listing_id, email):
     answered_ids = Response.objects.filter(listing_id=listing_id).filter(email=email).values_list('answer_id', flat=True).distinct()
     answered = Answer.objects.filter(id__in=answered_ids).values_list('id', flat=True)
-
 
     latest_questions_list = Question.objects.order_by("id")
     latest_answers_list = Answer.objects.order_by("id")
@@ -55,6 +83,7 @@ def result(request, listing_id, email):
         "latest_questions_list": latest_questions_list,
         "latest_answers_list": latest_answers_list,
         "answered": answered,
+        "email": email
         # "responses": responses
     }
 
@@ -110,6 +139,10 @@ def registerPage(request):
             form = CreateUserForm(request.POST)
             if form.is_valid():
                 form.save()
+                email = form['email'].value()
+                password = form['password1'].value()
+                user = authenticate(request, username=email, password=password)
+                login(request, user)
                 return redirect('submitter:home')
 
         context = {'form': form}

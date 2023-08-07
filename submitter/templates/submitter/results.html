@@ -1,5 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    /* Style for the details element */
+    details {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  /* Style for the summary element */
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  /* Hide the content by default */
+  details[open] > div {
+    display: block;
+  }
+
+  /* Style for the content within the details element */
+  details > div {
+    display: none;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
 <h1>Submissions for {{listing_name}}</h1>
 <p>A user can submit their responses here: 127.0.0.1:8000/submitter/{{listing_id}}/submission</p>
+
+<details>
+  <summary>Open Filters</summary>
+  <p>Leaving a field blank accepts any response for that question</p>
+  <form action="{% url 'submitter:results' listing_id%}" method="post">
+    {% csrf_token %}
+  
+    {% for question in latest_questions_list %}
+      <legend><h3>{{ question.question_text }}</h3></legend>
+
+        {% for answer in latest_answers_list %}
+            {% if answer.question_id == question.id%}
+                {% if answer.id in filtered_answers %}
+                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
+                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                {% else %}
+                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" >
+                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                {% endif %}
+
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <input type="submit" value="Filter">
+  </form>
+  <form action="{% url 'submitter:results' listing_id%}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Clear Filters">
+  </form>
+</details>
+
+<h2>Applicants:</h2>
 <table>
   <tr>
     <th>Email</th>
@@ -14,3 +76,6 @@
 </table>
 
 <a href="{% url 'submitter:home' %}">Home</a>
+
+</body>
+</html>
