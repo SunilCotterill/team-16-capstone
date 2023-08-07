@@ -1,16 +1,16 @@
-<h1>Submissions</h1>
-
+<h1>Submissions for {{listing_name}}</h1>
+<p>A user can submit their responses here: 127.0.0.1:8000/submitter/{{listing_id}}/submission</p>
 <table>
   <tr>
-    <th>Name</th>
     <th>Email</th>
     <th>Response</th>
   </tr>
-  {% for user in unique_users %}
+  {% for email in unique_users %}
   <tr>
-    <td>{{user.first_name}} {{user.last_name}}</td>
-    <td>{{user.email}}</td>
-    <td><a href="{% url 'submitter:result' listing_id user.id%}">Click here</a></td>
+    <td>{{email}}</td>
+    <td><a href="{% url 'submitter:result' listing_id email%}">Click here</a></td>
   </tr>
   {% endfor %}
 </table>
+
+<a href="{% url 'submitter:home' %}">Home</a>

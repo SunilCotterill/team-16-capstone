@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractUser
-# from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 
 
+def validate_substring(value):
+    if "uwaterloo.ca" not in value and "wlu.ca" not in value:
+        raise ValidationError("Must be UWaterloo or ULaurier email")
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -39,7 +42,7 @@ class UserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     username = None
-    email = models.EmailField(max_length=254, unique=True)
+    email = models.EmailField(max_length=254, unique=True, validators=[validate_substring])
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
     def __str__(self):
@@ -64,7 +67,7 @@ class Answer(models.Model):
 
 class Response(models.Model):
     # This is the user that submitted the question
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    email = models.EmailField(max_length=254, validators=[validate_substring])
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer =  models.ForeignKey(Answer, on_delete=models.CASCADE)
