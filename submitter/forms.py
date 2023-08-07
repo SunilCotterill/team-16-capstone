@@ -21,3 +21,7 @@ class CreateUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class CreateListingForm(forms.Form):
+    name = forms.CharField(required = True, label = 'Name', max_length = 200)
+

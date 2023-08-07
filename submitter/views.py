@@ -5,7 +5,7 @@ from django.template import loader
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 
-from .forms import CreateUserForm, CustomAuthenticationForm
+from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
 
 def index(request):
@@ -84,10 +84,21 @@ def submission_complete(request, listing_id):
     context = {"listing_id": listing_id}
     return HttpResponse(template.render(context, request))
 
-def new_listing(request, user_id):
-    template = loader.get_template("submitter/new_listing.html")
-    context = {"user_id": user_id}
-    return HttpResponse(template.render(context, request))
+def new_listing(request):
+    if request.method == "POST":
+        form = CreateListingForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            listing = Listing(name = name, creator = request.user)
+            listing.save()
+
+        redirect_url = reverse("submitter:home")
+        return redirect(redirect_url)
+
+    else:
+        form = CreateListingForm()
+    return render(request, "submitter/new_listing.html", {"form":form})
+
 
 def registerPage(request):
     if not request.user.is_authenticated:

@@ -16,6 +16,6 @@ urlpatterns = [
     path('register/', views.registerPage, name = "register"),
     path('login/', views.loginPage, name = "login"),
 
-    path('home/', views.homePage, name = "home")
-    path('home/new_listing', views.new_listing, name = "new_listing")
+    path('home/', views.homePage, name = "home"),
+    path('new_listing/', views.new_listing, name = "new_listing")
 ]
