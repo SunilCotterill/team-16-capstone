@@ -137,7 +137,10 @@ def loginPage(request):
 
 def homePage(request):
     if request.user.is_authenticated:
-        context={}
+        listings = Listing.objects.all().filter(creator=request.user)
+        context={'listings':listings}
         return render(request, "submitter/homepage.html", context)
     else:
         return redirect('submitter:register')
+    
+
