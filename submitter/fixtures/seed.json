@@ -1,1 +1,996 @@
-[{"model": "submitter.question", "pk": 1, "fields": {"question_text": "How do you typically prefer to recharge?"}}, {"model": "submitter.question", "pk": 2, "fields": {"question_text": "How do you prefer to spend your time at home?"}}, {"model": "submitter.question", "pk": 3, "fields": {"question_text": "How do you handle messes?"}}, {"model": "submitter.question", "pk": 4, "fields": {"question_text": "Where do you prefer to eat your meals?"}}, {"model": "submitter.question", "pk": 5, "fields": {"question_text": "Where do you prefer to do schoolwork?"}}, {"model": "submitter.question", "pk": 6, "fields": {"question_text": "How should household costs and supplies be split?"}}, {"model": "submitter.question", "pk": 7, "fields": {"question_text": "How do you feel about marijuana usage inside?"}}, {"model": "submitter.question", "pk": 8, "fields": {"question_text": "How old are you?"}}, {"model": "submitter.question", "pk": 9, "fields": {"question_text": "What is your gender identity?"}}, {"model": "submitter.question", "pk": 10, "fields": {"question_text": "What is your program of study?"}}, {"model": "submitter.question", "pk": 11, "fields": {"question_text": "How do you feel about drinking alcohol?"}}, {"model": "submitter.question", "pk": 12, "fields": {"question_text": "How do you feel about music being played out loud?"}}, {"model": "submitter.question", "pk": 13, "fields": {"question_text": "Would you like to live with somebody who shares similar political or religious beliefs? (We do not need to know your affiliations. That is a conversation to have with your potential roommates.("}}, {"model": "submitter.question", "pk": 14, "fields": {"question_text": "Do you want to become friends with your roommates?"}}, {"model": "submitter.question", "pk": 15, "fields": {"question_text": "If planning a social night with friends, my first choice would be:"}}, {"model": "submitter.question", "pk": 16, "fields": {"question_text": "On average, how often do you have guests in the house?"}}, {"model": "submitter.question", "pk": 17, "fields": {"question_text": "How often do you cook?"}}, {"model": "submitter.question", "pk": 18, "fields": {"question_text": "When do you typically prepare/eat dinner?"}}, {"model": "submitter.question", "pk": 19, "fields": {"question_text": "On average, what time do you wake up?"}}, {"model": "submitter.question", "pk": 20, "fields": {"question_text": "On average, what time do you go to bed?"}}, {"model": "submitter.question", "pk": 21, "fields": {"question_text": "On average, how much time do you need to spend in the bathroom in the morning?"}}, {"model": "submitter.question", "pk": 22, "fields": {"question_text": "On average, how much time do you need to spend in the bathroom at night?"}}, {"model": "submitter.question", "pk": 23, "fields": {"question_text": "On average, how much time do you typically spend per day in class/doing schoolwork?"}}, {"model": "submitter.question", "pk": 24, "fields": {"question_text": "On average, how often do you consume alcohol?"}}, {"model": "submitter.question", "pk": 25, "fields": {"question_text": "On average, how often do you consume marijuana?"}}, {"model": "submitter.question", "pk": 26, "fields": {"question_text": "On average, how often do you smoke cigarettes?"}}, {"model": "submitter.question", "pk": 27, "fields": {"question_text": "What chores do you think should be shared between roommates? (Shared between roommates means that you will share the responsibility.)"}}, {"model": "submitter.question", "pk": 28, "fields": {"question_text": "Please list up to five hobbies of yours. They should be separated by a comma (i.e.: alien hunting, underwater basket weaving)."}}, {"model": "submitter.question", "pk": 29, "fields": {"question_text": "How do you feel about smoking cigarettes?"}}, {"model": "submitter.answer", "pk": 1, "fields": {"question": 1, "answer_text": "I typically prefer to recharge by spending time alone."}}, {"model": "submitter.answer", "pk": 2, "fields": {"question": 1, "answer_text": "I typically prefer to recharge by spending time in social settings."}}, {"model": "submitter.answer", "pk": 3, "fields": {"question": 9, "answer_text": "Male"}}, {"model": "submitter.answer", "pk": 4, "fields": {"question": 9, "answer_text": "Female"}}, {"model": "submitter.answer", "pk": 5, "fields": {"question": 9, "answer_text": "Non-binary"}}, {"model": "submitter.answer", "pk": 6, "fields": {"question": 9, "answer_text": "Prefer not to answer"}}, {"model": "submitter.answer", "pk": 7, "fields": {"question": 2, "answer_text": "I prefer to spend my time at home in my room."}}, {"model": "submitter.answer", "pk": 8, "fields": {"question": 2, "answer_text": "I prefer to spend my time at home in common spaces."}}, {"model": "submitter.answer", "pk": 9, "fields": {"question": 3, "answer_text": "I typically become stressed if common spaces are too messy."}}, {"model": "submitter.answer", "pk": 10, "fields": {"question": 3, "answer_text": "I am comfortable with some level of mess in common spaces."}}, {"model": "submitter.answer", "pk": 11, "fields": {"question": 4, "answer_text": "I typically prefer to eat my meals in common areas."}}, {"model": "submitter.answer", "pk": 12, "fields": {"question": 4, "answer_text": "I typically prefer to eat my meals in my room."}}, {"model": "submitter.answer", "pk": 13, "fields": {"question": 5, "answer_text": "I prefer to do schoolwork on campus."}}, {"model": "submitter.answer", "pk": 14, "fields": {"question": 5, "answer_text": "I prefer to do schoolwork at home."}}, {"model": "submitter.answer", "pk": 15, "fields": {"question": 6, "answer_text": "I am open to splitting costs of supplies and household items with my roommates."}}, {"model": "submitter.answer", "pk": 16, "fields": {"question": 6, "answer_text": "I prefer that everyone has their own supplies and household items."}}, {"model": "submitter.answer", "pk": 17, "fields": {"question": 7, "answer_text": "I am fine with my roommates smoking marijuana inside."}}, {"model": "submitter.answer", "pk": 18, "fields": {"question": 7, "answer_text": "I have no tolerance for my roommates smoking marijuana inside."}}, {"model": "submitter.answer", "pk": 19, "fields": {"question": 11, "answer_text": "I am fine with my roommates drinking alcohol."}}, {"model": "submitter.answer", "pk": 20, "fields": {"question": 11, "answer_text": "I have no tolerance for my roommates drinking alcohol."}}, {"model": "submitter.answer", "pk": 21, "fields": {"question": 12, "answer_text": "I don�t mind if my roommates play music out loud."}}, {"model": "submitter.answer", "pk": 22, "fields": {"question": 12, "answer_text": "I prefer a relatively quiet environment."}}, {"model": "submitter.answer", "pk": 23, "fields": {"question": 13, "answer_text": "I prefer to live with roommates who share similar political and religious beliefs."}}, {"model": "submitter.answer", "pk": 24, "fields": {"question": 13, "answer_text": "I do not mind living with those who share differing religious/political beliefs."}}, {"model": "submitter.answer", "pk": 25, "fields": {"question": 14, "answer_text": "Becoming friends with my roommates and hanging out regularly is a priority of mine."}}, {"model": "submitter.answer", "pk": 26, "fields": {"question": 14, "answer_text": "I am okay with having infrequent interaction with my roommates."}}, {"model": "submitter.answer", "pk": 27, "fields": {"question": 15, "answer_text": "Going out to a patio/restaurant"}}, {"model": "submitter.answer", "pk": 28, "fields": {"question": 15, "answer_text": "Going out to a club/house party"}}, {"model": "submitter.answer", "pk": 29, "fields": {"question": 15, "answer_text": "Going to the movies"}}, {"model": "submitter.answer", "pk": 30, "fields": {"question": 15, "answer_text": "Staying in"}}, {"model": "submitter.answer", "pk": 31, "fields": {"question": 16, "answer_text": "Never"}}, {"model": "submitter.answer", "pk": 32, "fields": {"question": 16, "answer_text": "Rarely (1-2 times per month)"}}, {"model": "submitter.answer", "pk": 33, "fields": {"question": 16, "answer_text": "Occasionally (roughly once per week)"}}, {"model": "submitter.answer", "pk": 34, "fields": {"question": 16, "answer_text": "Often (multiple times per week)"}}, {"model": "submitter.answer", "pk": 35, "fields": {"question": 17, "answer_text": "Never"}}, {"model": "submitter.answer", "pk": 36, "fields": {"question": 17, "answer_text": "Rarely (1-2 times per week)"}}, {"model": "submitter.answer", "pk": 37, "fields": {"question": 17, "answer_text": "Often (once per day)"}}, {"model": "submitter.answer", "pk": 38, "fields": {"question": 17, "answer_text": "Very often (at least once per day)"}}, {"model": "submitter.answer", "pk": 39, "fields": {"question": 18, "answer_text": "Early (5:00pm � 6:00pm)"}}, {"model": "submitter.answer", "pk": 40, "fields": {"question": 18, "answer_text": "Evening (6:00pm � 9:00pm)"}}, {"model": "submitter.answer", "pk": 41, "fields": {"question": 18, "answer_text": "Late (9:00pm +)"}}, {"model": "submitter.answer", "pk": 42, "fields": {"question": 19, "answer_text": "Before 7:00am"}}, {"model": "submitter.answer", "pk": 43, "fields": {"question": 19, "answer_text": "7:00am � 8:00am"}}, {"model": "submitter.answer", "pk": 44, "fields": {"question": 19, "answer_text": "9:00am � 10:00am"}}, {"model": "submitter.answer", "pk": 45, "fields": {"question": 19, "answer_text": "11:00am +"}}, {"model": "submitter.answer", "pk": 46, "fields": {"question": 20, "answer_text": "Before 10:00pm"}}, {"model": "submitter.answer", "pk": 47, "fields": {"question": 20, "answer_text": "10:00pm � 11:00pm"}}, {"model": "submitter.answer", "pk": 48, "fields": {"question": 20, "answer_text": "11:00pm � 12:00am"}}, {"model": "submitter.answer", "pk": 49, "fields": {"question": 20, "answer_text": "12:00am +"}}, {"model": "submitter.answer", "pk": 50, "fields": {"question": 21, "answer_text": "< 1 hour"}}, {"model": "submitter.answer", "pk": 51, "fields": {"question": 21, "answer_text": "1 � 2 hours"}}, {"model": "submitter.answer", "pk": 52, "fields": {"question": 21, "answer_text": "2+ hours"}}, {"model": "submitter.answer", "pk": 53, "fields": {"question": 22, "answer_text": "< 1 hour"}}, {"model": "submitter.answer", "pk": 54, "fields": {"question": 22, "answer_text": "1 � 2 hours"}}, {"model": "submitter.answer", "pk": 55, "fields": {"question": 22, "answer_text": "2+ hours"}}, {"model": "submitter.answer", "pk": 56, "fields": {"question": 23, "answer_text": "< 3 hours"}}, {"model": "submitter.answer", "pk": 57, "fields": {"question": 23, "answer_text": "3 � 6 hours per day"}}, {"model": "submitter.answer", "pk": 58, "fields": {"question": 23, "answer_text": "6 � 9 hours per day"}}, {"model": "submitter.answer", "pk": 59, "fields": {"question": 23, "answer_text": "9 + hours per day"}}, {"model": "submitter.answer", "pk": 60, "fields": {"question": 24, "answer_text": "Never"}}, {"model": "submitter.answer", "pk": 61, "fields": {"question": 24, "answer_text": "Less than once a week"}}, {"model": "submitter.answer", "pk": 62, "fields": {"question": 24, "answer_text": "Once-twice a week"}}, {"model": "submitter.answer", "pk": 63, "fields": {"question": 24, "answer_text": "Three+ times a week"}}, {"model": "submitter.answer", "pk": 64, "fields": {"question": 25, "answer_text": "Never"}}, {"model": "submitter.answer", "pk": 65, "fields": {"question": 25, "answer_text": "Less than once a week"}}, {"model": "submitter.answer", "pk": 66, "fields": {"question": 25, "answer_text": "Multiple times a week"}}, {"model": "submitter.answer", "pk": 67, "fields": {"question": 25, "answer_text": "Everyday"}}, {"model": "submitter.answer", "pk": 68, "fields": {"question": 26, "answer_text": "Never"}}, {"model": "submitter.answer", "pk": 69, "fields": {"question": 26, "answer_text": "Less than once a week"}}, {"model": "submitter.answer", "pk": 70, "fields": {"question": 26, "answer_text": "Multiple times a week"}}, {"model": "submitter.answer", "pk": 71, "fields": {"question": 26, "answer_text": "Everyday"}}, {"model": "submitter.answer", "pk": 72, "fields": {"question": 27, "answer_text": "Dishes"}}, {"model": "submitter.answer", "pk": 73, "fields": {"question": 27, "answer_text": "Vacuuming/sweeping"}}, {"model": "submitter.answer", "pk": 74, "fields": {"question": 27, "answer_text": "Garbage/recycling"}}, {"model": "submitter.answer", "pk": 75, "fields": {"question": 27, "answer_text": "General de-cluttering"}}, {"model": "submitter.answer", "pk": 76, "fields": {"question": 27, "answer_text": "Cleaning kitchen surfaces (countertop, stove�)"}}, {"model": "submitter.answer", "pk": 77, "fields": {"question": 29, "answer_text": "I am fine with my roommates smoking cigarettes."}}, {"model": "submitter.answer", "pk": 78, "fields": {"question": 29, "answer_text": "I have no tolerance for my roommates smoking cigarettes."}}]
+[
+    {
+        "model": "submitter.question",
+        "pk": 1,
+        "fields": {
+            "question_text": "What is your gender identity?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 1,
+        "fields": {
+            "question": 1,
+            "answer_text": "Male"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 2,
+        "fields": {
+            "question": 1,
+            "answer_text": "Female"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 3,
+        "fields": {
+            "question": 1,
+            "answer_text": "Non-binary"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 4,
+        "fields": {
+            "question": 1,
+            "answer_text": "Other"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 5,
+        "fields": {
+            "question": 1,
+            "answer_text": "Prefer not to answer"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 2,
+        "fields": {
+            "question_text": "How old are you?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 6,
+        "fields": {
+            "question": 2,
+            "answer_text": "Under 18"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 7,
+        "fields": {
+            "question": 2,
+            "answer_text": "18-20"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 8,
+        "fields": {
+            "question": 2,
+            "answer_text": "21-24"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 9,
+        "fields": {
+            "question": 2,
+            "answer_text": "25 or older"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 3,
+        "fields": {
+            "question_text": "What is your program of study?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 10,
+        "fields": {
+            "question": 3,
+            "answer_text": "Engineering"
+        }
+    },   
+    {
+        "model": "submitter.answer",
+        "pk": 11,
+        "fields": {
+            "question": 3,
+            "answer_text": "Business"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 12,
+        "fields": {
+            "question": 3,
+            "answer_text": "Environmental Science"
+        }
+    },   
+    {
+        "model": "submitter.answer",
+        "pk": 13,
+        "fields": {
+            "question": 3,
+            "answer_text": "Other"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 4,
+        "fields": {
+            "question_text": "How do you typically prefer to recharge?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 14,
+        "fields": {
+            "question": 4,
+            "answer_text": "I typically prefer to recharge by spending time alone."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 15,
+        "fields": {
+            "question": 4,
+            "answer_text": "I typically prefer to recharge by spending time in social settings."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 5,
+        "fields": {
+            "question_text": "How do you prefer to spend your time at home?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 16,
+        "fields": {
+            "question": 5,
+            "answer_text": "I prefer to spend my time at home in my room."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 17,
+        "fields": {
+            "question": 5,
+            "answer_text": "I prefer to spend my time at home in common spaces."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 6,
+        "fields": {
+            "question_text": "How do you handle messes in common spaces?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 18,
+        "fields": {
+            "question": 6,
+            "answer_text": "I typically become stressed if common spaces are too messy."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 19,
+        "fields": {
+            "question": 6,
+            "answer_text": "I am comfortable with some level of mess in common spaces."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 7,
+        "fields": {
+            "question_text": "Where do you prefer to eat your meals at home?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 20,
+        "fields": {
+            "question": 7,
+            "answer_text": "I typically prefer to eat my meals in common areas."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 21,
+        "fields": {
+            "question": 7,
+            "answer_text": "I typically prefer to eat my meals in my room."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 8,
+        "fields": {
+            "question_text": "Where do you prefer to do schoolwork?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 22,
+        "fields": {
+            "question": 8,
+            "answer_text": "I prefer to do schoolwork on campus."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 23,
+        "fields": {
+            "question": 8,
+            "answer_text": "I prefer to do schoolwork at home."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 9,
+        "fields": {
+            "question_text": "How should household costs and supplies be split?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 24,
+        "fields": {
+            "question": 9,
+            "answer_text": "I am open to splitting costs of supplies and household items with my roommates."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 25,
+        "fields": {
+            "question": 9,
+            "answer_text": "I prefer that everyone has their own supplies and household items."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 10,
+        "fields": {
+            "question_text": "How do you feel about marijuana usage inside?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 26,
+        "fields": {
+            "question": 10,
+            "answer_text": "I am fine with my roommates smoking marijuana inside."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 27,
+        "fields": {
+            "question": 10,
+            "answer_text": "I have no tolerance for my roommates smoking marijuana inside."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 11,
+        "fields": {
+            "question_text": "How do you feel about drinking alcohol?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 28,
+        "fields": {
+            "question": 11,
+            "answer_text": "I am fine with my roommates drinking alcohol."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 29,
+        "fields": {
+            "question": 11,
+            "answer_text": "I have no tolerance for my roommates drinking alcohol."
+        }
+    },
+
+    {
+        "model": "submitter.question",
+        "pk": 12,
+        "fields": {
+            "question_text": "How do you feel about smoking cigarettes?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 30,
+        "fields": {
+            "question": 12,
+            "answer_text": "I am fine with my roommates smoking cigarettes."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 31,
+        "fields": {
+            "question": 12,
+            "answer_text": "I have no tolerance for my roommates smoking cigarettes."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 13,
+        "fields": {
+            "question_text": "How do you feel about music being played out loud?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 32,
+        "fields": {
+            "question": 13,
+            "answer_text": "I don't mind if my roommates play music out loud."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 33,
+        "fields": {
+            "question": 13,
+            "answer_text": "I prefer a relatively quiet environment."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 14,
+        "fields": {
+            "question_text": "Would you like to live with somebody who shares similar political or religious beliefs? (We do not need to know your affiliations. That is a conversation to have with your potential roommates.)"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 34,
+        "fields": {
+            "question": 14,
+            "answer_text": "I prefer to live with roommates who share similar political and religious beliefs."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 35,
+        "fields": {
+            "question": 14,
+            "answer_text": "I do not mind living with those who share differing religious/political beliefs."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 15,
+        "fields": {
+            "question_text": "Do you want to become friends with your roommates?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 36,
+        "fields": {
+            "question": 15,
+            "answer_text": "Becoming friends with my roommates and hanging out regularly is a priority of mine."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 37,
+        "fields": {
+            "question": 15,
+            "answer_text": "I am okay with having infrequent interaction with my roommates."
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 16,
+        "fields": {
+            "question_text": "If planning a social night with friends, my first choice would be:"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 38,
+        "fields": {
+            "question": 16,
+            "answer_text": "Going out to a patio/restaurant"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 39,
+        "fields": {
+            "question": 16,
+            "answer_text": "Going out to a club/house party"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 40,
+        "fields": {
+            "question": 16,
+            "answer_text": "Going to the movies"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 41,
+        "fields": {
+            "question": 16,
+            "answer_text": "Staying in"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 17,
+        "fields": {
+            "question_text": "On average, how often do you have guests in the house?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 42,
+        "fields": {
+            "question": 17,
+            "answer_text": "Never"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 43,
+        "fields": {
+            "question": 17,
+            "answer_text": "Rarely (1-2 times per month)"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 44,
+        "fields": {
+            "question": 17,
+            "answer_text": "Occasionally (roughly once per week)"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 45,
+        "fields": {
+            "question": 17,
+            "answer_text": "Often (multiple times per week)"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 18,
+        "fields": {
+            "question_text": "How often do you cook at home?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 46,
+        "fields": {
+            "question": 18,
+            "answer_text": "Never"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 47,
+        "fields": {
+            "question": 18,
+            "answer_text": "Rarely (1-2 times per week)"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 48,
+        "fields": {
+            "question": 18,
+            "answer_text": "Often (once per day)"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 49,
+        "fields": {
+            "question": 18,
+            "answer_text": "Very often (at least once per day)"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 19,
+        "fields": {
+            "question_text": "When do you typically prepare/eat dinner?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 50,
+        "fields": {
+            "question": 19,
+            "answer_text": "Early (5:00pm - 6:00pm)"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 51,
+        "fields": {
+            "question": 19,
+            "answer_text": "Evening (6:00pm - 9:00pm)"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 52,
+        "fields": {
+            "question": 19,
+            "answer_text": "Late (9:00pm +)"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 20,
+        "fields": {
+            "question_text": "On average, what time do you wake up?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 53,
+        "fields": {
+            "question": 20,
+            "answer_text": "Before 7:00am"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 54,
+        "fields": {
+            "question": 20,
+            "answer_text": "7:00am - 8:00am"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 55,
+        "fields": {
+            "question": 20,
+            "answer_text": "9:00am - 10:00am"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 56,
+        "fields": {
+            "question": 20,
+            "answer_text": "After 11:00am"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 21,
+        "fields": {
+            "question_text": "On average, what time do you go to bed?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 57,
+        "fields": {
+            "question": 21,
+            "answer_text": "Before 10:00pm"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 58,
+        "fields": {
+            "question": 21,
+            "answer_text": "10:00pm - 11:00pm"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 59,
+        "fields": {
+            "question": 21,
+            "answer_text": "11:00pm - 12:00am"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 60,
+        "fields": {
+            "question": 21,
+            "answer_text": "After 12:00am"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 22,
+        "fields": {
+            "question_text": "On average, how much time do you spend in the bathroom <b>in the morning</b>?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 61,
+        "fields": {
+            "question": 22,
+            "answer_text": "Less than 1 hour"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 62,
+        "fields": {
+            "question": 22,
+            "answer_text": "1 - 2 hours"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 63,
+        "fields": {
+            "question": 22,
+            "answer_text": "2+ hours"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 23,
+        "fields": {
+            "question_text": "On average, how much time do you need to spend in the bathroom <b>at night</b>?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 64,
+        "fields": {
+            "question": 23,
+            "answer_text": "Less than 1 hour"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 65,
+        "fields": {
+            "question": 23,
+            "answer_text": "1 - 2 hours"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 66,
+        "fields": {
+            "question": 23,
+            "answer_text": "2+ hours"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 24,
+        "fields": {
+            "question_text": "On average, how much time do you typically spend per day in class/doing schoolwork?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 67,
+        "fields": {
+            "question": 24,
+            "answer_text": "Less than 3 hours"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 68,
+        "fields": {
+            "question": 24,
+            "answer_text": "3 - 6 hours"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 69,
+        "fields": {
+            "question": 24,
+            "answer_text": "6 - 9 hours"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 70,
+        "fields": {
+            "question": 24,
+            "answer_text": "9+ hours"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 25,
+        "fields": {
+            "question_text": "On average, how often do you consume alcohol?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 71,
+        "fields": {
+            "question": 25,
+            "answer_text": "Never or very infrequently"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 72,
+        "fields": {
+            "question": 25,
+            "answer_text": "Less than once per week"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 73,
+        "fields": {
+            "question": 25,
+            "answer_text": "Once or twice per week"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 74,
+        "fields": {
+            "question": 25,
+            "answer_text": "Three or more times per week"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 26,
+        "fields": {
+            "question_text": "On average, how often do you consume marijuana?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 75,
+        "fields": {
+            "question": 26,
+            "answer_text": "Never"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 76,
+        "fields": {
+            "question": 26,
+            "answer_text": "Less than once per week"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 77,
+        "fields": {
+            "question": 26,
+            "answer_text": "Multiple times per week"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 78,
+        "fields": {
+            "question": 26,
+            "answer_text": "Everyday"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 27,
+        "fields": {
+            "question_text": "On average, how often do you smoke cigarettes?"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 79,
+        "fields": {
+            "question": 27,
+            "answer_text": "Never"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 80,
+        "fields": {
+            "question": 27,
+            "answer_text": "Less than once per week"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 81,
+        "fields": {
+            "question": 27,
+            "answer_text": "Multiple times per week"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 82,
+        "fields": {
+            "question": 27,
+            "answer_text": "Everyday"
+        }
+    },
+
+    {
+        "model": "submitter.question",
+        "pk": 28,
+        "fields": {
+            "question_text": "What chores do you think should be shared between roommates? (Shared between roommates means that you will share the responsibility.)"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 83,
+        "fields": {
+            "question": 28,
+            "answer_text": "Dishes"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 84,
+        "fields": {
+            "question": 28,
+            "answer_text": "Vacuuming/sweeping"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 85,
+        "fields": {
+            "question": 28,
+            "answer_text": "Garbage/recycling"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 86,
+        "fields": {
+            "question": 28,
+            "answer_text": "General de-cluttering"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 87,
+        "fields": {
+            "question": 28,
+            "answer_text": "Cleaning kitchen surfaces (countertops, stove, etc.)"
+        }
+    },
+
+
+    {
+        "model": "submitter.question",
+        "pk": 29,
+        "fields": {
+            "question_text": "Please list up to five hobbies of yours. They should be separated by a comma (i.e.: alien hunting, underwater basket weaving)."
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 88,
+        "fields": {
+            "question": 29,
+            "answer_text": "Movies"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 89,
+        "fields": {
+            "question": 29,
+            "answer_text": "Reading"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 90,
+        "fields": {
+            "question": 29,
+            "answer_text": "Video games"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 91,
+        "fields": {
+            "question": 29,
+            "answer_text": "Sports"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 92,
+        "fields": {
+            "question": 29,
+            "answer_text": "Listing to music"
+        }
+    }
+    
+]
