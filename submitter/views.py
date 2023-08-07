@@ -5,7 +5,7 @@ from django.template import loader
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 
-from .forms import CreateUserForm, CustomAuthenticationForm
+from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
 
 def index(request):
@@ -84,6 +84,22 @@ def submission_complete(request, listing_id):
     context = {"listing_id": listing_id}
     return HttpResponse(template.render(context, request))
 
+def new_listing(request):
+    if request.method == "POST":
+        form = CreateListingForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            listing = Listing(name = name, creator = request.user)
+            listing.save()
+
+        redirect_url = reverse("submitter:home")
+        return redirect(redirect_url)
+
+    else:
+        form = CreateListingForm()
+    return render(request, "submitter/new_listing.html", {"form":form})
+
+
 def registerPage(request):
     if not request.user.is_authenticated:
         form = CreateUserForm()
@@ -93,7 +109,7 @@ def registerPage(request):
             if form.is_valid():
                 form.save()
                 return redirect('submitter:home')
-        
+
         context = {'form': form}
         return render(request, "submitter/register.html", context)
     else:
@@ -102,7 +118,7 @@ def registerPage(request):
 def loginPage(request):
     form = CustomAuthenticationForm()
 
-    if request.method =="POST": 
+    if request.method =="POST":
         form = CustomAuthenticationForm(request, data=request.POST)
         if request.POST['email'] and request.POST['password']:
             email = form['email'].value()
@@ -125,4 +141,3 @@ def homePage(request):
         return render(request, "submitter/homepage.html", context)
     else:
         return redirect('submitter:register')
-    
