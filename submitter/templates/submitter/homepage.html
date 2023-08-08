@@ -1,16 +1,18 @@
-<h3>Hi!</h3>
+<h3>Welcome</h3>
 
 <p>Thank you for choosing our platform for your subletting needs. We are here to streamline the process of finding a compatible roommate.
 
     A shareable link will be generated each time a new quiz is created. Please attach this link in your rental postings or share it with others directly!</p>
 
-<a href="{% url 'submitter:new_listing' %}">Create a New Listing</a>
 
+{% if listings %}
 <p> View Listings:</p>
 <ul>
     {% for listing in listings %}
     <a href="{% url 'submitter:results' listing.id %}"> <li>{{listing.name}}</li> </a>
     {% endfor %}
 </ul>
+{% endif %}
 
+<a href="{% url 'submitter:new_listing' %}">Create a New Listing</a> <br>
 <a href="{% url 'submitter:logout' %}">Logout</a>
