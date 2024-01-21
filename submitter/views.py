@@ -15,8 +15,6 @@ def submission(request, listing_id):
     latest_questions_list = Question.objects.order_by("id")
     latest_answers_list = Answer.objects.order_by("id")
 
-    template = loader.get_template("submitter/submission.html")
-
     context = {
         "listing_id": listing_id,
         "latest_questions_list": latest_questions_list,
