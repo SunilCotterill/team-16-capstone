@@ -22,53 +22,53 @@ def submission(request, listing_id):
         "latest_questions_list": latest_questions_list,
         "latest_answers_list": latest_answers_list
     }
-
-    return HttpResponse(template.render(context, request))
+    return render(request, "submitter/submission.html", context)
 
 def results(request, listing_id):
-    filters = []
-    
-    if request.method == "POST":
-        for key in request.POST.keys():
-            if key.startswith('question_'):
-                filters.append(int(request.POST.get(key)))
+    if request.user.is_authenticated:
+        filters = []
         
-    
-    template = loader.get_template("submitter/results.html")
-    responses = Response.objects.filter(listing_id=listing_id)
-    unique_emails = responses.values_list('email', flat=True).distinct()
-    emails = []
-    
-    latest_questions_list = Question.objects.order_by("id")
-    latest_answers_list = Answer.objects.order_by("id")
-    
-    if filters:
-        for email in unique_emails:
-            flag = True
-            responses_for_email = Response.objects.filter(listing_id=listing_id, email=email)
-            for filter in filters:
-                if filter not in responses_for_email.values_list('answer_id', flat=True):
-                    flag = False
-                    break
-            if flag:
-                emails.append(email)
+        if request.method == "POST":
+            for key in request.POST.keys():
+                if key.startswith('question_'):
+                    filters.append(int(request.POST.get(key)))
+            
+        
+        responses = Response.objects.filter(listing_id=listing_id)
+        unique_emails = responses.values_list('email', flat=True).distinct()
+        emails = []
+        
+        latest_questions_list = Question.objects.order_by("id")
+        latest_answers_list = Answer.objects.order_by("id")
+        
+        if filters:
+            for email in unique_emails:
+                flag = True
+                responses_for_email = Response.objects.filter(listing_id=listing_id, email=email)
+                for filter in filters:
+                    if filter not in responses_for_email.values_list('answer_id', flat=True):
+                        flag = False
+                        break
+                if flag:
+                    emails.append(email)
+        else:
+            emails = unique_emails
+        # Name for title
+        name = Listing.objects.get(id=listing_id).name
+        context = {
+            "listing_id": listing_id,
+            "unique_users": emails,
+            "listing_name": name,
+            "latest_questions_list": latest_questions_list,
+            "latest_answers_list": latest_answers_list,
+            "filtered_answers": filters
+        }
+        return render(request, "submitter/results.html", context)
     else:
-        emails = unique_emails
+        return redirect('submitter:home')
 
     
 
-    # Name for title
-    name = Listing.objects.get(id=listing_id).name
-    context = {
-        "listing_id": listing_id,
-        "unique_users": emails,
-        "listing_name": name,
-        "latest_questions_list": latest_questions_list,
-        "latest_answers_list": latest_answers_list,
-        "filtered_answers": filters
-    }
-
-    return HttpResponse(template.render(context, request))
 
 
 def result(request, listing_id, email):
@@ -77,17 +77,14 @@ def result(request, listing_id, email):
 
     latest_questions_list = Question.objects.order_by("id")
     latest_answers_list = Answer.objects.order_by("id")
-    template = loader.get_template("submitter/result.html")
     context = {
         "listing_id": listing_id,
         "latest_questions_list": latest_questions_list,
         "latest_answers_list": latest_answers_list,
         "answered": answered,
         "email": email
-        # "responses": responses
     }
-
-    return HttpResponse(template.render(context, request))
+    return render(request, "submitter/result.html", context)
 
 
 def submit(request, listing_id):
@@ -111,9 +108,8 @@ def submit(request, listing_id):
     return redirect(redirect_url)
 
 def submission_complete(request, listing_id):
-    template = loader.get_template("submitter/submission_complete.html")
     context = {"listing_id": listing_id}
-    return HttpResponse(template.render(context, request))
+    return render(request, "submitter/submission_complete.html", context)
 
 def new_listing(request):
     if request.method == "POST":
