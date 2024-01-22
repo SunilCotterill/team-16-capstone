@@ -116,8 +116,12 @@ def new_listing(request):
         form = CreateListingForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
-            listing = Listing(name = name, creator = request.user)
-            listing.save()
+            questions = form.cleaned_data["questions"]
+            # listing = Listing(name = name, creator = request.user, questions = questions)
+            # listing.save()
+            listing = Listing.objects.create(name=name, creator = request.user)
+            for question in questions.iterator():
+                listing.questions.add(question)
 
         redirect_url = reverse("submitter:results", args = [listing.id])
         return redirect(redirect_url, listing.id)
