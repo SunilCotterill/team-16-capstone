@@ -31,7 +31,7 @@
 <h1>Submissions for {{listing_name}}</h1>
 <p>A user can submit their responses here: 127.0.0.1:8000/submitter/{{listing_id}}/submission</p>
 
-<details>
+<!-- <details>
   <summary>Open Filters</summary>
   <p>Leaving a field blank accepts any response for that question</p>
   <form action="{% url 'submitter:results' listing_id%}" method="post">
@@ -59,7 +59,7 @@
     {% csrf_token %}
     <input type="submit" value="Clear Filters">
   </form>
-</details>
+</details> -->
 
 <h2>Applicants:</h2>
 <table>
@@ -67,7 +67,7 @@
     <th>Email</th>
     <th>Response</th>
   </tr>
-  {% for email in unique_users %}
+  {% for email in user_emails %}
   <tr>
     <td>{{email}}</td>
     <td><a href="{% url 'submitter:result' listing_id email%}">Click here</a></td>

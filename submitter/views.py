@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Question, Answer, Listing, Response, CustomUser
+from .models import Question, Answer, Listing, Response, CustomUser, ListingResponse
 from django.template import loader
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
@@ -25,41 +25,44 @@ def submission(request, listing_id):
 def results(request, listing_id):
     if request.user.is_authenticated:
         filters = []
-        
-        if request.method == "POST":
-            for key in request.POST.keys():
-                if key.startswith('question_'):
-                    filters.append(int(request.POST.get(key)))
+        # if request.method == "POST":
+        #     for key in request.POST.keys():
+        #         if key.startswith('question_'):
+        #             filters.append(int(request.POST.get(key)))
             
         
-        responses = Response.objects.filter(listing_id=listing_id)
-        unique_emails = responses.values_list('email', flat=True).distinct()
-        emails = []
+        listing_responses = ListingResponse.objects.filter(listing_id=listing_id)
         
-        latest_questions_list = Question.objects.order_by("id")
-        latest_answers_list = Answer.objects.order_by("id")
+        user_ids = listing_responses.values_list('responder', flat=True).distinct()
+        user_emails = CustomUser.objects.filter(id__in=user_ids).values_list('email', flat=True)
+        # unique_emails = responses.values_list('email', flat=True).distinct()
+        # emails = []
         
-        if filters:
-            for email in unique_emails:
-                flag = True
-                responses_for_email = Response.objects.filter(listing_id=listing_id, email=email)
-                for filter in filters:
-                    if filter not in responses_for_email.values_list('answer_id', flat=True):
-                        flag = False
-                        break
-                if flag:
-                    emails.append(email)
-        else:
-            emails = unique_emails
-        # Name for title
-        name = Listing.objects.get(id=listing_id).name
+        # latest_questions_list = Question.objects.order_by("id")
+        # latest_answers_list = Answer.objects.order_by("id")
+        
+        # if filters:
+        #     for email in unique_emails:
+        #         flag = True
+        #         responses_for_email = Response.objects.filter(listing_id=listing_id, email=email)
+        #         for filter in filters:
+        #             if filter not in responses_for_email.values_list('answer_id', flat=True):
+        #                 flag = False
+        #                 break
+        #         if flag:
+        #             emails.append(email)
+        # else:
+        #     emails = unique_emails
+        # # Name for title
+        # name = Listing.objects.get(id=listing_id).name
         context = {
             "listing_id": listing_id,
-            "unique_users": emails,
-            "listing_name": name,
-            "latest_questions_list": latest_questions_list,
-            "latest_answers_list": latest_answers_list,
-            "filtered_answers": filters
+            "user_emails": user_emails
+            # "unique_users": emails,
+            # "listing_name": name,
+            # "latest_questions_list": latest_questions_list,
+            # "latest_answers_list": latest_answers_list,
+            # "filtered_answers": filters
         }
         return render(request, "submitter/results.html", context)
     else:
@@ -86,24 +89,33 @@ def result(request, listing_id, email):
 
 
 def submit(request, listing_id):
-    # Get the CSRF token from the POST request
-    csrf_token = request.POST.get('csrfmiddlewaretoken')
+    if request.POST:
+        print("hello")
+    if not request.user.is_authenticated:
+        return redirect('submitter:home')
+    else:
+        # Get the CSRF token from the POST request
+        csrf_token = request.POST.get('csrfmiddlewaretoken')
 
-    # Loop through all the keys in the POST data
-    for key in request.POST.keys():
-        email = request.POST.get('email')
-        if key.startswith('question_'):
-            question_id = key.split('_')[1]
-            selected_answer_id = request.POST.get(key)
-            new_response = Response()
-            new_response.listing = Listing.objects.get(pk = listing_id)
-            new_response.question = Question.objects.get(pk = question_id)
-            new_response.answer = Answer.objects.get(pk = selected_answer_id)
-            new_response.email = email
-            new_response.save()
-    # results_url = reverse("submitter:results", args=[listing_id])
-    redirect_url = reverse("submitter:submission_complete", args = [listing_id])
-    return redirect(redirect_url)
+        listingResponse = ListingResponse()
+        listingResponse.listing = Listing.objects.get(pk = listing_id)
+        listingResponse.responder =  request.user
+        listingResponse.save()
+        # Loop through all the keys in the POST data
+        for key in request.POST.keys():
+            email = request.POST.get('email')
+            if key.startswith('question_'):
+                question_id = key.split('_')[1]
+                selected_answer_id = request.POST.get(key)
+                new_response = Response()
+                new_response.question = Question.objects.get(pk = question_id)
+                new_response.answer = Answer.objects.get(pk = selected_answer_id)
+                new_response.listing_response = listingResponse
+                new_response.email = email
+                new_response.save()
+        
+        redirect_url = reverse("submitter:submission_complete", args = [listing_id])
+        return redirect(redirect_url)
 
 def submission_complete(request, listing_id):
     context = {"listing_id": listing_id}
