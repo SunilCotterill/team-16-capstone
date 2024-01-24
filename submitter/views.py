@@ -119,7 +119,7 @@ def submission_complete(request, listing_id):
     context = {"listing_id": listing_id}
     return render(request, "submitter/submission_complete.html", context)
 
-
+@login_required
 def new_listing(request):
     if request.method == "POST":
         form = CreateListingForm(request.POST)
