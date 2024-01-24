@@ -36,11 +36,11 @@
   <p>Leaving a field blank accepts any response for that question</p>
   <form action="{% url 'submitter:results' listing_id%}" method="post">
     {% csrf_token %}
-  
-    {% for question in latest_questions_list %}
+
+    {% for question in listing_questions_list %}
       <legend><h3>{{ question.question_text }}</h3></legend>
 
-        {% for answer in latest_answers_list %}
+        {% for answer in listing_answers_list %}
             {% if answer.question_id == question.id%}
                 {% if answer.id in filtered_answers %}
                     <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
