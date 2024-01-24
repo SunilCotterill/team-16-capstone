@@ -4,6 +4,7 @@ from .models import Question, Answer, Listing, Response, CustomUser
 from django.template import loader
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
@@ -117,6 +118,7 @@ def submit(request, listing_id):
 def submission_complete(request, listing_id):
     context = {"listing_id": listing_id}
     return render(request, "submitter/submission_complete.html", context)
+
 
 def new_listing(request):
     if request.method == "POST":

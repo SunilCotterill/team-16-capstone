@@ -27,10 +27,7 @@ class CreateListingForm(forms.ModelForm):
     questions = forms.ModelMultipleChoiceField(
         label = "Questions",
         queryset = Question.objects.all(),
-        # widget = forms.CheckboxSelectMultiple(attrs={
-        #     "class": "form-check-input"
-        # })
-        widget = forms.SelectMultiple(attrs={
+        widget = forms.CheckboxSelectMultiple(attrs={
             "class": "form-check-input"
         })
     )
