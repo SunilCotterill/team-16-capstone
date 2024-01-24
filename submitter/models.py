@@ -63,7 +63,8 @@ class Listing(models.Model):
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length = 200)
     questions = models.ManyToManyField(Question)
-    answers = models.ManyToManyField(Answer)
+    def __str__(self):
+        return self.name
 
 class Response(models.Model):
     # This is the user that submitted the question
