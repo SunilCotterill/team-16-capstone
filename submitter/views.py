@@ -4,7 +4,6 @@ from .models import Question, Answer, Listing, Response, CustomUser
 from django.template import loader
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
@@ -118,7 +117,6 @@ def submission_complete(request, listing_id):
     context = {"listing_id": listing_id}
     return render(request, "submitter/submission_complete.html", context)
 
-
 def new_listing(request):
     if not request.user.is_authenticated:
         return redirect("submitter:home")
@@ -142,7 +140,6 @@ def new_listing(request):
     else:
         form = CreateListingForm()
     return render(request, "submitter/new_listing.html", {"form":form})
-
 
 def registerPage(request):
     if not request.user.is_authenticated:
