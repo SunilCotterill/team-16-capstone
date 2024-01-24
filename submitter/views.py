@@ -73,7 +73,7 @@ def results(request, listing_id):
 
 
 def result(request, listing_id, email):
-    answered_ids = Response.objects.filter(listing_id=listing_id).filter(email=email).values_list('answer_id', flat=True).distinct()
+    answered_ids = Response.objects.filter(listing_id=listing_id).filter(email=email)
     answered = Answer.objects.filter(id__in=answered_ids).values_list('id', flat=True)
 
     latest_questions_list = Question.objects.order_by("id")
@@ -89,10 +89,8 @@ def result(request, listing_id, email):
 
 
 def submit(request, listing_id):
-    if request.POST:
-        print("hello")
     if not request.user.is_authenticated:
-        return redirect('submitter:home')
+        return registerPageRedirect(request, listing_id)
     else:
         # Get the CSRF token from the POST request
         csrf_token = request.POST.get('csrfmiddlewaretoken')
@@ -137,10 +135,50 @@ def new_listing(request):
     return render(request, "submitter/new_listing.html", {"form":form})
 
 
+def registerPageRedirect(request, listing_id):
+    form = CreateUserForm()
+    if request.method =="POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            email = form['email'].value()
+            password = form['password1'].value()
+            user = authenticate(request, username=email, password=password)
+            login(request, user)
+            if request.user.is_authenticated:
+                print("AHHHHHHHHHHH")
+            elif not request.user.is_authenticated:
+                print("Not authed")
+
+        #     listingResponse = ListingResponse()
+        #     listingResponse.listing = Listing.objects.get(pk = listing_id)
+        #     listingResponse.responder =  request.user
+        #     listingResponse.save()
+        #     # Loop through all the keys in the POST data
+        #     for key in request.POST.keys():
+        #         email = request.POST.get('email')
+        #         if key.startswith('question_'):
+        #             question_id = key.split('_')[1]
+        #             selected_answer_id = request.POST.get(key)
+        #             new_response = Response()
+        #             new_response.question = Question.objects.get(pk = question_id)
+        #             new_response.answer = Answer.objects.get(pk = selected_answer_id)
+        #             new_response.listing_response = listingResponse
+        #             new_response.email = email
+        #             new_response.save()
+        
+        # redirect_url = reverse("submitter:submission_complete", args = [listing_id])
+        # return redirect(redirect_url)
+
+    context = {
+        # 'form': form
+        }
+    
+    return render(request, "submitter/register.html", context)
+
 def registerPage(request):
     if not request.user.is_authenticated:
         form = CreateUserForm()
-
         if request.method =="POST":
             form = CreateUserForm(request.POST)
             if form.is_valid():
