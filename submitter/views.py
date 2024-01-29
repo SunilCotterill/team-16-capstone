@@ -17,8 +17,6 @@ def submission(request, listing_id):
     question_ids = list(listing_questions_list.values_list("id", flat = True))
     listing_answers_list = Answer.objects.filter(question__in = question_ids)
 
-    template = loader.get_template("submitter/submission.html")
-
     context = {
         "listing_id": listing_id,
         "listing_questions_list": listing_questions_list,

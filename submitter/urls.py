@@ -1,7 +1,8 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 
 
 app_name = "submitter"
@@ -19,4 +20,7 @@ urlpatterns = [
     path('home/', views.homePage, name = "home"),
     path('new_listing/', views.new_listing, name = "new_listing"),
     path('logout/', views.logout_view, name = "logout"),
+    
+    # Catch all for unknown links
+    re_path(r'^.*$', RedirectView.as_view(url='/'), name='redirect-to-home'),
 ]
