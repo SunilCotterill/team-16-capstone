@@ -25,13 +25,17 @@
     display: none;
     margin-top: 10px;
   }
+
+  .True {
+  background-color: cyan;
+}
 </style>
 </head>
 <body>
 <h1>Submissions for {{listing_name}}</h1>
 <p>A user can submit their responses here: 127.0.0.1:8000/submitter/{{listing_id}}/submission</p>
 
-<!-- <details>
+<details>
   <summary>Open Filters</summary>
   <p>Leaving a field blank accepts any response for that question</p>
   <form action="{% url 'submitter:results' listing_id%}" method="post">
@@ -59,18 +63,24 @@
     {% csrf_token %}
     <input type="submit" value="Clear Filters">
   </form>
-</details> -->
+</details> 
 
 <h2>Applicants:</h2>
 <table>
   <tr>
     <th>Email</th>
     <th>Response</th>
+    <th>Shortlisted</th>
   </tr>
-  {% for email in user_emails %}
+  {% for listing_response in listing_responses %}
   <tr>
-    <td>{{email}}</td>
-    <td><a href="{% url 'submitter:result' listing_id email%}">Click here</a></td>
+    <td>{{listing_response.responder.email }}</td>
+    <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}">Click here</a></td>
+    <td>
+      <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id%}" method="get">
+        <button type="submit" class="{{listing_response.is_shortlisted}}">Shortlist</button>
+       </form>
+    </td>
   </tr>
   {% endfor %}
 </table>

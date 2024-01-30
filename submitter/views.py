@@ -3,7 +3,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Question, Answer, Listing, Response, CustomUser, ListingResponse
 from django.template import loader
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.http import JsonResponse
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
@@ -12,6 +17,8 @@ def index(request):
     return redirect('submitter:register')
 
 def submission(request, listing_id):
+    if request.user.is_authenticated:
+       return redirect('submitter:home') 
     latest_questions_list = Question.objects.order_by("id")
     latest_answers_list = Answer.objects.order_by("id")
 
@@ -25,10 +32,10 @@ def submission(request, listing_id):
 def results(request, listing_id):
     if request.user.is_authenticated:
         filters = []
-        # if request.method == "POST":
-        #     for key in request.POST.keys():
-        #         if key.startswith('question_'):
-        #             filters.append(int(request.POST.get(key)))
+        if request.method == "POST":
+            for key in request.POST.keys():
+                if key.startswith('question_'):
+                    filters.append(int(request.POST.get(key)))
             
         
         listing_responses = ListingResponse.objects.filter(listing_id=listing_id)
@@ -38,8 +45,8 @@ def results(request, listing_id):
         # unique_emails = responses.values_list('email', flat=True).distinct()
         # emails = []
         
-        # latest_questions_list = Question.objects.order_by("id")
-        # latest_answers_list = Answer.objects.order_by("id")
+        latest_questions_list = Question.objects.order_by("id")
+        latest_answers_list = Answer.objects.order_by("id")
         
         # if filters:
         #     for email in unique_emails:
@@ -57,27 +64,31 @@ def results(request, listing_id):
         # name = Listing.objects.get(id=listing_id).name
         context = {
             "listing_id": listing_id,
-            "user_emails": user_emails
+            "listing_responses": listing_responses,
             # "unique_users": emails,
             # "listing_name": name,
-            # "latest_questions_list": latest_questions_list,
-            # "latest_answers_list": latest_answers_list,
+            "latest_questions_list": latest_questions_list,
+            "latest_answers_list": latest_answers_list,
             # "filtered_answers": filters
         }
         return render(request, "submitter/results.html", context)
     else:
         return redirect('submitter:home')
 
-    
-
-
 
 def result(request, listing_id, email):
-    answered_ids = Response.objects.filter(listing_id=listing_id).filter(email=email)
+    # answered_ids = Response.objects.filter(listing_id=listing_id).filter(email=email)
+    
+    # answered = Answer.objects.filter(id__in=answered_ids).values_list('id', flat=True)
+    responder = CustomUser.objects.get(email=email)
+    listingResponse = ListingResponse.objects.filter(listing=listing_id).get(responder=responder)
+    
+    answered_ids = Response.objects.filter(listing_response = listingResponse).values_list('answer__id', flat=True)
     answered = Answer.objects.filter(id__in=answered_ids).values_list('id', flat=True)
 
     latest_questions_list = Question.objects.order_by("id")
     latest_answers_list = Answer.objects.order_by("id")
+    
     context = {
         "listing_id": listing_id,
         "latest_questions_list": latest_questions_list,
@@ -87,11 +98,9 @@ def result(request, listing_id, email):
     }
     return render(request, "submitter/result.html", context)
 
-
 def submit(request, listing_id):
-    if not request.user.is_authenticated:
-        return registerPageRedirect(request, listing_id)
-    else:
+    if request.user.is_authenticated:
+        print("in submit")
         # Get the CSRF token from the POST request
         csrf_token = request.POST.get('csrfmiddlewaretoken')
 
@@ -100,6 +109,7 @@ def submit(request, listing_id):
         listingResponse.responder =  request.user
         listingResponse.save()
         # Loop through all the keys in the POST data
+        print("before for")
         for key in request.POST.keys():
             email = request.POST.get('email')
             if key.startswith('question_'):
@@ -111,9 +121,11 @@ def submit(request, listing_id):
                 new_response.listing_response = listingResponse
                 new_response.email = email
                 new_response.save()
-        
-        redirect_url = reverse("submitter:submission_complete", args = [listing_id])
-        return redirect(redirect_url)
+    else:
+        return redirect(reverse('submitter:register') + f'?next={request.path}')
+    
+    redirect_url = reverse("submitter:submission_complete", args = [listing_id])
+    return redirect(redirect_url)
 
 def submission_complete(request, listing_id):
     context = {"listing_id": listing_id}
@@ -127,7 +139,7 @@ def new_listing(request):
             listing = Listing(name = name, creator = request.user)
             listing.save()
 
-        redirect_url = reverse("submitter:results", args = [listing.id])
+        redirect_url = reverse("submitter:register", args = [listing.id])
         return redirect(redirect_url, listing.id)
 
     else:
@@ -135,51 +147,15 @@ def new_listing(request):
     return render(request, "submitter/new_listing.html", {"form":form})
 
 
-def registerPageRedirect(request, listing_id):
-    form = CreateUserForm()
-    if request.method =="POST":
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form['email'].value()
-            password = form['password1'].value()
-            user = authenticate(request, username=email, password=password)
-            login(request, user)
-            if request.user.is_authenticated:
-                print("AHHHHHHHHHHH")
-            elif not request.user.is_authenticated:
-                print("Not authed")
-
-        #     listingResponse = ListingResponse()
-        #     listingResponse.listing = Listing.objects.get(pk = listing_id)
-        #     listingResponse.responder =  request.user
-        #     listingResponse.save()
-        #     # Loop through all the keys in the POST data
-        #     for key in request.POST.keys():
-        #         email = request.POST.get('email')
-        #         if key.startswith('question_'):
-        #             question_id = key.split('_')[1]
-        #             selected_answer_id = request.POST.get(key)
-        #             new_response = Response()
-        #             new_response.question = Question.objects.get(pk = question_id)
-        #             new_response.answer = Answer.objects.get(pk = selected_answer_id)
-        #             new_response.listing_response = listingResponse
-        #             new_response.email = email
-        #             new_response.save()
-        
-        # redirect_url = reverse("submitter:submission_complete", args = [listing_id])
-        # return redirect(redirect_url)
-
-    context = {
-        # 'form': form
-        }
-    
-    return render(request, "submitter/register.html", context)
-
 def registerPage(request):
     if not request.user.is_authenticated:
         form = CreateUserForm()
-        if request.method =="POST":
+        # We should really use request session to do this but for now I think this works
+        if "info" in request.session and request.session["info"]:
+            messages.add_message(request, messages.INFO, request.session["info"])
+            del request.session["info"]
+        
+        if request.method == "POST":
             form = CreateUserForm(request.POST)
             if form.is_valid():
                 form.save()
@@ -187,7 +163,10 @@ def registerPage(request):
                 password = form['password1'].value()
                 user = authenticate(request, username=email, password=password)
                 login(request, user)
-                return redirect('submitter:home')
+                if url_has_allowed_host_and_scheme(request.GET['next'], None):
+                    return redirect(request.GET['next'])
+                else:
+                    return redirect('submitter:home')
 
         context = {'form': form}
         return render(request, "submitter/register.html", context)
@@ -226,5 +205,19 @@ def homePage(request):
 def logout_view(request):
     logout(request)
     return redirect("submitter:login")
+
+# AIDAN? make this so only the lister
+@login_required
+def update_shortlist(request, listing_id, listing_response_id):
+    context={}
+    try:
+        listingResponse = ListingResponse.objects.get(pk=listing_response_id)
+        listingResponse.is_shortlisted = not listingResponse.is_shortlisted  # Toggle the shortlisted field
+        listingResponse.save()
+        
+        return results(request, listing_id)
+
+    except listingResponse.DoesNotExist:
+        return render(request, "submitter/homepage.html", context)
     
 
