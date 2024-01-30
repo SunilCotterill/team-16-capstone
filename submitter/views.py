@@ -38,38 +38,34 @@ def results(request, listing_id):
                     filters.append(int(request.POST.get(key)))
             
         
-        listing_responses = ListingResponse.objects.filter(listing_id=listing_id)
-        
-        user_ids = listing_responses.values_list('responder', flat=True).distinct()
-        user_emails = CustomUser.objects.filter(id__in=user_ids).values_list('email', flat=True)
-        # unique_emails = responses.values_list('email', flat=True).distinct()
-        # emails = []
+        listing_responses_temp = ListingResponse.objects.filter(listing_id=listing_id)
+        user_ids = listing_responses_temp.values_list('responder', flat=True).distinct()
+
         
         latest_questions_list = Question.objects.order_by("id")
         latest_answers_list = Answer.objects.order_by("id")
-        
-        # if filters:
-        #     for email in unique_emails:
-        #         flag = True
-        #         responses_for_email = Response.objects.filter(listing_id=listing_id, email=email)
-        #         for filter in filters:
-        #             if filter not in responses_for_email.values_list('answer_id', flat=True):
-        #                 flag = False
-        #                 break
-        #         if flag:
-        #             emails.append(email)
-        # else:
-        #     emails = unique_emails
-        # # Name for title
-        # name = Listing.objects.get(id=listing_id).name
+        listing_responses = []
+        if filters:
+            for listing_response in listing_responses_temp:
+                flag = True
+                responses_for_email = Response.objects.filter(listing_response=listing_response.id)
+                for filter in filters:
+                    if filter not in responses_for_email.values_list('answer_id', flat=True):
+                        flag = False
+                        break
+                if flag:
+                    listing_responses.append(listing_response)
+        else:
+            listing_responses = listing_responses_temp
+
+        name = Listing.objects.get(id=listing_id).name
         context = {
             "listing_id": listing_id,
             "listing_responses": listing_responses,
-            # "unique_users": emails,
-            # "listing_name": name,
+            "listing_name": name,
             "latest_questions_list": latest_questions_list,
             "latest_answers_list": latest_answers_list,
-            # "filtered_answers": filters
+            "filtered_answers": filters
         }
         return render(request, "submitter/results.html", context)
     else:
@@ -100,7 +96,6 @@ def result(request, listing_id, email):
 
 def submit(request, listing_id):
     if request.user.is_authenticated:
-        print("in submit")
         # Get the CSRF token from the POST request
         csrf_token = request.POST.get('csrfmiddlewaretoken')
 
@@ -109,9 +104,8 @@ def submit(request, listing_id):
         listingResponse.responder =  request.user
         listingResponse.save()
         # Loop through all the keys in the POST data
-        print("before for")
         for key in request.POST.keys():
-            email = request.POST.get('email')
+            # email = request.POST.get('email')
             if key.startswith('question_'):
                 question_id = key.split('_')[1]
                 selected_answer_id = request.POST.get(key)
@@ -119,9 +113,28 @@ def submit(request, listing_id):
                 new_response.question = Question.objects.get(pk = question_id)
                 new_response.answer = Answer.objects.get(pk = selected_answer_id)
                 new_response.listing_response = listingResponse
-                new_response.email = email
                 new_response.save()
+        if "submit" in request.session:
+            keys_to_del = ["submit"]
+            for key in request.session.keys():
+               if key.startswith('question_'):
+                question_id = key.split('_')[1]
+                selected_answer_id = request.session.get(key)
+                new_response = Response()
+                new_response.question = Question.objects.get(pk = question_id)
+                new_response.answer = Answer.objects.get(pk = selected_answer_id)
+                new_response.listing_response = listingResponse
+                new_response.save()
+                keys_to_del.append(key)
+            for key in keys_to_del:
+                del request.session[key]
+                
     else:
+        for key in request.POST.keys():
+            if key.startswith('question_'):
+                request.session[key] = request.POST.get(key)
+            request.session["submit"] = "true"
+                 
         return redirect(reverse('submitter:register') + f'?next={request.path}')
     
     redirect_url = reverse("submitter:submission_complete", args = [listing_id])
@@ -139,7 +152,7 @@ def new_listing(request):
             listing = Listing(name = name, creator = request.user)
             listing.save()
 
-        redirect_url = reverse("submitter:register", args = [listing.id])
+        redirect_url = reverse("submitter:results", args = [listing.id])
         return redirect(redirect_url, listing.id)
 
     else:
@@ -163,7 +176,7 @@ def registerPage(request):
                 password = form['password1'].value()
                 user = authenticate(request, username=email, password=password)
                 login(request, user)
-                if url_has_allowed_host_and_scheme(request.GET['next'], None):
+                if 'next' in request.GET and url_has_allowed_host_and_scheme(request.GET['next'], None):
                     return redirect(request.GET['next'])
                 else:
                     return redirect('submitter:home')
