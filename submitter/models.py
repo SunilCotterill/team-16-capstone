@@ -55,13 +55,13 @@ class CustomUser(AbstractUser):
 class Listing(models.Model):
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length = 200)
+    questions = models.ManyToManyField(Question)
 
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     def __str__(self):
         return self.question_text
-
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -78,4 +78,4 @@ class Response(models.Model):
     # This is the user that submitted the question
     listing_response = models.ForeignKey(ListingResponse, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer =  models.ForeignKey(Answer, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)

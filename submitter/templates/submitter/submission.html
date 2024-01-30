@@ -1,10 +1,10 @@
 <form action="{% url 'submitter:submit' listing_id%}" method="post">
     {% csrf_token %}
-   
-    {% for question in latest_questions_list %}
+
+    {% for question in listing_questions_list %}
       <legend><h2>{{ question.question_text }}</h2></legend>
 
-        {% for answer in latest_answers_list %}
+        {% for answer in listing_answers_list %}
             {% if answer.question_id == question.id%}
             <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" required>
             <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>

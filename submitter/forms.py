@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
-from .models import CustomUser
+from .models import CustomUser, Question, Listing
 
 
 
@@ -22,6 +22,20 @@ class CreateUserForm(UserCreationForm):
             user.save()
         return user
 
-class CreateListingForm(forms.Form):
+class CreateListingForm(forms.ModelForm):
     name = forms.CharField(required = True, label = 'Name', max_length = 200)
+    questions = forms.ModelMultipleChoiceField(
+        label = "Questions",
+        queryset = Question.objects.all(),
+        widget = forms.CheckboxSelectMultiple(attrs={
+            "class": "form-check-input"
+        })
+    )
+
+    class Meta:
+        model = Listing
+        fields = [
+            "name",
+            "questions"
+        ]
 

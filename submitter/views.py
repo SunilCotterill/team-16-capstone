@@ -12,7 +12,6 @@ from django.http import JsonResponse
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
-
 def index(request):
     return redirect('submitter:register')
 
@@ -24,8 +23,8 @@ def submission(request, listing_id):
 
     context = {
         "listing_id": listing_id,
-        "latest_questions_list": latest_questions_list,
-        "latest_answers_list": latest_answers_list
+        "listing_questions_list": listing_questions_list,
+        "listing_answers_list": listing_answers_list
     }
     return render(request, "submitter/submission.html", context)
 
@@ -73,22 +72,21 @@ def results(request, listing_id):
 
 
 def result(request, listing_id, email):
-    # answered_ids = Response.objects.filter(listing_id=listing_id).filter(email=email)
+    listing = Listing.objects.get(id = listing_id)
+    if not request.user.id == listing.creator.id:
+        return redirect("submitter:home")
     
-    # answered = Answer.objects.filter(id__in=answered_ids).values_list('id', flat=True)
-    responder = CustomUser.objects.get(email=email)
-    listingResponse = ListingResponse.objects.filter(listing=listing_id).get(responder=responder)
-    
-    answered_ids = Response.objects.filter(listing_response = listingResponse).values_list('answer__id', flat=True)
+    answered_ids = Response.objects.filter(listing_id=listing_id).filter(email=email).values_list('answer_id', flat=True).distinct()
     answered = Answer.objects.filter(id__in=answered_ids).values_list('id', flat=True)
 
-    latest_questions_list = Question.objects.order_by("id")
-    latest_answers_list = Answer.objects.order_by("id")
-    
+    listing_questions_list = listing.questions.all()
+    question_ids = list(listing_questions_list.values_list("id", flat = True))
+    listing_answers_list = Answer.objects.filter(question__in = question_ids)
+
     context = {
         "listing_id": listing_id,
-        "latest_questions_list": latest_questions_list,
-        "latest_answers_list": latest_answers_list,
+        "listing_questions_list": listing_questions_list,
+        "listing_answers_list": listing_answers_list,
         "answered": answered,
         "email": email
     }
@@ -145,12 +143,21 @@ def submission_complete(request, listing_id):
     return render(request, "submitter/submission_complete.html", context)
 
 def new_listing(request):
+    if not request.user.is_authenticated:
+        return redirect("submitter:home")
+
     if request.method == "POST":
         form = CreateListingForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
-            listing = Listing(name = name, creator = request.user)
+            questions = form.cleaned_data["questions"]
+
+            listing = Listing()
+            listing.name = name
+            listing.creator = request.user
             listing.save()
+            for question in questions.iterator():
+                listing.questions.add(question)
 
         redirect_url = reverse("submitter:results", args = [listing.id])
         return redirect(redirect_url, listing.id)
@@ -158,7 +165,6 @@ def new_listing(request):
     else:
         form = CreateListingForm()
     return render(request, "submitter/new_listing.html", {"form":form})
-
 
 def registerPage(request):
     if not request.user.is_authenticated:
@@ -212,7 +218,7 @@ def homePage(request):
         context={'listings':listings}
         return render(request, "submitter/homepage.html", context)
     else:
-        return redirect('submitter:register')
+        return redirect('submitter:login')
 
 
 def logout_view(request):
