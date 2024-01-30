@@ -139,7 +139,8 @@ def submit(request, listing_id):
             if key.startswith('question_'):
                 request.session[key] = request.POST.get(key)
             request.session["submit"] = "true"
-                 
+        
+        request.session["info"] = "Please create an account with us so we can save these responses for future quizzes. We promise not to spam with mailing lists, even if you want us to."
         return redirect(reverse('submitter:register') + f'?next={request.path}')
     
     redirect_url = reverse("submitter:submission_complete", args = [listing_id])
