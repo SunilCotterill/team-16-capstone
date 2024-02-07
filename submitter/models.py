@@ -75,6 +75,7 @@ class ListingResponse(models.Model):
 
 class Response(models.Model):
     # This is the user that submitted the question
+    created_timestamp = models.DateTimeField(auto_now_add=True)
     listing_response = models.ForeignKey(ListingResponse, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)

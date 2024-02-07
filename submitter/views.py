@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.http import JsonResponse
+from django.db.models import Max
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
@@ -16,17 +17,30 @@ def index(request):
     return redirect('submitter:register')
 
 def submission(request, listing_id):
-    if request.user.is_authenticated:
-       return redirect('submitter:home') 
+
     listing = Listing.objects.get(pk = listing_id)
     listing_questions_list = listing.questions.all()
     question_ids = list(listing_questions_list.values_list("id", flat = True))
     listing_answers_list = Answer.objects.filter(question__in = question_ids)
 
+    previous_answers = None
+    if request.user.is_authenticated:
+        responses = Response.objects.filter(listing_response__responder=request.user.id)
+        
+        latest_responses = responses.values('question').annotate(
+            latest_response_timestamp=Max('created_timestamp')
+            ).order_by()
+
+        # Retrieve the responses corresponding to the latest response for each unique question
+        previous_answers= Response.objects.filter(
+            created_timestamp__in=latest_responses.values('latest_response_timestamp')
+        ).values('answer').values_list('id', flat=True)
+
     context = {
         "listing_id": listing_id,
         "listing_questions_list": listing_questions_list,
-        "listing_answers_list": listing_answers_list
+        "listing_answers_list": listing_answers_list,
+        "previous_answers": previous_answers
     }
     return render(request, "submitter/submission.html", context)
 
@@ -166,13 +180,16 @@ def new_listing(request):
             listing.save()
             for question in questions.iterator():
                 listing.questions.add(question)
+        else:
+            return render(request, "submitter/new_listing.html", {"form":form})
+
 
         redirect_url = reverse("submitter:results", args = [listing.id])
         return redirect(redirect_url, listing.id)
 
     else:
         form = CreateListingForm()
-    return render(request, "submitter/new_listing.html", {"form":form})
+        return render(request, "submitter/new_listing.html", {"form":form})
 
 def registerPage(request):
     if not request.user.is_authenticated:
