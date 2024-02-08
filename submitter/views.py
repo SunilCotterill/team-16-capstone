@@ -190,8 +190,10 @@ def submission_complete(request, listing_id):
     return render(request, "submitter/submission_complete.html", context)
 
 def new_listing(request):
-    if not request.user.is_authenticated and request.user.email_is_verified:
+    if not request.user.is_authenticated:
         return redirect("submitter:home")
+    elif not request.user.email_is_verified:
+        return redirect("submitter:verify-email")
 
     if request.method == "POST":
         form = CreateListingForm(request.POST)
