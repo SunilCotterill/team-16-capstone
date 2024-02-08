@@ -4,19 +4,58 @@ from .models import Question, Answer, Listing, Response, CustomUser, ListingResp
 from django.template import loader
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.http import JsonResponse
+from .forms import CreateUserForm
+
+# For email verification
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+from django.contrib import messages
+
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
+
+# so we can reference the user model as User instead of CustomUser
+User = get_user_model()
+
+# send email with verification link
+def verify_email(request):
+    if request.method == "POST":
+        if request.user.email_is_verified != True:
+            current_site = get_current_site(request)
+            user = request.user
+            email = request.user.email
+            subject = "Verify Email"
+            message = render_to_string('submitter/verify_email_message.html', {
+                'request': request,
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            })
+            email = EmailMessage(
+                subject, message, to=[email]
+            )
+            email.content_subtype = 'html'
+            email.send()
+            return redirect('submitter/verify-email-done')
+        else:
+            return redirect('signup')
+    return render(request, 'submitter/verify_email.html')
 
 def index(request):
     return redirect('submitter:register')
 
 def submission(request, listing_id):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.email_is_verified:
        return redirect('submitter:home') 
     listing = Listing.objects.get(pk = listing_id)
     listing_questions_list = listing.questions.all()
@@ -100,7 +139,7 @@ def result(request, listing_id, email):
     return render(request, "submitter/result.html", context)
 
 def submit(request, listing_id):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.email_is_verified:
         # Get the CSRF token from the POST request
         csrf_token = request.POST.get('csrfmiddlewaretoken')
 
@@ -151,7 +190,7 @@ def submission_complete(request, listing_id):
     return render(request, "submitter/submission_complete.html", context)
 
 def new_listing(request):
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated and request.user.email_is_verified:
         return redirect("submitter:home")
 
     if request.method == "POST":
@@ -193,12 +232,12 @@ def registerPage(request):
                 if 'next' in request.GET and url_has_allowed_host_and_scheme(request.GET['next'], None):
                     return redirect(request.GET['next'])
                 else:
-                    return redirect('submitter:home')
+                    return redirect('submitter:verify-email')
 
         context = {'form': form}
         return render(request, "submitter/register.html", context)
     else:
-        return redirect('submitter:home')
+        return redirect('submitter:verify-email')
 
 def loginPage(request):
     form = CustomAuthenticationForm()
@@ -221,7 +260,7 @@ def loginPage(request):
     return render(request, "submitter/login.html", context)
 
 def homePage(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.email_is_verified:
         listings = Listing.objects.all().filter(creator=request.user)
         context={'listings':listings}
         return render(request, "submitter/homepage.html", context)
@@ -233,7 +272,6 @@ def logout_view(request):
     logout(request)
     return redirect("submitter:login")
 
-# AIDAN? make this so only the lister
 @login_required
 def update_shortlist(request, listing_id, listing_response_id):
     context={}
@@ -247,4 +285,23 @@ def update_shortlist(request, listing_id, listing_response_id):
     except listingResponse.DoesNotExist:
         return render(request, "submitter/homepage.html", context)
     
+def verify_email_done(request):
+    return render(request, 'submitter/verify_email_done.html')
 
+def verify_email_confirm(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.email_is_verified = True
+        user.save()
+        messages.success(request, 'Your email has been verified.')
+        return redirect('submitter:verify-email-complete')   
+    else:
+        messages.warning(request, 'The link is invalid.')
+    return render(request, 'submitter/verify_email_confirm.html')
+
+def verify_email_complete(request):
+    return render(request, 'submitter/verify_email_complete.html')
