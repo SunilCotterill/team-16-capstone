@@ -6,7 +6,7 @@
 
         {% for answer in listing_answers_list %}
             {% if answer.question_id == question.id%}
-            <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" required>
+            <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" required {% if previous_answers and answer.id in previous_answers %} checked="checked" {% endif %}>
             <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
             {% endif %}
         {% endfor %}
