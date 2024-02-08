@@ -20,6 +20,7 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
 
+from django.db.models import Max
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
@@ -62,10 +63,24 @@ def submission(request, listing_id):
     question_ids = list(listing_questions_list.values_list("id", flat = True))
     listing_answers_list = Answer.objects.filter(question__in = question_ids)
 
+    previous_answers = None
+    if request.user.is_authenticated:
+        responses = Response.objects.filter(listing_response__responder=request.user.id)
+        
+        latest_responses = responses.values('question').annotate(
+            latest_response_timestamp=Max('created_timestamp')
+            ).order_by()
+
+        # Retrieve the responses corresponding to the latest response for each unique question
+        previous_answers= Response.objects.filter(
+            created_timestamp__in=latest_responses.values('latest_response_timestamp')
+        ).values('answer').values_list('id', flat=True)
+
     context = {
         "listing_id": listing_id,
         "listing_questions_list": listing_questions_list,
-        "listing_answers_list": listing_answers_list
+        "listing_answers_list": listing_answers_list,
+        "previous_answers": previous_answers
     }
     return render(request, "submitter/submission.html", context)
 
@@ -207,13 +222,16 @@ def new_listing(request):
             listing.save()
             for question in questions.iterator():
                 listing.questions.add(question)
+        else:
+            return render(request, "submitter/new_listing.html", {"form":form})
+
 
         redirect_url = reverse("submitter:results", args = [listing.id])
         return redirect(redirect_url, listing.id)
 
     else:
         form = CreateListingForm()
-    return render(request, "submitter/new_listing.html", {"form":form})
+        return render(request, "submitter/new_listing.html", {"form":form})
 
 def registerPage(request):
     if not request.user.is_authenticated:
