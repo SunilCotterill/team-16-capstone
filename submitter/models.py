@@ -43,6 +43,8 @@ class UserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(max_length=254, unique=True, validators=[validate_substring])
+    email_is_verified = models.BooleanField(default=False)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
@@ -50,6 +52,9 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
