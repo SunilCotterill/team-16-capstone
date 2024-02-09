@@ -56,8 +56,6 @@ def index(request):
     return redirect('submitter:register')
 
 def submission(request, listing_id):
-    if request.user.is_authenticated and request.user.email_is_verified:
-       return redirect('submitter:home') 
     listing = Listing.objects.get(pk = listing_id)
     listing_questions_list = listing.questions.all()
     question_ids = list(listing_questions_list.values_list("id", flat = True))
@@ -154,7 +152,7 @@ def result(request, listing_id, email):
     return render(request, "submitter/result.html", context)
 
 def submit(request, listing_id):
-    if request.user.is_authenticated and request.user.email_is_verified:
+    if request.user.is_authenticated:
         # Get the CSRF token from the POST request
         csrf_token = request.POST.get('csrfmiddlewaretoken')
 
