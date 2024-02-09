@@ -302,6 +302,8 @@ def homePage(request):
         listings = Listing.objects.all().filter(creator=request.user)
         context={'listings':listings}
         return render(request, "submitter/homepage.html", context)
+    elif request.user.is_authenticated:
+        return redirect('submitter:verify-email')
     else:
         return redirect('submitter:login')
 
