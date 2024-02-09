@@ -80,6 +80,10 @@ def submission(request, listing_id):
         "listing_answers_list": listing_answers_list,
         "previous_answers": previous_answers
     }
+    error_messages = list(messages.get_messages(request))
+    if error_messages:
+        context['error_message'] = error_messages[0]
+    
     return render(request, "submitter/submission.html", context)
 
 def results(request, listing_id):
@@ -94,7 +98,7 @@ def results(request, listing_id):
                 filters.append(int(request.POST.get(key)))
         
     
-    listing_responses_temp = ListingResponse.objects.filter(listing_id=listing_id)
+    listing_responses_temp = ListingResponse.objects.filter(listing_id=listing_id).filter(responder__email_is_verified=True)
     user_ids = listing_responses_temp.values_list('responder', flat=True).distinct()
 
     
@@ -153,7 +157,6 @@ def result(request, listing_id, email):
 
 def submit_from_redirect(request,user):
     if "submit" in request.session:
-        print("in submit_from_redirect")
         listing_id = request.session["listing_id"]
         listingResponse = ListingResponse()
         listingResponse.listing = Listing.objects.get(pk = listing_id)
@@ -183,7 +186,13 @@ def submit(request, listing_id):
         listingResponse = ListingResponse()
         listingResponse.listing = Listing.objects.get(pk = listing_id)
         listingResponse.responder =  request.user
-        listingResponse.save()
+        try:
+            listingResponse.save()
+        except Exception as e:
+            messages.error(request, "Naughty naughty naughty, you are doing something you shouldn't")
+            return submission(request, listing_id)
+
+            
         # Loop through all the keys in the POST data
         for key in request.POST.keys():
             # email = request.POST.get('email')
@@ -264,7 +273,7 @@ def registerPage(request):
         context = {'form': form}
         return render(request, "submitter/register.html", context)
     else:
-        return redirect('submitter:verify-email')
+        return redirect('submitter:home')
 
 def loginPage(request):
     form = CustomAuthenticationForm()
