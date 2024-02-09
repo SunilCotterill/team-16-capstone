@@ -46,7 +46,7 @@ def verify_email(request):
                 subject, message, to=[email]
             )
             email.content_subtype = 'html'
-            # email.send()
+            email.send()
             return redirect('submitter:verify-email-done')
         else:
             return redirect('signup')
