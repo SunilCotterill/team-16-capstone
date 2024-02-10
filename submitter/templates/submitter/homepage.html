@@ -1,18 +1,214 @@
-<h3>Welcome</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Title</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            margin: 0; /* Remove default margin */
+            overflow: hidden; /* Prevent body from scrolling */
+        }
 
-<p>Thank you for choosing our platform for your subletting needs. We are here to streamline the process of finding a compatible roommate.
+        .logo {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            height: 10vh;
+            width: 10vw;
+        }
 
-    A shareable link will be generated each time a new quiz is created. Please attach this link in your rental postings or share it with others directly!</p>
+        .vertical-rectangle {
+            background-color: #E6F1F1;
+            width: 16vw;
+            height: 100%; /* Change height to cover the entire page */
+            position: fixed; /* Change position to fixed */
+            top: 0; /* Position it at the top */
+            left: 0; /* Align it to the left */
+            border-right: 3px solid #D9D9D9;
+            z-index: 1000; /* Ensure it's behind other content */
+        }
 
+        .content {
+            margin-left: 17vw;
+            padding-left: 20px;
+            padding-top: 0px;
+            max-width: 70vw;
+            position: relative;
+            margin-top: 50px;
+        }
 
-{% if listings %}
-<p> View Listings:</p>
-<ul>
-    {% for listing in listings %}
-    <a href="{% url 'submitter:results' listing.id %}"> <li>{{listing.name}}</li> </a>
-    {% endfor %}
-</ul>
-{% endif %}
+        .welcome-title {
+            font-size: max(3vw, 20px);
+            font-weight: 550;
+            margin-bottom: 10px;
+        }
 
-<a href="{% url 'submitter:new_listing' %}">Create a New Listing</a> <br>
-<a href="{% url 'submitter:logout' %}">Logout</a>
+        .listing-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-top: 8vh; /* Adjusted margin-top */
+        }
+
+        .listing-box {
+            background-color: #F1F2F1;
+            border: 1px solid #1FBCBC;
+            padding: 10px 20px; /* Adjust padding to move content over */
+            height: 7vh;
+            margin-bottom: 15px;
+            width: 85%;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: left;
+            text-decoration: none; /* Remove underline */
+            color: black; /* Set text color */
+            transition: background-color 0.3s; /* Smooth transition for background color change */
+        }
+
+        .listing-box:hover {
+            background-color: #D9E9E9; /* Lighter background color on hover */
+        }
+
+        .listing-name {
+            font-weight: bold;
+            font-size: 1em; /* Increased font size for listing name */
+        }
+
+        .listing-details {
+            margin-top: 5px;
+            font-weight: normal;
+            font-size: 1em; /* Match font size for listing details */
+        }
+
+        .listings-container {
+            height: 48vh; /* Set the height of the container */
+            overflow-y: auto; /* Enable vertical scrolling */
+            margin-bottom: 15px; /* Add some bottom margin */
+            width: 40%;
+            float: left; /* Make it float left */
+            margin-right: 120px; /* Move the listings container down */
+            margin-top: -3vh;
+        }
+
+        .new-listing-container {
+            text-align: center;
+            border: 1px solid #908d92;
+            border-radius: 5px;
+            padding: 10px;
+            width: 260px;
+            height: 100px;
+            background-color: #E6F1F1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 22px; /* Add margin to separate it */
+            float: left; /* Make it float left */
+            margin-top: -3vh; /* Move the new listing container down */
+            transition: background-color 0.3s; /* Smooth transition for background color change */
+        }
+
+        .new-listing-container:hover {
+            background-color: #c3d5d5; /* Lighter background color on hover */
+        }
+
+        .create-listing {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: black; /* Change text color to black */
+            display: inline-block; /* Ensure proper alignment */
+            padding: 5px 10px; /* Adjust padding for better appearance */
+            border-radius: 5px; /* Add border radius */
+            text-decoration: none !important; /* Remove underline */
+        }
+
+        .logout-btn {
+            position: fixed; /* Changed to fixed */
+            bottom: 2vh; /* Adjusted the position */
+            left: 1.2vw; /* Adjusted the position */
+            z-index: 1001;
+            background-color: #E6F1F1;
+            padding: 15px 30px;
+            border: 1px solid #908d92;
+            border-radius: 10px;
+            width: 9vw;
+            height: 3vh;
+            text-align: center;
+        }
+
+        /* Logout Button Hover Effect */
+        .logout-btn:hover {
+            background-color: #c3d5d5; /* Dark blue background color on hover */
+            color: black; /* Change text color to white on hover */
+        }
+
+        /* Plus Icon */
+        .create-listing i {
+            color: #1FBCBC; /* Change color of the icon */
+            font-size: 1.7em; /* Increase size of the icon */
+            vertical-align: 10px; /* Adjust vertical alignment */
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG Logo -->
+    {% load static %}
+    <img src="{% static 'submitter/images/logo.svg' %}" alt="home" class="logo"> <!-- Updated SVG logo path and added logo class -->
+
+    <!-- Vertical Rectangle -->
+    <div class="vertical-rectangle"></div>
+
+    <!-- Main Content -->
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="welcome-title">Welcome Home, {{ first_name }}!</h3>
+
+                <p>Thank you for choosing our platform for your subletting needs!
+                We are here to streamline the process of finding a compatible roommate. A shareable link will be generated each time a new quiz is created!</p>
+
+                {% if listings %}
+                <div class="container">
+                    <h3 class="listing-title">Your Listings:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; New Listing:</h3> <!-- Title for Your Listings -->
+                    <span class="half-break"></span><br>
+                    <!-- Listings Container -->
+                    <div class="listings-container">
+                        <div class="row">
+                            {% for listing in listings %}
+                            <div class="col-md-4 mb-4">
+                                <a href="{% url 'submitter:results' listing.id %}" class="listing-box">
+                                    <h5>
+                                        <span class="listing-name" style="font-size: 1.1em;">Name:&nbsp;   </span> {{listing.name}}
+                                        <span class="listing-details">
+                                            <br>Applicants: {{listing.applicants}} &nbsp;&nbsp;&nbsp;&nbsp;  
+                                            Shortlist: {{listing.shortlist}}
+                                        </span>
+                                    </h5>
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- New Listing Container -->
+                    <a href="{% url 'submitter:new_listing' %}" class="new-listing-container" style="text-decoration: none;">
+                        <div class="create-listing">
+                            Create New Listing   <!-- Move the text before the icon -->
+                            &nbsp;  <i class="fas fa-plus-square" style="margin-left: 5px; vertical-align: -5px;"></i> <!-- Add vertical-align property -->
+                        </div>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Logout Button -->
+    <a href="{% url 'submitter:logout' %}" class="logout-btn">Logout</a>
+</body>
+</html>

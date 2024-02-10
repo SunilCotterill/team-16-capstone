@@ -240,7 +240,7 @@ def loginPage(request):
 def homePage(request):
     if request.user.is_authenticated:
         listings = Listing.objects.all().filter(creator=request.user)
-        context={'listings':listings}
+        context={'listings':listings, 'first_name': request.user.first_name}
         return render(request, "submitter/homepage.html", context)
     else:
         return redirect('submitter:login')
