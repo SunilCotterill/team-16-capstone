@@ -4,20 +4,58 @@ from .models import Question, Answer, Listing, Response, CustomUser, ListingResp
 from django.template import loader
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.http import JsonResponse
+from .forms import CreateUserForm
+
+# For email verification
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+from django.contrib import messages
+
 from django.db.models import Max
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
+
+# so we can reference the user model as User instead of CustomUser
+User = get_user_model()
+
+# send email with verification link
+def verify_email(request):
+    if request.method == "POST":
+        if request.user.email_is_verified != True:
+            current_site = get_current_site(request)
+            user = request.user
+            email = request.user.email
+            subject = "Verify Email"
+            message = render_to_string('submitter/verify_email_message.html', {
+                'request': request,
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            })
+            email = EmailMessage(
+                subject, message, to=[email]
+            )
+            email.content_subtype = 'html'
+            email.send()
+            return redirect('submitter:verify-email-done')
+        else:
+            return redirect('signup')
+    return render(request, 'submitter/verify_email.html')
 
 def index(request):
     return redirect('submitter:register')
 
 def submission(request, listing_id):
-
     listing = Listing.objects.get(pk = listing_id)
     listing_questions_list = listing.questions.all()
     question_ids = list(listing_questions_list.values_list("id", flat = True))
@@ -42,6 +80,10 @@ def submission(request, listing_id):
         "listing_answers_list": listing_answers_list,
         "previous_answers": previous_answers
     }
+    error_messages = list(messages.get_messages(request))
+    if error_messages:
+        context['error_message'] = error_messages[0]
+    
     return render(request, "submitter/submission.html", context)
 
 def results(request, listing_id):
@@ -56,7 +98,7 @@ def results(request, listing_id):
                 filters.append(int(request.POST.get(key)))
         
     
-    listing_responses_temp = ListingResponse.objects.filter(listing_id=listing_id)
+    listing_responses_temp = ListingResponse.objects.filter(listing_id=listing_id).filter(responder__email_is_verified=True)
     user_ids = listing_responses_temp.values_list('responder', flat=True).distinct()
 
     
@@ -113,6 +155,29 @@ def result(request, listing_id, email):
     }
     return render(request, "submitter/result.html", context)
 
+def submit_from_redirect(request,user):
+    if "submit" in request.session:
+        listing_id = request.session["listing_id"]
+        listingResponse = ListingResponse()
+        listingResponse.listing = Listing.objects.get(pk = listing_id)
+        listingResponse.responder =  user
+        listingResponse.save()
+        keys_to_del = ["submit", "listing_id"]
+        for key in request.session.keys():
+            if key.startswith('question_'):
+                question_id = key.split('_')[1]
+                selected_answer_id = request.session.get(key)
+                new_response = Response()
+                new_response.question = Question.objects.get(pk = question_id)
+                new_response.answer = Answer.objects.get(pk = selected_answer_id)
+                new_response.listing_response = listingResponse
+                new_response.save()
+                keys_to_del.append(key)
+        for key in keys_to_del:
+            del request.session[key]
+            
+
+
 def submit(request, listing_id):
     if request.user.is_authenticated:
         # Get the CSRF token from the POST request
@@ -121,7 +186,13 @@ def submit(request, listing_id):
         listingResponse = ListingResponse()
         listingResponse.listing = Listing.objects.get(pk = listing_id)
         listingResponse.responder =  request.user
-        listingResponse.save()
+        try:
+            listingResponse.save()
+        except Exception as e:
+            messages.error(request, "Naughty naughty naughty, you are doing something you shouldn't")
+            return submission(request, listing_id)
+
+            
         # Loop through all the keys in the POST data
         for key in request.POST.keys():
             # email = request.POST.get('email')
@@ -133,29 +204,15 @@ def submit(request, listing_id):
                 new_response.answer = Answer.objects.get(pk = selected_answer_id)
                 new_response.listing_response = listingResponse
                 new_response.save()
-        if "submit" in request.session:
-            keys_to_del = ["submit"]
-            for key in request.session.keys():
-               if key.startswith('question_'):
-                question_id = key.split('_')[1]
-                selected_answer_id = request.session.get(key)
-                new_response = Response()
-                new_response.question = Question.objects.get(pk = question_id)
-                new_response.answer = Answer.objects.get(pk = selected_answer_id)
-                new_response.listing_response = listingResponse
-                new_response.save()
-                keys_to_del.append(key)
-            for key in keys_to_del:
-                del request.session[key]
-                
     else:
         for key in request.POST.keys():
             if key.startswith('question_'):
                 request.session[key] = request.POST.get(key)
+            request.session["listing_id"] = listing_id
             request.session["submit"] = "true"
-        
+
         request.session["info"] = "Please create an account with us so we can save these responses for future quizzes. We promise not to spam with mailing lists, even if you want us to."
-        return redirect(reverse('submitter:register') + f'?next={request.path}')
+        return redirect(reverse('submitter:register'))
     
     redirect_url = reverse("submitter:submission_complete", args = [listing_id])
     return redirect(redirect_url)
@@ -167,6 +224,8 @@ def submission_complete(request, listing_id):
 def new_listing(request):
     if not request.user.is_authenticated:
         return redirect("submitter:home")
+    elif not request.user.email_is_verified:
+        return redirect("submitter:verify-email")
 
     if request.method == "POST":
         form = CreateListingForm(request.POST)
@@ -206,11 +265,10 @@ def registerPage(request):
                 email = form['email'].value()
                 password = form['password1'].value()
                 user = authenticate(request, username=email, password=password)
+                if "submit" in request.session:
+                    submit_from_redirect(request, user)
                 login(request, user)
-                if 'next' in request.GET and url_has_allowed_host_and_scheme(request.GET['next'], None):
-                    return redirect(request.GET['next'])
-                else:
-                    return redirect('submitter:home')
+                return redirect('submitter:verify-email')
 
         context = {'form': form}
         return render(request, "submitter/register.html", context)
@@ -229,6 +287,8 @@ def loginPage(request):
             # Authenticate using your custom backend
             user = authenticate(request, username=email, password=password)
             if user is not None:
+                if "submit" in request.session:
+                    submit_from_redirect(request, user)
                 login(request, user)
                 return redirect('submitter:home')
             else:
@@ -238,10 +298,12 @@ def loginPage(request):
     return render(request, "submitter/login.html", context)
 
 def homePage(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.email_is_verified:
         listings = Listing.objects.all().filter(creator=request.user)
         context={'listings':listings, 'first_name': request.user.first_name}
         return render(request, "submitter/homepage.html", context)
+    elif request.user.is_authenticated:
+        return redirect('submitter:verify-email')
     else:
         return redirect('submitter:login')
 
@@ -250,7 +312,6 @@ def logout_view(request):
     logout(request)
     return redirect("submitter:login")
 
-# AIDAN? make this so only the lister
 @login_required
 def update_shortlist(request, listing_id, listing_response_id):
     context={}
@@ -264,4 +325,22 @@ def update_shortlist(request, listing_id, listing_response_id):
     except listingResponse.DoesNotExist:
         return render(request, "submitter/homepage.html", context)
     
+def verify_email_done(request):
+    return render(request, 'submitter/verify_email_done.html')
 
+def verify_email_confirm(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.email_is_verified = True
+        user.save()
+        return redirect('submitter:verify-email-complete')   
+    else:
+        messages.warning(request, 'The link is invalid.')
+    return render(request, 'submitter/verify_email_confirm.html')
+
+def verify_email_complete(request):
+    return render(request, 'submitter/verify_email_complete.html')

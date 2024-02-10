@@ -6,8 +6,6 @@ from .models import CustomUser, Question, Listing
 
 class CustomAuthenticationForm(AuthenticationForm):
     email = forms.EmailField(widget=forms.TextInput(attrs={'autofocus': True}))
-    
-
 
 class CreateUserForm(UserCreationForm):
     email = forms.EmailField(required=True)

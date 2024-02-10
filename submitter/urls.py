@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 
 from . import views
 from django.contrib.auth import views as auth_views
@@ -21,9 +21,13 @@ urlpatterns = [
     path('home/', views.homePage, name = "home"),
     path('new_listing/', views.new_listing, name = "new_listing"),
     path('logout/', views.logout_view, name = "logout"),
+    path('signup/', views.registerPage, name='signup'),
 
+    path('verify-email/', views.verify_email, name='verify-email'),
+    path('verify-email/done/', views.verify_email_done, name='verify-email-done'),
+    path('verify-email-confirm/<uidb64>/<token>/', views.verify_email_confirm, name='verify-email-confirm'),
+    path('verify-email/complete/', views.verify_email_complete, name='verify-email-complete'),
 
-    
     # Catch all for unknown links
     re_path(r'^.*$', RedirectView.as_view(url='/'), name='redirect-to-home'),
 ]

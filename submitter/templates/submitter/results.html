@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-    /* Style for the details element */
-    details {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicants Page</title>
 
-  /* Style for the summary element */
-  summary {
-    cursor: pointer;
-    font-weight: bold;
-  }
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Style for the details element */
+        details {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px;
+      }
 
-  /* Hide the content by default */
-  details[open] > div {
-    display: block;
-  }
+      /* Style for the summary element */
+      summary {
+        cursor: pointer;
+        font-weight: bold;
+      }
 
-  /* Style for the content within the details element */
-  details > div {
-    display: none;
-    margin-top: 10px;
-  }
+      /* Hide the content by default */
+      details[open] > div {
+        display: block;
+      }
 
-  .True {
-  background-color: cyan;
-}
-</style>
+      /* Style for the content within the details element */
+      details > div {
+        display: none;
+        margin-top: 10px;
+      }
+
+      .True {
+      background-color: cyan;
+    }
+    </style>
 </head>
 <body>
 <h1>Submissions for {{listing_name}}</h1>
-<p>A user can submit their responses here: 127.0.0.1:8000/submitter/{{listing_id}}/submission</p>
+<p>A user can submit their responses here: 127.0.0.1:8000/apartmate/{{listing_id}}/submission</p>
 
 <details>
   <summary>Open Filters</summary>
@@ -63,29 +68,72 @@
     {% csrf_token %}
     <input type="submit" value="Clear Filters">
   </form>
-</details> 
+</details>
 
-<h2>Applicants:</h2>
-<table>
-  <tr>
-    <th>Email</th>
-    <th>Response</th>
-    <th>Shortlisted</th>
-  </tr>
-  {% for listing_response in listing_responses %}
-  <tr>
-    <td>{{listing_response.responder.email }}</td>
-    <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}">Click here</a></td>
-    <td>
-      <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id%}" method="get">
-        <button type="submit" class="{{listing_response.is_shortlisted}}">Shortlist</button>
-       </form>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
+<div class="container" style = "margin-left: 0">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+    <li class="nav-item">
+      <a class="nav-link active" id="all-applicants-tab" data-toggle="tab" href="#all-applicants" role="tab" aria-controls="all-applicants" aria-selected="true">All Applicants</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" id="shortlist-tab" data-toggle="tab" href="#shortlist" role="tab" aria-controls="shortlist" aria-selected="false">Shortlist</a>
+    </li>
+
+  </ul>
+  <div class="tab-content" id="myTabContent">
+
+    <div class="tab-pane fade show active" id="all-applicants" role="tabpanel" aria-labelledby="all-applicants-tab">
+        <table>
+          <tr>
+            <th>Email</th>
+            <th>Response</th>
+            <th>Shortlisted</th>
+          </tr>
+          {% for listing_response in listing_responses %}
+          <tr>
+            <td>{{listing_response.responder.email }}</td>
+            <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}">Click here</a></td>
+            <td>
+              <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id%}" method="get">
+                <button type="submit" class="{{listing_response.is_shortlisted}}">Shortlist</button>
+               </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+    </div>
+
+    <div class="tab-pane fade" id="shortlist" role="tabpanel" aria-labelledby="shortlist-tab">
+        <table>
+          <tr>
+            <th>Email</th>
+            <th>Response</th>
+            <th>Shortlisted</th>
+          </tr>
+          {% for listing_response in listing_responses %}
+          <tr>
+            {% if listing_response.is_shortlisted %}
+                <td>{{listing_response.responder.email }}</td>
+                <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}">Click here</a></td>
+                <td>
+                  <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id%}" method="get">
+                    <button type="submit" class="{{listing_response.is_shortlisted}}">Shortlist</button>
+                   </form>
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </table>
+    </div>
+  </div>
+</div>
 
 <a href="{% url 'submitter:home' %}">Home</a>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

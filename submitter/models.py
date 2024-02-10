@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 
 def validate_substring(value):
-    if "@uwaterloo.ca" not in value and "@wlu.ca" not in value:
+    if not value.endswith("@uwaterloo.ca") and not value.endswith("@wlu.ca"):
         raise ValidationError("Must be UWaterloo or ULaurier email")
 
 class UserManager(BaseUserManager):
@@ -43,6 +43,8 @@ class UserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(max_length=254, unique=True, validators=[validate_substring])
+    email_is_verified = models.BooleanField(default=False)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
@@ -50,6 +52,9 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -72,6 +77,9 @@ class ListingResponse(models.Model):
     responder = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     is_shortlisted = models.BooleanField(default = False)
+
+    class Meta:
+        unique_together = ('responder', 'listing')
 
 class Response(models.Model):
     # This is the user that submitted the question

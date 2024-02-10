@@ -1,1 +1,70 @@
-<h2>Thank you for applying! Your response has been submitted. You can now close this window.</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You Page</title>
+
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .thank-you-box {
+      padding-top: 3vw;
+      position: relative;
+      background-color: #E6F1F1;
+      border: 2px solid black;
+      border-radius: 5px;
+      height: 80vh;
+      width: 70vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 30em;
+    }
+    .thank-you-box h1, .thank-you-box h2 {
+      margin: 0 0;
+    }
+    .additional-text {
+      font-size: max(1vw, 12px);
+      padding: 0 30px 0 30px;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .larger-title {
+      font-size: max(3.5vw, 35px);
+      margin-bottom: 10px;
+    }
+    .logo {
+      position: absolute;
+      top: 5%;
+      right: 5%;
+      width: 10%;
+      max-width: 100px;
+      height: auto;
+      z-index: 1;
+    }
+    .checkmark {
+      margin-top: 30px;
+      width: max(5.5vw, 55px);
+      height: auto;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row justify-content-center align-items-center" style="height: 100vh;">
+    <div class="thank-you-box text-center">
+      {% load static %}
+      <img src="{% static 'submitter/images/logo.svg' %}" alt="home" class="logo">
+      <h1 class = "larger-title">Thank You!</h1><br>
+      <h2 class = "additional-text">Your Response has been submitted. You may now close this window.</h2>
+      <img src="{% static 'submitter/images/success-checkmark.svg' %}" alt="checkmark" class="checkmark">
+    </div>
+  </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
