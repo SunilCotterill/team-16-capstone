@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 
 def validate_substring(value):
-    if "@uwaterloo.ca" not in value and "@wlu.ca" not in value:
+    if not value.endswith("@uwaterloo.ca") and not value.endswith("@wlu.ca"):
         raise ValidationError("Must be UWaterloo or ULaurier email")
 
 class UserManager(BaseUserManager):
@@ -77,6 +77,9 @@ class ListingResponse(models.Model):
     responder = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     is_shortlisted = models.BooleanField(default = False)
+
+    class Meta:
+        unique_together = ('responder', 'listing')
 
 class Response(models.Model):
     # This is the user that submitted the question
