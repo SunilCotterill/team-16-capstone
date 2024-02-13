@@ -1,9 +1,10 @@
-from django.urls import path, re_path, include
+from django.urls import path, re_path, reverse_lazy
 from django.shortcuts import redirect
 
 from . import views
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
+from submitter.views import ResetPasswordView
 
 
 app_name = "submitter"
@@ -31,10 +32,14 @@ urlpatterns = [
 
     path('change-password', views.change_password, name='change-password'),
 
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='registration/password_reset_form.html'), name='password_reset'),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
-    path('reset/<uidb64><token>/',auth_views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm.html'), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'), name='password_reset_complete'),     
+    path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
+    path('password-reset-confirm/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(template_name='submitter/password_reset_confirm.html', success_url=reverse_lazy('submitter:password_reset_complete')),
+         name='password_reset_confirm'),
+    path('password-reset-complete/',
+         auth_views.PasswordResetCompleteView.as_view(template_name='submitter/password_reset_complete.html'),
+         name='password_reset_complete'),
+
 
     # Catch all for unknown links
     re_path(r'^.*$', RedirectView.as_view(url='/'), name='redirect-to-home'),
