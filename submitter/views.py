@@ -57,6 +57,7 @@ def index(request):
 
 def submission(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
+    listing_name = listing.name
     listing_questions_list = listing.questions.all()
     question_ids = list(listing_questions_list.values_list("id", flat = True))
     listing_answers_list = Answer.objects.filter(question__in = question_ids)
@@ -76,6 +77,7 @@ def submission(request, listing_id):
 
     context = {
         "listing_id": listing_id,
+        "listing_name": listing_name,
         "listing_questions_list": listing_questions_list,
         "listing_answers_list": listing_answers_list,
         "previous_answers": previous_answers
