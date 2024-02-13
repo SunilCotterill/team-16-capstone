@@ -1,5 +1,4 @@
 from django.urls import path, re_path, include
-from django.shortcuts import redirect
 
 from . import views
 from django.contrib.auth import views as auth_views
@@ -8,7 +7,7 @@ from django.views.generic import RedirectView
 
 app_name = "submitter"
 urlpatterns = [
-    path("", views.index, name="index", ),
+    path("", views.index, name="index"),
     path("<int:listing_id>/submission", views.submission, name="submission"),
     path("<int:listing_id>/submit/", views.submit, name="submit"),
     path("<int:listing_id>/results", views.results, name="results"),
@@ -30,11 +29,6 @@ urlpatterns = [
     path('verify-email/complete/', views.verify_email_complete, name='verify-email-complete'),
 
     path('change-password', views.change_password, name='change-password'),
-
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='registration/password_reset_form.html'), name='password_reset'),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
-    path('reset/<uidb64><token>/',auth_views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm.html'), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'), name='password_reset_complete'),     
 
     # Catch all for unknown links
     re_path(r'^.*$', RedirectView.as_view(url='/'), name='redirect-to-home'),
