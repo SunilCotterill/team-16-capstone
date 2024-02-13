@@ -2,9 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Question, Answer, Listing, Response, CustomUser, ListingResponse
 from django.template import loader
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -346,3 +346,11 @@ def verify_email_confirm(request, uidb64, token):
 
 def verify_email_complete(request):
     return render(request, 'submitter/verify_email_complete.html')
+
+def change_password(request):
+   form = PasswordChangeForm(user=request.user, data=request.POST or None)
+   if form.is_valid():
+     form.save()
+     update_session_auth_hash(request, form.user)
+     return redirect('submitter:home')
+   return render(request, 'submitter/change_password.html', {'form': form})
