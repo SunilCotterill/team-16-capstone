@@ -151,7 +151,11 @@ def result(request, listing_id, email):
         "listing_questions_list": listing_questions_list,
         "listing_answers_list": listing_answers_list,
         "answered": answered,
-        "email": email
+        "email": email,
+        "first_name": responder.first_name,
+        "last_name": responder.last_name,
+        "listing_name": listing.name,
+        "listing_response": listingResponse
     }
     return render(request, "submitter/result.html", context)
 
