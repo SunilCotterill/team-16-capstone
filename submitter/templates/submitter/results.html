@@ -436,22 +436,20 @@
                 </div>
             </div>
         </div>
-
+        {% if not listing_status %}
+        <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
+            {% csrf_token %}
+            <button type="submit" title="Close Listing">Close Listing</button>
+        </form>
+        {% else %}
+        <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
+            {% csrf_token %}
+            <button type="submit" title="Reopen Listing">Reopen Listing</button>
+        </form>
+        {% endif %}
     </div>
 
-    <!-- Logout Button -->
-    {% if not listing_status %}
-    <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
-      {% csrf_token %}
-      <button type="submit" title="Close Listing">Close Listing</button>
-    </form>
-{% else %}
-    <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
-      {% csrf_token %}
-      <button type="submit" title="Reopen Listing">Reopen Listing</button>
-    </form>
-{% endif %}
-<a href="{% url 'submitter:logout' %}" class="logout-btn">Logout</a>
+
 
     <!-- Bootstrap and JavaScript libraries -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
