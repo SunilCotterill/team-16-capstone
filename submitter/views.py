@@ -124,10 +124,12 @@ def results(request, listing_id):
         listing_responses = listing_responses_temp
 
     name = Listing.objects.get(id=listing_id).name
+    status = Listing.objects.get(id=listing_id).is_closed
     context = {
         "listing_id": listing_id,
         "listing_responses": listing_responses,
         "listing_name": name,
+        "listing_status": status,
         "listing_questions_list": listing_questions_list,
         "listing_answers_list": listing_answers_list,
         "filtered_answers": filters
