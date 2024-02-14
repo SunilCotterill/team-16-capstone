@@ -323,7 +323,7 @@
 
     <!-- Main Content -->
     <div class="container content" style="display: flex; align-items: center;">
-        <h1 class="main-title" style="margin-left: min(8vw, 11%);">Listing: {{listing_name}}</h1>
+        <h1 class="main-title" style="margin-left: min(1.7vw, 11%);">Listing: {{listing_name}}</h1>
         <div style="margin-left: auto;"></div> <!-- Empty div to push the button to the right -->
         {% if not listing_status %}
         <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
