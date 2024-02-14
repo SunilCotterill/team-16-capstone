@@ -1,6 +1,46 @@
-<h1>Create a New Listing</h1>
-<form method="POST" action = "">
-    {% csrf_token %}
-    {{ form }}
-    <input type = "submit", value = "Create Listing">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApartMate</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CSS -->
+    <style>
+        .content {
+            margin-top: 4vh;
+            padding-left: 18vw;
+        }
+        .form-padding {
+            padding-left: 4vw;
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Add margin between stacked inputs */
+            text-align: left; /* Align text to the left */
+        }
+    </style>
+</head>
+<body>
+
+    {% block header %}
+        {% include 'submitter/base.html' %}
+    {% endblock %}
+
+    <div class="content">
+
+        <h1>Create a New Listing</h1>
+        <br>
+        <form method="POST" action = "" class = "form-padding">
+            {% csrf_token %}
+            {{ form }}
+            <input type = "submit", value = "Create Listing">
+        </form>
+
+    </div>
+
+
+</body>
+
+
+
