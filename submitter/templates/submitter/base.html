@@ -92,6 +92,28 @@
             background-color: #c3d5d5; /* Dark blue background color on hover */
             color: black; /* Change text color to white on hover */
         }
+
+        .change-password-btn {
+            position: fixed; /* Changed to fixed */
+            bottom: 13vh; /* Adjusted the position */
+            left: 1.2vw; /* Adjusted the position */
+            z-index: 1001;
+            background-color: #E6F1F1;
+            padding: 15px 30px;
+            border: 1px solid #908d92;
+            border-radius: 10px;
+            width: 13.5vw;
+            height: 10.5vh;
+            color: black;
+            text-align: center;
+            
+        }
+
+        /* Logout Button Hover Effect */
+        .change-password-btn:hover {
+            background-color: #c3d5d5; /* Dark blue background color on hover */
+            color: black; /* Change text color to white on hover */
+        }
     </style>
 </head>
 <body>
@@ -104,6 +126,9 @@
 
     <!-- Home Button -->
     <a href="{% url 'submitter:home' %}" class="home-btn"><i class="fas fa-home" style="color: #000000;"></i> &nbsp;Home</a>
+
+    <!-- Change Pasword Button -->
+    <a href="{% url 'submitter:change-password' %}" class="change-password-btn">Change Password</a>
 
     <!-- Logout Button -->
     <a href="{% url 'submitter:logout' %}" class="logout-btn"><i class="fas fa-sign-out" style="color: #000000;"></i>Logout</a>
