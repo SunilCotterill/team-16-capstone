@@ -20,14 +20,14 @@
         /* Custom CSS for centered square */
         .centered-square {
             width: 65vw; /* Adjust the width of the square */
-            height: 80vh; /* Adjust the height of the square */
+            height: fit-content; /* Adjust the height of the square */
             margin: 50px auto 20px auto; /* Center horizontally and move down with reduced space between title and text */
             text-align: center; /* Align text to the center */
             display: flex; /* Use flexbox for vertical centering */
             justify-content: center; /* Center horizontally */
             align-items: center; /* Center vertically */
             flex-direction: column; /* Stack elements vertically */
-            /* min-height: 20em; */
+            min-height: 80vh;
         }
 
         /* Custom CSS for stacked form inputs */
@@ -99,11 +99,20 @@
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" placeholder="Password">
                         </div>
-                        {{ form.errors }}
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {% for field, error_list in form.errors.items %}
+                                    {% for error in error_list %}
+                                        <p>{{ field }}: {{ error }}</p>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                         <input type="submit" class="btn btn-login" value="Login"> <!-- Add btn-login class -->
                     </form>
                     <div class="mt-3">
-                        <a href="{% url 'submitter:register' %}">Create Account</a>
+                        <a href="{% url 'submitter:register' %}">Create Account</a> <br>
+                        <a href="{% url 'submitter:password_reset' %}">Forgot Password?</a>
                     </div>
                 </div>
             </div>

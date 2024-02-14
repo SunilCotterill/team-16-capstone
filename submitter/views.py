@@ -2,9 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Question, Answer, Listing, Response, CustomUser, ListingResponse
 from django.template import loader
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -23,6 +23,22 @@ from django.contrib import messages
 from django.db.models import Max
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
+
+# for password reset
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+
+# password reset class override
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'submitter/password_reset.html'
+    email_template_name = 'submitter/password_reset_email.html'
+    subject_template_name = 'submitter/password_reset_subject.txt'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('submitter:home')
 
 # so we can reference the user model as User instead of CustomUser
 User = get_user_model()
@@ -57,6 +73,7 @@ def index(request):
 
 def submission(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
+    listing_name = listing.name
     listing_questions_list = listing.questions.all()
     question_ids = list(listing_questions_list.values_list("id", flat = True))
     listing_answers_list = Answer.objects.filter(question__in = question_ids)
@@ -76,6 +93,7 @@ def submission(request, listing_id):
 
     context = {
         "listing_id": listing_id,
+        "listing_name": listing_name,
         "listing_questions_list": listing_questions_list,
         "listing_answers_list": listing_answers_list,
         "previous_answers": previous_answers
@@ -348,3 +366,11 @@ def verify_email_confirm(request, uidb64, token):
 
 def verify_email_complete(request):
     return render(request, 'submitter/verify_email_complete.html')
+
+def change_password(request):
+   form = PasswordChangeForm(user=request.user, data=request.POST or None)
+   if form.is_valid():
+     form.save()
+     update_session_auth_hash(request, form.user)
+     return redirect('submitter:home')
+   return render(request, 'submitter/change_password.html', {'form': form})
