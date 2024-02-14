@@ -24,6 +24,10 @@ from django.db.models import Max
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
+from django.urls import reverse_lazy
+
+from django.urls import reverse_lazy
+
 # for password reset
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView
@@ -73,6 +77,8 @@ def index(request):
 
 def submission(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
+    if listing.is_closed:
+        return render(request, 'submitter/listing_closed.html')
     listing_name = listing.name
     listing_questions_list = listing.questions.all()
     question_ids = list(listing_questions_list.values_list("id", flat = True))
@@ -115,11 +121,9 @@ def results(request, listing_id):
             if key.startswith('question_'):
                 filters.append(int(request.POST.get(key)))
         
-    
     listing_responses_temp = ListingResponse.objects.filter(listing_id=listing_id).filter(responder__email_is_verified=True)
     user_ids = listing_responses_temp.values_list('responder', flat=True).distinct()
 
-    
     listing_questions_list = listing.questions.all()
     question_ids = list(listing_questions_list.values_list("id", flat = True))
     listing_answers_list = Answer.objects.filter(question__in = question_ids)
@@ -138,17 +142,29 @@ def results(request, listing_id):
         listing_responses = listing_responses_temp
 
     name = Listing.objects.get(id=listing_id).name
+    status = Listing.objects.get(id=listing_id).is_closed
     context = {
         "listing_id": listing_id,
         "listing_responses": listing_responses,
         "listing_name": name,
+        "listing_status": status,
         "listing_questions_list": listing_questions_list,
         "listing_answers_list": listing_answers_list,
         "filtered_answers": filters
     }
     return render(request, "submitter/results.html", context)
 
+def close_listing(request, listing_id):
+    listing = Listing.objects.get(pk = listing_id)
+    listing.is_closed = True
+    listing.save()
+    return redirect('submitter:home')
 
+def reopen_listing(request, listing_id):
+    listing = Listing.objects.get(pk = listing_id)
+    listing.is_closed = False
+    listing.save()
+    return redirect('submitter:home')
 
 def result(request, listing_id, email):
     listing = Listing.objects.get(id = listing_id)
@@ -198,8 +214,6 @@ def submit_from_redirect(request,user):
         for key in keys_to_del:
             del request.session[key]
             
-
-
 def submit(request, listing_id):
     if request.user.is_authenticated:
         # Get the CSRF token from the POST request

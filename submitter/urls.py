@@ -40,6 +40,8 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(template_name='submitter/password_reset_complete.html'),
          name='password_reset_complete'),
 
+    path('listing-closed/<int:listing_id>/complete', views.close_listing, name='close-listing'),
+    path('listing-reopened/<int:listing_id>/complete', views.reopen_listing, name='reopen-listing'),
 
     # Catch all for unknown links
     re_path(r'^.*$', RedirectView.as_view(url='/'), name='redirect-to-home'),
