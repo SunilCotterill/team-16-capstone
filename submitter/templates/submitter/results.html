@@ -130,6 +130,10 @@
   </div>
 </div>
 
+<form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
+  {% csrf_token %}
+  <button type="submit" title="Close Listing">Close Listing</button>
+</form>
 <a href="{% url 'submitter:home' %}">Home</a>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

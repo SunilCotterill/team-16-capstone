@@ -28,6 +28,8 @@ urlpatterns = [
     path('verify-email-confirm/<uidb64>/<token>/', views.verify_email_confirm, name='verify-email-confirm'),
     path('verify-email/complete/', views.verify_email_complete, name='verify-email-complete'),
 
+    path('listing-closed/<int:listing_id>/complete', views.close_listing, name='close-listing'),
+
     # Catch all for unknown links
     re_path(r'^.*$', RedirectView.as_view(url='/'), name='redirect-to-home'),
 ]

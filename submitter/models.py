@@ -65,7 +65,7 @@ class Listing(models.Model):
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length = 200)
     questions = models.ManyToManyField(Question)
-
+    is_closed = models.BooleanField(default=False)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
