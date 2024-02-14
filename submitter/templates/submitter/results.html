@@ -134,6 +134,10 @@
   {% csrf_token %}
   <button type="submit" title="Close Listing">Close Listing</button>
 </form>
+<form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
+  {% csrf_token %}
+  <button type="submit" title="Reopen Listing">Reopen Listing</button>
+</form>
 <a href="{% url 'submitter:home' %}">Home</a>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
