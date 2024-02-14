@@ -1,24 +1,97 @@
-<h1>Application Submission for {{email}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Submission</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-mbU/5F3Bw6I9nai8vyxa4oegf3MW1TKqHMz12j8bKNLfo+xXZFEfZCZ0R7ISlwP1" crossorigin="anonymous">
+    <style>
+        /* CSS for the title */
+        .title-container {
+            display: flex;
+            align-items: center; /* Align items vertically */
+        }
 
-<form disabled>
-    {% csrf_token %}
+        .title {
+            font-size: 43px; /* Adjust the font size */
+            font-weight: 500; /* Make the title bold */
+            margin-bottom: 1vh;
+            font-family: 'Poppins', sans-serif;
+            margin-left: 20vw;
+            margin-top: 8vh;
+        }
+        
+        /* CSS for the form and legends */
+        .form-container {
+            margin-left: 20vw; /* Adjust the left margin as needed */
+        }
 
-    {% for question in listing_questions_list %}
-      <legend><h2>{{ question.question_text }}</h2></legend>
+        .legend {
+            margin-top: 2vh;
+            margin-left: 0vw; /* Adjust the left margin as needed */
+            font-size: 18px; /* Adjust the font size for the question */
+            margin-bottom: 1vh;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
 
-        {% for answer in listing_answers_list %}
-            {% if answer.question_id == question.id%}
-                {% if answer.id in answered %}
-                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
-                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
-                {% else %}
-                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" disabled>
-                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+        /* CSS for the labels */
+        .label {
+            margin-left: 1vw; /* Adjust the left margin as needed */
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* CSS for the link */
+        .link {
+            margin-left: 20vw; /* Adjust the left margin as needed */
+            font-size: 18px; /* Adjust the font size */
+            margin-top: 10vh;
+            font-family: 'Poppins', sans-serif;
+            color: black;
+        }
+
+        body {
+            padding-bottom: 10vh; /* Adjust the margin as needed */
+        }
+    </style>
+</head>
+<body>
+    <!-- Title -->
+    <div class="title-container">
+        <!-- Display filled or regular heart icon based on shortlisted status -->
+        {% if listing_response.is_shortlisted %}
+            <h1 class="title">{{ first_name }} {{ last_name }} &nbsp; <i class="fas fa-heart" style="color: #20bdbc;"></i></h1>
+        {% else %}
+            <h1 class="title">{{ first_name }} {{ last_name }} &nbsp; <i class="far fa-heart" style="color: #20bdbc;"></i></h1>
+        {% endif %}
+        <!-- Link -->
+        <a href="{% url 'submitter:results' listing_id %}" class="link"><i class="fas fa-arrow-left"></i>  Return to: {{ listing_name }} </a>
+    </div>
+
+    <!-- Form -->
+    <form disabled class="form-container">
+        {% block header %}
+            {% include 'submitter/base.html' %}
+        {% endblock %}
+        {% csrf_token %}
+
+        {% for question in listing_questions_list %}
+            <legend class="legend">{{ question.question_text }}</legend>
+
+            {% for answer in listing_answers_list %}
+                {% if answer.question_id == question.id %}
+                    {% if answer.id in answered %}
+                        <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
+                        <label for="answer{{ forloop.counter }}" class="label">{{ answer.answer_text }}</label><br>
+                    {% else %}
+                        <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" disabled>
+                        <label for="answer{{ forloop.counter }}" class="label">{{ answer.answer_text }}</label><br>
+                    {% endif %}
                 {% endif %}
-
-            {% endif %}
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-</form>
-
-<a href="{% url 'submitter:results' listing_id%}">All Results</a>
+    </form>
+</body>
+</html>

@@ -169,7 +169,11 @@ def result(request, listing_id, email):
         "listing_questions_list": listing_questions_list,
         "listing_answers_list": listing_answers_list,
         "answered": answered,
-        "email": email
+        "email": email,
+        "first_name": responder.first_name,
+        "last_name": responder.last_name,
+        "listing_name": listing.name,
+        "listing_response": listingResponse
     }
     return render(request, "submitter/result.html", context)
 
@@ -318,7 +322,7 @@ def loginPage(request):
 def homePage(request):
     if request.user.is_authenticated and request.user.email_is_verified:
         listings = Listing.objects.all().filter(creator=request.user)
-        context={'listings':listings}
+        context={'listings':listings, 'first_name': request.user.first_name}
         return render(request, "submitter/homepage.html", context)
     elif request.user.is_authenticated:
         return redirect('submitter:verify-email')
