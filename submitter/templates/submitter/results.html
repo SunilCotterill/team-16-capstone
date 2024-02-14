@@ -1,136 +1,446 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applicants Page</title>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Your existing CSS styles */
         /* Style for the details element */
+        
+        body, h1, h2, h3, h4, h5, h6, p, a, button, label, summary {
+          font-family: 'Poppins', sans-serif !important;
+        }
+
+        
         details {
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin: 10px;
-      }
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            background-color: #E6F1F1;
+        }
 
-      /* Style for the summary element */
-      summary {
-        cursor: pointer;
-        font-weight: bold;
-      }
+        /* Style for the summary element */
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 2vw; /* Align to the right */
+            margin-right: 2vw; /* Move 8% of viewport width from the left */
+        }   
 
-      /* Hide the content by default */
-      details[open] > div {
-        display: block;
-      }
+        /* Hide the content by default */
+        details {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 0px 4vw 10px 8vw; /* Shorten from the right by setting margin-right to auto */
+            width: 25%; /* Default width */
+            max-width: 25%; /* Limit maximum width */
+        }
 
-      /* Style for the content within the details element */
-      details > div {
-        display: none;
-        margin-top: 10px;
-      }
+        /* Style for the content within the details element */
+        
 
-      .True {
-      background-color: cyan;
-    }
+        details[open] {
+            width: 25%; /* Adjust width as needed when expanded */
+            max-width: 80%; /* Limit maximum width when expanded */
+        }
+        .True {
+            background-color: cyan;
+        }
+
+        /* Adjust the margins to move content to the right */
+        .content {
+            margin-left: 8vw; /* Align to the right */
+            margin-right: auto; /* Align to the left */
+            padding-right: 40px; /* Add padding to the right */
+            padding-left: 40px; /* Add padding to the left */
+            padding-top: 0px;
+            max-width: 84vw; /* Limit maximum width */
+            position: relative;
+            margin-top: 50px;
+        }     
+
+        .container {
+            margin-left: 8vw; /* Move container 10% of viewport width from the left */
+            margin-right: 8vw; /* Move container 10% of viewport width from the right */
+        }
+
+        /* Move the title slightly to the right */
+        .main-title {
+            margin-left: 8vw; /* Adjust as needed */
+            font-weight: bold;
+        }
+
+        /* Move the submission URL text to the right */
+        .submission-url {
+          margin-top: 3vh;  
+          margin-bottom:3vh;
+          margin-left: 8vw; /* Move text 8% of viewport width from the left */
+          font-size: 18px;
+          
+        }
+
+        /* Move the filter button to the right */
+        .filter-btn {
+            margin-left: auto; /* Align to the right */
+            margin-right: 8vw; /* Move button 8% of viewport width from the left */
+            border-radius: 50px;
+        }
+
+        /* Move both nav items to the right */
+        .nav-item {
+            margin-right: 0vw; /* Adjust as needed */
+        }
+
+        /* Move Shortlist text to the right */
+        td.shortlist-header {
+            text-align: right; /* Align to the right */
+        }
+
+        .shortlist-form {
+            text-align: left;
+            margin-right: 2vw; /* Adjust margin as needed */
+        }
+
+        /* Adjust Shortlist tab positioning */
+        .shortlist-tab {
+            margin-left: 2vw; /* Align to the right */
+            margin-right: 0vw; /* Move tab 8% of viewport width from the left */
+        }
+
+        /* Adjust All Applicants tab positioning */
+        .all-applicants-tab {
+            margin-left: 7vw; /* Align to the right */
+        }
+
+        .all-applicants-tab a.active {
+            background-color: #525050; /* Set the background color to a shade of gray */
+        }
+
+        /* Adjust table positioning */
+        table {
+            margin-left: 10vw; /* Align table to the right */
+            margin-right: 10vw; /* Move table 8% of viewport width from the left */
+            margin-top: 3vh;
+            width: 100%; /* Adjust table width */
+        }
+
+        /* Adjust table header positioning */
+        th {
+            text-align: left; /* Align header content to the left */
+            font-size: 18px;
+            font-weight: 300;
+            padding-bottom: 3vh;
+        }
+
+        /* Adjust table cell positioning */
+        td {
+            text-align: left; /* Align cell content to the left */
+            padding-top: 5px; /* Add padding top */
+            padding-bottom: 5px; /* Add padding bottom */
+            padding: 20px 0px; /* Add padding to all sides of the cell */
+        }
+
+        /* Remove button styling */
+        button[type="submit"] {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .heart-icon {
+            font-size: 1.5vw; /* Set the size of the heart icon */
+            margin-right: 5px;
+            background-color: 00B3B3;
+        }
+        
+        /* Move the Response title to the left */
+        .response-header {
+            text-align: left; /* Align to the left */
+        }
+
+        .heart-icon-bigger {
+            font-size: 1.5vw; /* Set the size of the heart icon to 2% of the viewport width */
+            margin-right: 2.35vw;
+
+        }
+
+        .result-link {
+          display: inline-block;
+          padding: 8px 16px; /* Adjust padding as needed */
+          border: 1px solid #17A2B8; /* Add border */
+          border-radius: 5px; /* Add border radius for rounded corners */
+          text-decoration: none; /* Remove default underline */
+          color: #0B6868;
+        }
+
+        .result-link:hover {
+          background-color: #f0f0f0; /* Change background color on hover */
+        }
+
+        /* Adjust the font size of the tab navigation */
+        .all-applicants-tab a,
+        .shortlist-tab a {
+            font-size: 17px; /* Adjust the font size as needed */
+            font-weight: 400;
+            color: black;
+        }
+
+        .shortlist-tab a.active {
+            background-color: #ccc; /* Set the background color to a shade of gray */
+        }
+
+        /* Copy Button */
+        .copy-button {
+            display: inline-block;
+            padding: 0;
+            background: none;
+            border: 0px solid #17A2B8;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #0B6868;
+            cursor: pointer;
+            margin-left: 10px; /* Adjusted margin to align with the submission URL */
+            font-size: 19px;
+            transition: background-color 0.3s;
+            padding: 3px 7px;
+        }
+
+        .copy-button:hover {
+            background-color: #e6e5e5; /* Change background color on hover */
+        }
+
+
+        .copy-button:hover::before {
+            background-color: #fdfbfb;
+            content: "Copy to Clipboard"; /* Popup message */
+            display: block;
+            position: absolute;
+            top: -30px; /* Adjust the distance from the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f0ecec; /* Background color for the popup message */
+            color: #000000; /* Text color for the popup message */
+            padding: 5px 10px; /* Padding for the popup message */
+            border-radius: 5px; /* Border radius for the popup message */
+            font-size: 14px; /* Font size for the popup message */
+        }
+
+        /* Fading effect for dropdown content */
+        .filter-dropdown {
+            display: none; /* Initially hide the dropdown content */
+            position: absolute; /* Position the dropdown absolutely */
+            background-color: #fff; /* Set background color */
+            border: 1px solid #bdbbbb; /* Add a border for visibility */
+            padding: 10px;
+            padding-right: 4vw;
+            border-radius: 5px;
+            opacity: 0; /* Set initial opacity to 0 */
+            transition: opacity 0.3s ease-in-out; /* Apply transition effect for opacity */
+            margin-left: -0.8vw;
+            margin-top: 1.3vh;
+            min-height: 35vh;
+            max-height: 60vh; /* Set maximum height */
+            overflow-y: auto;
+            padding-top: 3vh;
+            padding-left: 2vw;
+            width: 80%
+        }
+
+        details[open] .filter-dropdown {
+            display: block; /* Display the dropdown content when details element is open */
+            opacity: 1; /* Set opacity to 1 when displayed */
+        }
+
+        /* Fade out effect for background content */
+        details[open] + * {
+            transition: opacity 0.3s ease-in-out; /* Apply transition effect for opacity */
+            opacity: 0.3; /* Reduce opacity of background content when dropdown is open */
+        }
+
+        /* Padding after each question in the filter dropdown */
+        .filter-dropdown legend {
+            font-size: 18px; /* Adjust font size as needed */
+            font-weight: 800;
+            counter-increment: legend-counter; /* Increment the counter for each legend */
+            padding-top: 1.5vh; /* Add padding after each question */
+            padding-bottom: 0.1vh;
+            margin-right: 5px;
+        }
+
+        
+        .filter-dropdown label {
+            font-size: 13px; /* Adjust font size as needed */
+        }
+
+        .filter-dropdown summary {
+            font-size: 18px; /* Adjust the font size as needed */
+        }
+
+        .filter-dropdown legend h3 {
+            font-size: 50px; /* Adjust the font size as needed */
+            font-weight: 800;
+            margin-top: 0; /* Remove default margin for h3 */
+            margin-bottom: 5px; /* Add some bottom margin for spacing */
+        }
+
+        /* Increase font size for filter button and clear filter button */
+        .filter-btn {
+            font-size: 15px;
+            margin-top: 2vh;
+            margin-bottom: 1vh;
+            background-color: #1FBCBC ;
+            color: white;
+        }
+
+        .clear-filter-btn {
+            font-size: 15px;
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            color: #17A2B8;
+            background-color: #FFFFFF;
+            border-color: #17A2B8;
+        }
+
+        table tr {
+            border-bottom: 0.3px solid #e5e5e5;
+        }
+
+
+
     </style>
 </head>
 <body>
-<h1>Submissions for {{listing_name}}</h1>
-<p>A user can submit their responses here: 127.0.0.1:8000/apartmate/{{listing_id}}/submission</p>
+    <!-- Call the base template for logo, vertical rectangle, and logout button -->
+    {% block header %}
+        {% include 'submitter/base.html' %}
+    {% endblock %}
 
-<details>
-  <summary>Open Filters</summary>
-  <p>Leaving a field blank accepts any response for that question</p>
-  <form action="{% url 'submitter:results' listing_id%}" method="post">
-    {% csrf_token %}
+    <!-- Main Content -->
+    <div class="container content">
+        <h1 class="main-title">Listing: {{listing_name}}</h1>
+        <p class="submission-url">Shareable Link: 127.0.0.1:8000/apartmate/{{listing_id}}/submission
+            <!-- Copy Button -->
+            <button class="copy-button" onclick="copyToClipboard()"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
+        </p>
 
-    {% for question in listing_questions_list %}
-      <legend><h3>{{ question.question_text }}</h3></legend>
+        <!-- Filters -->
+        <details>
+            <summary>Apply Filters</summary>
+            <div class="filter-dropdown">
+                <!-- Your filter content here -->
+                <p style="font-size: 17px;">Select the answers that you wish to be included in application submissions. If a question is left empty, all options will be considered viable. </p>
+                <form action="{% url 'submitter:results' listing_id%}" method="post">
+                    {% csrf_token %}
 
-        {% for answer in listing_answers_list %}
-            {% if answer.question_id == question.id%}
-                {% if answer.id in filtered_answers %}
-                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
-                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
-                {% else %}
-                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" >
-                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
-                {% endif %}
+                    {% for question in listing_questions_list %}
+                        <legend><h3 style="font-size: 14px;">{{ question.question_text }}</h3></legend>
 
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
-    <input type="submit" value="Filter">
-  </form>
-  <form action="{% url 'submitter:results' listing_id%}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Clear Filters">
-  </form>
-</details>
+                        {% for answer in listing_answers_list %}
+                            {% if answer.question_id == question.id %}
+                                {% if answer.id in filtered_answers %}
+                                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
+                                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                                {% else %}
+                                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" >
+                                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                                {% endif %}
 
-<div class="container" style = "margin-left: 0">
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    <input type="submit" value="Apply Filters" class="filter-btn">
+                </form>
+                <form action="{% url 'submitter:results' listing_id%}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Clear Filters" class="clear-filter-btn">
+                </form>
+            </div>
+        </details>
 
-    <li class="nav-item">
-      <a class="nav-link active" id="all-applicants-tab" data-toggle="tab" href="#all-applicants" role="tab" aria-controls="all-applicants" aria-selected="true">All Applicants</a>
-    </li>
+        <!-- Add some space -->
+        <div style="height: 20px;"></div>
 
-    <li class="nav-item">
-      <a class="nav-link" id="shortlist-tab" data-toggle="tab" href="#shortlist" role="tab" aria-controls="shortlist" aria-selected="false">Shortlist</a>
-    </li>
+        <div class="container">
+            <!-- Tab navigation -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item all-applicants-tab"> <!-- Modified -->
+                    <a class="nav-link active" id="all-applicants-tab" data-toggle="tab" href="#all-applicants" role="tab" aria-controls="all-applicants" aria-selected="true">All Applicants</a>
+                </li>
 
-  </ul>
-  <div class="tab-content" id="myTabContent">
+                <li class="nav-item shortlist-tab"> <!-- Modified -->
+                  <a class="nav-link" id="shortlist-tab" data-toggle="tab" href="#shortlist" role="tab" aria-controls="shortlist" aria-selected="false">Shortlist &nbsp; <i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></a>
+                </li>
+            </ul>
+            <!-- Tab content -->
+            <div class="tab-content" id="myTabContent">
 
-    <div class="tab-pane fade show active" id="all-applicants" role="tabpanel" aria-labelledby="all-applicants-tab">
-        <table>
-          <tr>
-            <th>Email</th>
-            <th>Response</th>
-            <th>Shortlisted</th>
-          </tr>
-          {% for listing_response in listing_responses %}
-          <tr>
-            <td>{{listing_response.responder.email }}</td>
-            <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}">Click here</a></td>
-            <td>
-              <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id%}" method="get">
-                <button type="submit" class="{{listing_response.is_shortlisted}}">Shortlist</button>
-               </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
+                <!-- All Applicants Tab -->
+                <div class="tab-pane fade show active" id="all-applicants" role="tabpanel" aria-labelledby="all-applicants-tab">
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Applicant Name</th>
+                            <th>Email</th>
+                            <th class="response-header">Submission Results</th> <!-- Modified -->
+                        </tr>
+                        {% for listing_response in listing_responses %}
+                            <tr>
+                                <td>
+                                    <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get" class="shortlist-form">
+                                        {% if listing_response.is_shortlisted %}
+                                            <button type="submit" class="True"><i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></button>
+                                        {% else %}
+                                            <button type="submit" class="False"><i class="far fa-heart heart-icon" style="color:#00B3B3;"></i></i></button>
+                                        {% endif %}
+                                    </form>
+                                </td>
+                                <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
+                                <td>{{ listing_response.responder.email }}</td>
+                                <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                <!-- Shortlist Tab -->
+                <div class="tab-pane fade" id="shortlist" role="tabpanel" aria-labelledby="shortlist-tab">
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Applicant Name</th>
+                            <th>Email</th>
+                            <th class="response-header">Submission Results</th> <!-- Modified -->
+                        </tr>
+                        {% for listing_response in listing_responses %}
+                            {% if listing_response.is_shortlisted %}
+                                <tr>
+                                    <td>
+                                        <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get">
+                                            <button type="submit" class="{{ listing_response.is_shortlisted }}"><i class="fa-solid fa-heart heart-icon-bigger" style="color:#00B3B3;"></i></i></i></button>
+                                        </form>
+                                    </td>
+                                    <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
+                                    <td>{{ listing_response.responder.email }}</td>
+                                    <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="tab-pane fade" id="shortlist" role="tabpanel" aria-labelledby="shortlist-tab">
-        <table>
-          <tr>
-            <th>Email</th>
-            <th>Response</th>
-            <th>Shortlisted</th>
-          </tr>
-          {% for listing_response in listing_responses %}
-          <tr>
-            {% if listing_response.is_shortlisted %}
-                <td>{{listing_response.responder.email }}</td>
-                <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}">Click here</a></td>
-                <td>
-                  <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id%}" method="get">
-                    <button type="submit" class="{{listing_response.is_shortlisted}}">Shortlist</button>
-                   </form>
-                </td>
-              </tr>
-            {% endif %}
-          {% endfor %}
-        </table>
-    </div>
-  </div>
-</div>
-
-{% if not listing_status %}
+    <!-- Logout Button -->
+    {% if not listing_status %}
     <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
       {% csrf_token %}
       <button type="submit" title="Close Listing">Close Listing</button>
@@ -141,10 +451,22 @@
       <button type="submit" title="Reopen Listing">Reopen Listing</button>
     </form>
 {% endif %}
-<a href="{% url 'submitter:home' %}">Home</a>
+<a href="{% url 'submitter:logout' %}" class="logout-btn">Logout</a>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap and JavaScript libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function copyToClipboard() {
+            var copyText = document.createElement("input");
+            copyText.setAttribute("value", "127.0.0.1:8000/apartmate/{{listing_id}}/submission");
+            document.body.appendChild(copyText);
+            copyText.select();
+            document.execCommand("copy");
+            document.body.removeChild(copyText);
+            alert("Copied the link: " + copyText.value);
+        }
+    </script>
 </body>
 </html>
