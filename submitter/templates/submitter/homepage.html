@@ -145,8 +145,28 @@
             text-align: center;
         }
 
+        .change-password-btn {
+            position: fixed; /* Changed to fixed */
+            bottom: 20vh; /* Adjusted the position */
+            left: 1.2vw; /* Adjusted the position */
+            z-index: 1001;
+            background-color: #E6F1F1;
+            padding: 15px 30px;
+            border: 1px solid #908d92;
+            border-radius: 10px;
+            width: 9vw;
+            height: 3vh;
+            text-align: center;
+        }
+
         /* Logout Button Hover Effect */
         .logout-btn:hover {
+            background-color: #c3d5d5; /* Dark blue background color on hover */
+            color: black; /* Change text color to white on hover */
+        }
+
+        /* Logout Button Hover Effect */
+        .change-password-btn:hover {
             background-color: #c3d5d5; /* Dark blue background color on hover */
             color: black; /* Change text color to white on hover */
         }
@@ -208,8 +228,10 @@
             </div>
         </div>
     </div>
-    <a href="{% url 'submitter:change-password' %}">Change Password</a> <br>
+    <!-- Change Pasword Button -->
+    <a href="{% url 'submitter:change-password' %}" class="change-password-btn">Change Password</a>
     <!-- Logout Button -->
     <a href="{% url 'submitter:logout' %}" class="logout-btn">Logout</a>
 </body>
+    
 </html>
