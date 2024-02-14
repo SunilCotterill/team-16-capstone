@@ -36,14 +36,13 @@
         details {
             border: 1px solid #ddd;
             padding: 10px;
-            margin: 0px 4vw 10px 8vw; /* Shorten from the right by setting margin-right to auto */
+            margin: 0px 4vw 10px 19.5vw; /* Shorten from the right by setting margin-right to auto */
             width: 25%; /* Default width */
             max-width: 25%; /* Limit maximum width */
         }
 
         /* Style for the content within the details element */
         
-
         details[open] {
             width: 25%; /* Adjust width as needed when expanded */
             max-width: 80%; /* Limit maximum width when expanded */
@@ -323,11 +322,25 @@
     {% endblock %}
 
     <!-- Main Content -->
-    <div class="container content">
-        <h1 class="main-title">Listing: {{listing_name}}</h1>
-        <p class="submission-url">Shareable Link: 127.0.0.1:8000/apartmate/{{listing_id}}/submission
+    <div class="container content" style="display: flex; align-items: center;">
+        <h1 class="main-title" style="margin-left: min(1.7vw, 11%);">Listing: {{listing_name}}</h1>
+        <div style="margin-left: auto;"></div> <!-- Empty div to push the button to the right -->
+        {% if not listing_status %}
+        <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
+            {% csrf_token %}
+            <button type="submit" style="border: 2px solid #1FBCBC; border-radius: 5px; margin-right: 30vw; margin-top: -2vh; padding: 5px; background-color: transparent; color: #0c6262; font-weight: bold; cursor: pointer;" title="Close Listing">Close Listing</button>
+        </form>
+        {% else %}
+        <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
+            {% csrf_token %}
+            <button type="submit" style="border: 2px solid #1FBCBC; border-radius: 5px; margin-right: 30vw; margin-top: -2vh; padding: 5px; background-color: transparent; color: #0c6262; font-weight: bold; cursor: pointer;" title="Reopen Listing">Reopen Listing</button>
+        </form>
+        {% endif %}
+        </div>
+        <!-- Shareable Link Section -->
+        <p class="submission-url" style="margin-top: 20px; margin-left: 19.5vw">Shareable Link: 127.0.0.1:8000/apartmate/{{listing_id}}/submission
             <!-- Copy Button -->
-            <button class="copy-button" onclick="copyToClipboard()"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
+            <button class="copy-button" onclick="copyToClipboard()" style="margin-left: 10px;"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
         </p>
 
         <!-- Filters -->
@@ -436,18 +449,8 @@
                 </div>
             </div>
         </div>
-        {% if not listing_status %}
-        <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
-            {% csrf_token %}
-            <button type="submit" title="Close Listing">Close Listing</button>
-        </form>
-        {% else %}
-        <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
-            {% csrf_token %}
-            <button type="submit" title="Reopen Listing">Reopen Listing</button>
-        </form>
-        {% endif %}
     </div>
+
 
 
 
