@@ -165,8 +165,6 @@
             color: black; /* Change text color to white on hover */
         }
 
-
-
         /* Plus Icon */
         .create-listing i {
             color: #1FBCBC; /* Change color of the icon */
@@ -196,7 +194,8 @@
 
                 <div class="container">
                     {% if listings %}
-                    <h3 class="listing-title">Your Listings:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; New Listing:</h3> <!-- Title for Your Listings -->
+                    <h3 class="listing-title">Your Listings:</h3> <!-- Title for Your Listings -->
+                    <h3 class="listing-title" style="margin-top:-4vh; margin-left:45.9vw">New Listing: </h3> <!-- Title for Your Listings -->
                     <span class="half-break"></span><br>
                     <!-- Listings Container -->
                     <div class="listings-container">
@@ -212,14 +211,23 @@
                             {% endfor %}
                         </div>
                     </div>
-                    {% endif %}
-                    <!-- New Listing Container -->
-                    <a href="{% url 'submitter:new_listing' %}" class="new-listing-container" style="text-decoration: none;">
+                    <a href="{% url 'submitter:new_listing' %}" class="new-listing-container" style="text-decoration: none; margin-bottom: 20vh; margin-left: 46vw;">
                         <div class="create-listing">
                             Create New Listing   <!-- Move the text before the icon -->
-                            &nbsp;  <i class="fas fa-plus-square" style="margin-left: 5px; vertical-align: -5px;"></i> <!-- Add vertical-align property -->
+                            &nbsp;  <i class="fas fa-plus-square" style="margin-left: 0vw; margin-top: 0vh; vertical-align: -5px;"></i> <!-- Add vertical-align property -->
                         </div>
                     </a>
+                    {% else %}
+                    <!-- If there are no listings, adjust the position of the "Create New Listing" button -->
+                    <h3 class="listing-title">Your Listings:</h3> <!-- Title for Your Listings -->
+                    <h3 class="listing-title" style="margin-top:-4vh; margin-left:45.9vw">New Listing: </h3> <!-- Title for Your Listings -->
+                    <a href="{% url 'submitter:new_listing' %}" class="new-listing-container" style="text-decoration: none; margin-top: 5vh; margin-left: 46vw;">
+                        <div class="create-listing">
+                            Create New Listing   <!-- Move the text before the icon -->
+                            &nbsp;  <i class="fas fa-plus-square" style="margin-left: 0vw; margin-top: 0vh; vertical-align: -5px;"></i> <!-- Add vertical-align property -->
+                        </div>
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -228,5 +236,4 @@
     <!-- Logout Button -->
     <a href="{% url 'submitter:logout' %}" class="logout-btn">Logout</a>
 </body>
-    
 </html>
