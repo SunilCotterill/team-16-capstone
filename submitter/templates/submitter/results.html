@@ -338,7 +338,11 @@
         {% endif %}
         </div>
         <!-- Shareable Link Section -->
-        <p class="submission-url" style="margin-top: 20px; margin-left: 19.5vw">Shareable Link: 127.0.0.1:8000/apartmate/{{listing_id}}/submission
+        {% if protocol %}
+        <p class="submission-url" style="margin-top: 20px; margin-left: 19.5vw">Shareable Link: {{ protocol }}://{{ domain }}/apartmate/{{listing_id}}/submission
+        {% else %}
+        <p class="submission-url" style="margin-top: 20px; margin-left: 19.5vw">Shareable Link: {{ domain }}/apartmate/{{listing_id}}/submission
+        {% endif %}
             <!-- Copy Button -->
             <button class="copy-button" onclick="copyToClipboard()" style="margin-left: 10px;"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
         </p>
@@ -461,7 +465,7 @@
     <script>
         function copyToClipboard() {
             var copyText = document.createElement("input");
-            copyText.setAttribute("value", "127.0.0.1:8000/apartmate/{{listing_id}}/submission");
+            copyText.setAttribute("value", location.protocol + '//' + location.host + "/apartmate/{{listing_id}}/submission");
             document.body.appendChild(copyText);
             copyText.select();
             document.execCommand("copy");

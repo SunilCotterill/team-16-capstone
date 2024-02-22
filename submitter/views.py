@@ -143,6 +143,7 @@ def results(request, listing_id):
 
     name = Listing.objects.get(id=listing_id).name
     status = Listing.objects.get(id=listing_id).is_closed
+    current_site = get_current_site(request)
     context = {
         "listing_id": listing_id,
         "listing_responses": listing_responses,
@@ -150,7 +151,8 @@ def results(request, listing_id):
         "listing_status": status,
         "listing_questions_list": listing_questions_list,
         "listing_answers_list": listing_answers_list,
-        "filtered_answers": filters
+        "filtered_answers": filters,
+        'domain': current_site.domain
     }
     return render(request, "submitter/results.html", context)
 
