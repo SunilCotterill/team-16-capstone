@@ -338,7 +338,7 @@
         {% endif %}
         </div>
         <!-- Shareable Link Section -->
-        <p class="submission-url" style="margin-top: 20px; margin-left: 19.5vw">Shareable Link: {{ protocol }}://{{ domain }}/apartmate/{{listing_id}}/submission
+        <p class="submission-url" style="margin-top: 20px; margin-left: 19.5vw">Shareable Link: {% if request.is_secure %}https{% else %}http{% endif %}://{{ domain }}/apartmate/{{listing_id}}/submission
             <!-- Copy Button -->
             <button class="copy-button" onclick="copyToClipboard()" style="margin-left: 10px;"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
         </p>
