@@ -160,12 +160,14 @@ def close_listing(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
     listing.is_closed = True
     listing.save()
+    return results(request, listing_id)
     return redirect('submitter:home')
 
 def reopen_listing(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
     listing.is_closed = False
     listing.save()
+    return results(request, listing_id)
     return redirect('submitter:home')
 
 def result(request, listing_id, email):
@@ -377,7 +379,7 @@ def verify_email_confirm(request, uidb64, token):
         user.save()
         return redirect('submitter:verify-email-complete')   
     else:
-        messages.warning(request, 'The link is invalid.')
+        messages.warning(request, 'The link is invalid.'+' check_token: '+str(account_activation_token.check_token(user, token)) +' Token is: ' +str(token) + 'User is:'+str(user))
     return render(request, 'submitter/verify_email_confirm.html')
 
 def verify_email_complete(request):
