@@ -1,6 +1,17 @@
-<div class="alert alert-success">
-    <p>Verify Email</p>
-</div>
+<head>
+    <title>Email Verification</title>
+</head>
+<body>
+    <h2>Verify Email</h2>
+    <p>Hi {{ user.first_name }},</p>
+    <p>You created an account on ApartMate and need to verify your email. Please click the button below to verify your email and you will be redicted to the home page.</p>
+    <form action="{% url 'submitter:verify-email-confirm' uidb64=uidb64 token=token %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="uidb64" value="{{ uidb64 }}">
+        <input type="hidden" name="token" value="{{ token }}">
+        <button type="submit">Verify Email</button>
+    </form>
+    <a href="{% url 'submitter:logout' %}">Home</a>
+</body>
 
-<a href="{% url 'submitter:home' %}">Home</a>
 
