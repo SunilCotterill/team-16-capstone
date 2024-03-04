@@ -27,16 +27,16 @@ urlpatterns = [
 
     path('verify-email/', views.verify_email, name='verify-email'),
     path('verify-email/done/', views.verify_email_done, name='verify-email-done'),
-    path('verify-email-confirm/<uidb64>/<token>/', views.verify_email_confirm, name='verify-email-confirm'),
-    path('verify-email/complete/', views.verify_email_complete, name='verify-email-complete'),
+    path('verify-email-confirm/', views.verify_email_confirm, name='verify-email-confirm'),
+    path('verify-email/complete/<uidb64>/<token>/', views.verify_email_complete, name='verify-email-complete'),
 
     path('change-password', views.change_password, name='change-password'),
 
     path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
-    path('password-reset-confirm/<uidb64>/<token>/',
+    path('password-reset-confirm/<uidb64>/<token>',
          auth_views.PasswordResetConfirmView.as_view(template_name='submitter/password_reset_confirm.html', success_url=reverse_lazy('submitter:password_reset_complete')),
          name='password_reset_confirm'),
-    path('password-reset-complete/',
+    path('password-reset-complete',
          auth_views.PasswordResetCompleteView.as_view(template_name='submitter/password_reset_complete.html'),
          name='password_reset_complete'),
 

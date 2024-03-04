@@ -69,7 +69,7 @@ def verify_email(request):
             email.send()
             return redirect('submitter:verify-email-done')
         else:
-            return redirect('signup')
+            return redirect('submitter:signup')
     return render(request, 'submitter/verify_email.html')
 
 def index(request):
@@ -366,21 +366,19 @@ def update_shortlist(request, listing_id, listing_response_id):
 def verify_email_done(request):
     return render(request, 'submitter/verify_email_done.html')
 
-def verify_email_confirm(request, uidb64, token):
+def verify_email_confirm(request):
+       return render(request, 'submitter/verify_email_confirm.html')
+
+def verify_email_complete(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
-        user.email_is_verified = True
-        user.save()
-        return redirect('submitter:verify-email-complete')   
+        return render(request, 'submitter/verify_email_complete.html')   
     else:
         messages.warning(request, 'The link is invalid.')
-    return render(request, 'submitter/verify_email_confirm.html')
-
-def verify_email_complete(request):
     return render(request, 'submitter/verify_email_complete.html')
 
 def change_password(request):
