@@ -62,6 +62,34 @@
             width: 17vw; /* Adjust width as needed when expanded */
             max-width: 80%; /* Limit maximum width when expanded */
         }
+
+        @media (min-width: 1440px) { 
+            details {
+                border: 1px solid #ddd;
+                padding: 10px;
+                margin-left: 1vw; /* Shorten from the right by setting margin-right to auto */
+                width: 17vw; /* Default width */
+                max-width: 25%; /* Limit maximum width */
+                font-size: 1.1vw ;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                margin-bottom: 2vh;
+            }
+        }
+
+        @media (max-width: 1440px) { 
+            details {
+                border: 1px solid #ddd;
+                padding: 10px;
+                margin-left: 8vw; /* Shorten from the right by setting margin-right to auto */
+                width: 17vw; /* Default width */
+                max-width: 25%; /* Limit maximum width */
+                font-size: 1.1vw ;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                margin-bottom: 2vh;
+            }
+        }
+
+
         .True {
             background-color: cyan;
         }
@@ -116,6 +144,26 @@
           margin-left: 1vw; /* Move text 8% of viewport width from the left */
           font-size: 1.3vw;
           
+        }
+
+
+        @media (min-width: 1440px) { 
+            .submission-url {
+                margin-top: 3vh;  
+                margin-bottom:3vh;
+                margin-left: 1vw; /* Move text 8% of viewport width from the left */
+                font-size: 1.3vw;
+            }
+        }
+
+
+        @media (max-width: 1440px) { 
+            .submission-url {
+                margin-top: 3vh;  
+                margin-bottom:3vh;
+                margin-left: 8vw; /* Move text 8% of viewport width from the left */
+                font-size: 1.3vw;
+            }
         }
 
         /* Move the filter button to the right */
