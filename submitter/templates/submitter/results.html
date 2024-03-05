@@ -46,7 +46,7 @@
         details {
             border: 1px solid #ddd;
             padding: 10px;
-            margin: 0px 4vw 10px 19.5vw; /* Shorten from the right by setting margin-right to auto */
+            margin-left: 8vw; /* Shorten from the right by setting margin-right to auto */
             width: 25%; /* Default width */
             max-width: 25%; /* Limit maximum width */
         }
@@ -74,14 +74,20 @@
         }     
 
         .container {
-            margin-left: 8vw; /* Move container 10% of viewport width from the left */
-            margin-right: 8vw; /* Move container 10% of viewport width from the right */
+            display: flex;
+            flex-direction: column; /* Stack children vertically. Use 'row' for horizontal stacking */
+            align-items: left; /* Center-align items horizontally */
+            justify-content: flex-start; /* Align items to the start of the container vertically */
+            margin-left: 0vw; /* Keep your existing left margin */
+            margin-right: 8vw; /* Keep your existing right margin */
+            width: auto; /* Adjust the width as needed */
         }
 
         /* Move the title slightly to the right */
         .main-title {
-            margin-left: 8vw; /* Adjust as needed */
             font-weight: bold;
+            margin-left: 0vw;
+            font-size: 3vw;
         }
 
         /* Move the submission URL text to the right */
@@ -89,14 +95,14 @@
           margin-top: 3vh;  
           margin-bottom:3vh;
           margin-left: 8vw; /* Move text 8% of viewport width from the left */
-          font-size: 18px;
+          font-size: 1.3vw;
           
         }
 
         /* Move the filter button to the right */
         .filter-btn {
             margin-left: auto; /* Align to the right */
-            margin-right: 8vw; /* Move button 8% of viewport width from the left */
+            margin-right: 0vw; /* Move button 8% of viewport width from the left */
             border-radius: 50px;
         }
 
@@ -132,7 +138,7 @@
 
         /* Adjust table positioning */
         table {
-            margin-left: 10vw; /* Align table to the right */
+            margin-left: 8vw; /* Align table to the right */
             margin-right: 10vw; /* Move table 8% of viewport width from the left */
             margin-top: 3vh;
             width: 100%; /* Adjust table width */
@@ -141,7 +147,7 @@
         /* Adjust table header positioning */
         th {
             text-align: left; /* Align header content to the left */
-            font-size: 18px;
+            font-size: 1.2vw;
             font-weight: 300;
             padding-bottom: 3vh;
         }
@@ -187,16 +193,18 @@
           border-radius: 5px; /* Add border radius for rounded corners */
           text-decoration: none; /* Remove default underline */
           color: #0B6868;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .result-link:hover {
           background-color: #f0f0f0; /* Change background color on hover */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         /* Adjust the font size of the tab navigation */
         .all-applicants-tab a,
         .shortlist-tab a {
-            font-size: 17px; /* Adjust the font size as needed */
+            font-size: 1.2vw; /* Adjust the font size as needed */
             font-weight: 400;
             color: black;
         }
@@ -216,7 +224,7 @@
             color: #0B6868;
             cursor: pointer;
             margin-left: 10px; /* Adjusted margin to align with the submission URL */
-            font-size: 19px;
+            font-size: 1.3vw;
             transition: background-color 0.3s;
             padding: 3px 7px;
         }
@@ -238,7 +246,7 @@
             color: #000000; /* Text color for the popup message */
             padding: 5px 10px; /* Padding for the popup message */
             border-radius: 5px; /* Border radius for the popup message */
-            font-size: 14px; /* Font size for the popup message */
+            font-size: 1vw; /* Font size for the popup message */
         }
 
         /* Fading effect for dropdown content */
@@ -252,14 +260,15 @@
             border-radius: 5px;
             opacity: 0; /* Set initial opacity to 0 */
             transition: opacity 0.3s ease-in-out; /* Apply transition effect for opacity */
-            margin-left: -0.8vw;
+            margin-left: 0vw;
             margin-top: 1.3vh;
             min-height: 35vh;
             max-height: 60vh; /* Set maximum height */
             overflow-y: auto;
             padding-top: 3vh;
             padding-left: 2vw;
-            width: 80%
+            width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         details[open] .filter-dropdown {
@@ -275,28 +284,30 @@
 
         /* Padding after each question in the filter dropdown */
         .filter-dropdown legend {
-            font-size: 18px; /* Adjust font size as needed */
+            font-size: 1.2vw; /* Adjust font size as needed */
             font-weight: 800;
             counter-increment: legend-counter; /* Increment the counter for each legend */
-            padding-top: 1.5vh; /* Add padding after each question */
+            padding-top: 1vh; /* Add padding after each question */
             padding-bottom: 0.1vh;
+            padding-left: 0.5vw;
             margin-right: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        
         .filter-dropdown label {
-            font-size: 13px; /* Adjust font size as needed */
+            font-size: 1vw; /* Adjust font size as needed */
         }
 
         .filter-dropdown summary {
-            font-size: 18px; /* Adjust the font size as needed */
+            font-size: 1.2vw; /* Adjust the font size as needed */
         }
 
         .filter-dropdown legend h3 {
-            font-size: 50px; /* Adjust the font size as needed */
+            font-size: 1.2vw; /* Adjust the font size as needed */
             font-weight: 800;
             margin-top: 0; /* Remove default margin for h3 */
             margin-bottom: 5px; /* Add some bottom margin for spacing */
+            
         }
 
         /* Increase font size for filter button and clear filter button */
@@ -321,6 +332,26 @@
             border-bottom: 0.3px solid #e5e5e5;
         }
 
+        .title-and-action-container {
+            display: flex;
+            flex-direction: row; /* Align items in a row */
+            align-items: left; /* Center items vertically */
+            justify-content: space-between; /* Space between title and button */
+            width: 80%; /* Full width of its parent */
+            margin-bottom: 0vh; /* Optional: adds some space below the container */
+            margin-left: 2vw;
+        }
+
+        button[type="submit"] {
+            border: 2px;
+            border-radius: 5px;
+            padding: 5px 10px; /* Adjust padding as needed */
+            background-color: transparent;
+            color: #0c6262;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
 
 
     </style>
@@ -332,23 +363,23 @@
     {% endblock %}
 
     <!-- Main Content -->
-    <div class="container content" style="display: flex; align-items: center;">
-        <h1 class="main-title" style="margin-left: min(1.7vw, 11%);">Listing: {{listing_name}}</h1>
-        <div style="margin-left: auto;"></div> <!-- Empty div to push the button to the right -->
-        {% if not listing_status %}
-        <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
-            {% csrf_token %}
-            <button type="submit" style="border: 2px solid #1FBCBC; border-radius: 5px; margin-right: 30vw; margin-top: -2vh; padding: 5px; background-color: transparent; color: #0c6262; font-weight: bold; cursor: pointer;" title="Close Listing">Close Listing</button>
-        </form>
-        {% else %}
-        <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
-            {% csrf_token %}
-            <button type="submit" style="border: 2px solid #1FBCBC; border-radius: 5px; margin-right: 30vw; margin-top: -2vh; padding: 5px; background-color: transparent; color: #0c6262; font-weight: bold; cursor: pointer;" title="Reopen Listing">Reopen Listing</button>
-        </form>
-        {% endif %}
+    <div class="container content">
+        <div class="title-and-action-container">
+            <h1 class="main-title">Listing: {{listing_name}}</h1>
+            {% if not listing_status %}
+            <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
+                {% csrf_token %}
+                <button type="submit" style="color: rgb(12, 135, 39); background-color: rgb(255, 255, 255); border: 2px solid rgb(12, 135, 39); padding: 5px 10px; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Close Listing">Listing Open</button>
+            </form>
+            {% else %}
+            <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
+                {% csrf_token %}
+                <button type="submit" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); border: 2px solid rgb(234, 15, 15); padding: 5px 10px; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Reopen Listing">Listing Closed</button>
+            </form>
+            {% endif %}
         </div>
         <!-- Shareable Link Section -->
-        <p class="submission-url" style="margin-top: 20px; margin-left: 19.5vw">Shareable Link: {% if request.is_secure %}https{% else %}http{% endif %}://{{ domain }}/apartmate/{{listing_id}}/submission
+        <p class="submission-url" style="margin-top: 20px">Shareable Link: {% if request.is_secure %}https{% else %}http{% endif %}://{{ domain }}/apartmate/{{listing_id}}/submission
             <!-- Copy Button -->
             <button class="copy-button" onclick="copyToClipboard()" style="margin-left: 10px;"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
         </p>
