@@ -337,11 +337,13 @@
             padding-left: 2vw;
             width: 80%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            
         }
 
         details[open] .filter-dropdown {
             display: block; /* Display the dropdown content when details element is open */
             opacity: 1; /* Set opacity to 1 when displayed */
+     
         }
 
         /* Fade out effect for background content */
@@ -380,7 +382,7 @@
 
         /* Increase font size for filter button and clear filter button */
         .filter-btn {
-            font-size: 15px;
+            font-size: 0.9vw;
             margin-top: 2vh;
             margin-bottom: 1vh;
             padding-left: 1vw;
@@ -391,7 +393,7 @@
         }
 
         .clear-filter-btn {
-            font-size: 15px;
+            font-size: 0.9vw;
             margin-top: 1vh;
             margin-bottom: 1vh;
             color: #000000;
@@ -468,7 +470,7 @@
                     {% csrf_token %}
 
                     {% for question in listing_questions_list %}
-                        <legend><h3 style="font-size: 14px;">{{ question.question_text }}</h3></legend>
+                        <legend><h3 style="font-size: 1vw">{{ question.question_text }}</h3></legend>
 
                         {% for answer in listing_answers_list %}
                             {% if answer.question_id == question.id %}
