@@ -59,7 +59,7 @@ def verify_email(request):
                 'request': request,
                 'user': user,
                 'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'uidb64':urlsafe_base64_encode(force_bytes(user.pk)),
                 'token':account_activation_token.make_token(user),
             })
             email = EmailMessage(
@@ -69,7 +69,7 @@ def verify_email(request):
             email.send()
             return redirect('submitter:verify-email-done')
         else:
-            return redirect('signup')
+            return redirect('submitter:signup')
     return render(request, 'submitter/verify_email.html')
 
 def index(request):
@@ -366,22 +366,34 @@ def update_shortlist(request, listing_id, listing_response_id):
 def verify_email_done(request):
     return render(request, 'submitter/verify_email_done.html')
 
-def verify_email_confirm(request, uidb64, token):
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.email_is_verified = True
-        user.save()
-        return redirect('submitter:verify-email-complete')   
-    else:
-        messages.warning(request, 'The link is invalid.')
-    return render(request, 'submitter/verify_email_confirm.html')
+def verify_email_complete(request, uidb64, token):
+    context = {
+        'uidb64': uidb64,
+        'token': token,
+    }
+    return render(request, 'submitter/verify_email_complete.html', context)
 
-def verify_email_complete(request):
-    return render(request, 'submitter/verify_email_complete.html')
+def verify_email_confirm(request, uidb64, token):
+    if request.method == 'POST':
+        uidb64 = request.POST.get('uidb64')
+        token = request.POST.get('token')
+
+        try:
+            uidb64 = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uidb64)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and account_activation_token.check_token(user, token):
+            user.email_is_verified = True  
+            user.save()
+            login(request, user)  
+            messages.success(request, 'Your email has been verified. You are now logged in.')  
+            return redirect('submitter:home')  
+
+    messages.warning(request, 'Failed to verify email. Please try again later.')
+    print("this did not work")
+    return redirect('submitter:home') 
 
 def change_password(request):
    form = PasswordChangeForm(user=request.user, data=request.POST or None)
