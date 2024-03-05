@@ -464,7 +464,7 @@
         <details>
             <summary>Apply Filters</summary>
             <div class="filter-dropdown">
-                <!-- Your filter content here -->
+        
                 <p style="font-size: 1vw;">Select the answers that you wish to be included in application submissions. If a question is left empty, all options will be considered viable. </p>
                 <form action="{% url 'submitter:results' listing_id%}" method="post">
                     {% csrf_token %}
