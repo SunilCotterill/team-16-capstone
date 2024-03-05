@@ -29,7 +29,7 @@
         details {
             border: 1px solid #ddd;
             padding: 10px;
-            margin: 10px;
+            margin-left: 10px;
             border-radius: 10px;
             background-color: #E6F1F1;
         }
@@ -45,16 +45,17 @@
         /* Hide the content by default */
         details {
             border: 1px solid #ddd;
-            padding: 10px;
+            padding: 0.5vw;
             margin-left: 8vw; /* Shorten from the right by setting margin-right to auto */
-            width: 25%; /* Default width */
+            width: 17vw; /* Default width */
             max-width: 25%; /* Limit maximum width */
+            font-size: 1.1vw ;
         }
 
         /* Style for the content within the details element */
         
         details[open] {
-            width: 25%; /* Adjust width as needed when expanded */
+            width: 17vw; /* Adjust width as needed when expanded */
             max-width: 80%; /* Limit maximum width when expanded */
         }
         .True {
@@ -147,7 +148,7 @@
         /* Adjust table header positioning */
         th {
             text-align: left; /* Align header content to the left */
-            font-size: 1.2vw;
+            font-size: 1.1vw;
             font-weight: 300;
             padding-bottom: 3vh;
         }
@@ -158,6 +159,7 @@
             padding-top: 5px; /* Add padding top */
             padding-bottom: 5px; /* Add padding bottom */
             padding: 20px 0px; /* Add padding to all sides of the cell */
+            font-size: 1.1vw;
         }
 
         /* Remove button styling */
@@ -315,16 +317,21 @@
             font-size: 15px;
             margin-top: 2vh;
             margin-bottom: 1vh;
-            background-color: #1FBCBC ;
-            color: white;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            background-color: #ffffff ;
+            color: rgb(0, 0, 0);
+            border-color: #17A2B8;
         }
 
         .clear-filter-btn {
             font-size: 15px;
             margin-top: 1vh;
             margin-bottom: 1vh;
-            color: #17A2B8;
-            background-color: #FFFFFF;
+            color: #000000;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            background-color: #ffffff;
             border-color: #17A2B8;
         }
 
@@ -335,7 +342,7 @@
         .title-and-action-container {
             display: flex;
             flex-direction: row; /* Align items in a row */
-            align-items: left; /* Center items vertically */
+            align-items: right; /* Center items vertically */
             justify-content: space-between; /* Space between title and button */
             width: 80%; /* Full width of its parent */
             margin-bottom: 0vh; /* Optional: adds some space below the container */
@@ -369,12 +376,12 @@
             {% if not listing_status %}
             <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="color: rgb(12, 135, 39); background-color: rgb(255, 255, 255); border: 2px solid rgb(12, 135, 39); padding: 5px 10px; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Close Listing">Listing Open</button>
+                <button type="submit" style="color: rgb(12, 135, 39); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 2px solid rgb(12, 135, 39); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Close Listing">Listing Open</button>
             </form>
             {% else %}
             <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); border: 2px solid rgb(234, 15, 15); padding: 5px 10px; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Reopen Listing">Listing Closed</button>
+                <button type="submit" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 2px solid rgb(234, 15, 15); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Reopen Listing">Listing Closed</button>
             </form>
             {% endif %}
         </div>
@@ -389,7 +396,7 @@
             <summary>Apply Filters</summary>
             <div class="filter-dropdown">
                 <!-- Your filter content here -->
-                <p style="font-size: 17px;">Select the answers that you wish to be included in application submissions. If a question is left empty, all options will be considered viable. </p>
+                <p style="font-size: 1vw;">Select the answers that you wish to be included in application submissions. If a question is left empty, all options will be considered viable. </p>
                 <form action="{% url 'submitter:results' listing_id%}" method="post">
                     {% csrf_token %}
 

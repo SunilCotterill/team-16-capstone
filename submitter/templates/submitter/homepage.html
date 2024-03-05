@@ -12,12 +12,14 @@
             position: relative;
             padding-left: 0vw; /* Remove default margin */
             overflow-y: auto; /* Prevent body from scrolling */
+            
         }
 
         .listings-and-create-container {
             display: flex;
             flex-direction: row;
             align-items: flex-start; /* Ensure items are aligned at the top */
+            align-items: left;
             gap: 0px; /* Adjust the gap between items as needed */
             margin-top: 20px; /* Space from the top or previous content */
             /* Adjust padding or margins as necessary */
@@ -35,13 +37,13 @@
         .content {
             display: flex; /* Make content a flex container */
             flex-direction: column; /* Stack children vertically */
-            align-items: center; /* Center-align items horizontally */
+            align-items: left; /* Center-align items horizontally */
             justify-content: start; /* Align items to the start of the flex container */
             gap: 20px; /* Space between items */
             padding: 20px;
             margin-top: 50px;
             margin-left: 8vw; /* Adjusted to ensure it's positioned correctly */
-            max-width: 70vw; /* Ensure content does not stretch too wide */
+            max-width: 75%; /* Ensure content does not stretch too wide */
         }
 
         .welcome-title, .listing-title, .info-text, .listings-container, .new-listing-container {
@@ -107,6 +109,7 @@
             margin-left: 0;
             margin-right: auto;
             flex: 1;
+            overflow-x: hidden;
         }
 
         .new-listing-container {
