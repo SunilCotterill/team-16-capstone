@@ -23,50 +23,44 @@
             width: 10vw;
         }
 
-        .vertical-rectangle {
-            background-color: #E6F1F1;
-            width: 16vw;
-            height: 100%; /* Change height to cover the entire page */
-            position: fixed; /* Change position to fixed */
-            top: 0; /* Position it at the top */
-            left: 0; /* Align it to the left */
-            border-right: 3px solid #D9D9D9;
-            z-index: 1000; /* Ensure it's behind other content */
+        .content {
+            display: flex; /* Make content a flex container */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center-align items horizontally */
+            justify-content: start; /* Align items to the start of the flex container */
+            gap: 20px; /* Space between items */
+            padding: 20px;
+            margin-top: 50px;
+            margin-left: 8vw; /* Adjusted to ensure it's positioned correctly */
+            max-width: 70vw; /* Ensure content does not stretch too wide */
         }
 
-        .content {
-            margin-left: 8vw; /* Move content to the right */
-            margin-right: 0; /* Remove right margin */
-            padding-right: 40px; /* Add padding to the right */
-            padding-left: 40px; /* Maintain left padding */
-            padding-top: 0px;
-            max-width: 70vw;
-            position: relative;
-            margin-top: 50px;
+        .welcome-title, .listing-title, .info-text, .listings-container, .new-listing-container {
+            width: 100%; /* Ensure they take up full width of their container */
+            /* Other styling adjustments as necessary */
+            padding-left: 10vw;
         }
 
         .welcome-title {
             font-size: max(3vw, 20px);
             font-weight: 550;
             margin-bottom: 10px;
-            margin-left: 8vw;
         }
 
         .listing-title {
             font-weight: 600;
             font-size: 1.1em;
             margin-top: 8vh; /* Adjusted margin-top */
-            margin-left: 8.4vw;
         }
 
         .listing-box {
             background-color: #F1F2F1;
             border: 1px solid #1FBCBC;
-            padding: 10px 20px; /* Adjust padding to move content over */
+            padding: 10px 10px; /* Adjust padding to move content over */
             height: 10vh;
             margin-bottom: -1vh;
             margin-left: 0vw;
-            width: 95%; /* Increase width of listing box */
+            width: 100%; /* Increase width of listing box */
             border-radius: 5px;
             display: flex;
             flex-direction: column;
@@ -97,8 +91,8 @@
             height: 48vh; /* Set a maximum height */
             overflow-y: auto; /* Enable vertical scrolling */
             margin-bottom: 15px; /* Add some bottom margin */
-            width: 36%; /* Adjust width to fit content */
-            margin-left: 8.4vw;
+            width: 100%; /* Adjust width to fit content */
+            margin-right: 0vw;
         }
 
         .new-listing-container {
@@ -130,40 +124,7 @@
             border-radius: 5px; /* Add border radius */
             text-decoration: none !important; /* Remove underline */
         }
-
-        .logout-btn {
-            position: fixed; /* Changed to fixed */
-            bottom: 2vh; /* Adjusted the position */
-            left: 1.2vw; /* Adjusted the position */
-            z-index: 1001;
-            background-color: #E6F1F1;
-            padding: 15px 30px;
-            border: 1px solid #908d92;
-            border-radius: 10px;
-            width: 9vw;
-            height: 3vh;
-            text-align: center;
-        }
-
-        .change-password-btn {
-            position: fixed; /* Changed to fixed */
-            bottom: 20vh; /* Adjusted the position */
-            left: 1.2vw; /* Adjusted the position */
-            z-index: 1001;
-            background-color: #E6F1F1;
-            padding: 15px 30px;
-            border: 1px solid #908d92;
-            border-radius: 10px;
-            width: 9vw;
-            height: 3vh;
-            text-align: center;
-        }
-
-        /* Logout Button Hover Effect */
-        .logout-btn:hover {
-            background-color: #c3d5d5; /* Dark blue background color on hover */
-            color: black; /* Change text color to white on hover */
-        }
+    
 
         /* Plus Icon */
         .create-listing i {
@@ -174,66 +135,49 @@
 
         .info-text {
             text-align: left;
-            margin-left: 8vw; /* Match the left margin of welcome title */
+            margin-left: 0vw; /* Match the left margin of welcome title */
         }
     </style>
 </head>
 <body>
-    <!-- Call the base template for logo, vertical rectangle, and logout button -->
+    <!-- Header content placeholder -->
     {% block header %}
         {% include 'submitter/base.html' %}
     {% endblock %}
 
-    <!-- Main Content -->
-    <div class="container content">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="welcome-title">Welcome Home, {{ first_name }}!</h3>
-                <p class="info-text">Thank you for choosing our platform for your subletting needs!
-                We are here to streamline the process of finding a compatible roommate. A shareable link will be generated each time a new quiz is created!</p>
-
-                <div class="container">
-                    {% if listings %}
-                    <h3 class="listing-title">Your Listings:</h3> <!-- Title for Your Listings -->
-                    <h3 class="listing-title" style="margin-top:-4vh; margin-left:45.9vw">New Listing: </h3> <!-- Title for Your Listings -->
-                    <span class="half-break"></span><br>
-                    <!-- Listings Container -->
-                    <div class="listings-container">
-                        <div class="row">
-                            {% for listing in listings %}
-                            <div class="col-md-12 mb-4">
-                                <a href="{% url 'submitter:results' listing.id %}" class="listing-box">
-                                    <h5 class="listing-name">Name: {{listing.name}}</h5>
-                                    <p class="listing-details">Applicants: {{listing.applicants}} &nbsp;&nbsp;&nbsp;&nbsp;  
-                                            Shortlist: {{listing.shortlist}}</p>
-                                </a>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <a href="{% url 'submitter:new_listing' %}" class="new-listing-container" style="text-decoration: none; margin-bottom: 20vh; margin-left: 46vw;">
-                        <div class="create-listing">
-                            Create New Listing   <!-- Move the text before the icon -->
-                            &nbsp;  <i class="fas fa-plus-square" style="margin-left: 0vw; margin-top: 0vh; vertical-align: -5px;"></i> <!-- Add vertical-align property -->
-                        </div>
+    <div class="content">
+        <h3 class="welcome-title">Welcome Home, {{ first_name }}!</h3>
+        <p class="info-text">Thank you for choosing our platform for your subletting needs! We are here to streamline the process of finding a compatible roommate. A shareable link will be generated each time a new quiz is created!</p>
+        
+        {% if listings %}
+        <h3 class="listing-title">Your Listings:</h3>
+        <div class="listings-container">
+            <div class="row">
+                {% for listing in listings %}
+                <div class="col-md-12 mb-4">
+                    <a href="{% url 'submitter:results' listing.id %}" class="listing-box">
+                        <h5 class="listing-name">Name: {{listing.name}}</h5>
+                        <p class="listing-details">Applicants: {{listing.applicants}} &nbsp;&nbsp;&nbsp;&nbsp; Shortlist: {{listing.shortlist}}</p>
                     </a>
-                    {% else %}
-                    <!-- If there are no listings, adjust the position of the "Create New Listing" button -->
-                    <h3 class="listing-title">Your Listings:</h3> <!-- Title for Your Listings -->
-                    <h3 class="listing-title" style="margin-top:-4vh; margin-left:45.9vw">New Listing: </h3> <!-- Title for Your Listings -->
-                    <a href="{% url 'submitter:new_listing' %}" class="new-listing-container" style="text-decoration: none; margin-top: 5vh; margin-left: 46vw;">
-                        <div class="create-listing">
-                            Create New Listing   <!-- Move the text before the icon -->
-                            &nbsp;  <i class="fas fa-plus-square" style="margin-left: 0vw; margin-top: 0vh; vertical-align: -5px;"></i> <!-- Add vertical-align property -->
-                        </div>
-                    </a>
-                    {% endif %}
                 </div>
+                {% endfor %}
             </div>
         </div>
+        <a href="{% url 'submitter:new_listing' %}" class="new-listing-container" style="text-decoration: none; margin-bottom: 20vh;">
+            <div class="create-listing">
+                Create New Listing
+                <i class="fas fa-plus-square"></i>
+            </div>
+        </a>
+        {% else %}
+        <h3 class="listing-title">Your Listings:</h3>
+        <a href="{% url 'submitter:new_listing' %}" class="new-listing-container" style="text-decoration: none; margin-top: 5vh;">
+            <div class="create-listing">
+                Create New Listing
+                <i class="fas fa-plus-square"></i>
+            </div>
+        </a>
+        {% endif %}
     </div>
-
-    <!-- Logout Button -->
-    <a href="{% url 'submitter:logout' %}" class="logout-btn">Logout</a>
 </body>
 </html>
