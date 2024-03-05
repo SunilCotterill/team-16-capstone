@@ -46,7 +46,7 @@
         details {
             border: 1px solid #ddd;
             padding: 10px;
-            margin-left: 8vw; /* Shorten from the right by setting margin-right to auto */
+            margin-left: 1vw; /* Shorten from the right by setting margin-right to auto */
             width: 25%; /* Default width */
             max-width: 25%; /* Limit maximum width */
         }
@@ -63,10 +63,10 @@
 
         /* Adjust the margins to move content to the right */
         .content {
-            margin-left: 8vw; /* Align to the right */
+            margin-left: 0vw; /* Align to the right */
             margin-right: auto; /* Align to the left */
             padding-right: 40px; /* Add padding to the right */
-            padding-left: 40px; /* Add padding to the left */
+            padding-left: 0px; /* Add padding to the left */
             padding-top: 0px;
             max-width: 84vw; /* Limit maximum width */
             position: relative;
@@ -79,14 +79,13 @@
             align-items: left; /* Center-align items horizontally */
             justify-content: flex-start; /* Align items to the start of the container vertically */
             margin-left: 0vw; /* Keep your existing left margin */
-            margin-right: 8vw; /* Keep your existing right margin */
+            margin-right: 1vw; /* Keep your existing right margin */
             width: auto; /* Adjust the width as needed */
         }
 
-        /* Move the title slightly to the right */
         .main-title {
             font-weight: bold;
-            margin-left: 0vw;
+            margin-left: -5vw;
             font-size: 3vw;
         }
 
@@ -94,7 +93,7 @@
         .submission-url {
           margin-top: 3vh;  
           margin-bottom:3vh;
-          margin-left: 8vw; /* Move text 8% of viewport width from the left */
+          margin-left: 1vw; /* Move text 8% of viewport width from the left */
           font-size: 1.3vw;
           
         }
@@ -138,7 +137,7 @@
 
         /* Adjust table positioning */
         table {
-            margin-left: 8vw; /* Align table to the right */
+            margin-left: 1vw; /* Align table to the right */
             margin-right: 10vw; /* Move table 8% of viewport width from the left */
             margin-top: 3vh;
             width: 100%; /* Adjust table width */
@@ -335,11 +334,12 @@
         .title-and-action-container {
             display: flex;
             flex-direction: row; /* Align items in a row */
-            align-items: left; /* Center items vertically */
-            justify-content: space-between; /* Space between title and button */
-            width: 80%; /* Full width of its parent */
+            align-items: center; /* Center items vertically */
+            justify-content: left; /* Space between title and button */
+            width: 100%; /* Full width of its parent */
             margin-bottom: 0vh; /* Optional: adds some space below the container */
-            margin-left: 2vw;
+            margin-left: 0vw;
+            gap: 10%;
         }
 
         button[type="submit"] {

@@ -17,8 +17,8 @@
         .listings-and-create-container {
             display: flex;
             flex-direction: row;
-            align-items: flex-start; /* Ensure items are aligned at the top */
-            gap: 0px; /* Adjust the gap between items as needed */
+            align-items: left; /* Ensure items are aligned at the top */
+            gap: 5%; /* Adjust the gap between items as needed */
             margin-top: 20px; /* Space from the top or previous content */
             /* Adjust padding or margins as necessary */
         }
@@ -35,13 +35,13 @@
         .content {
             display: flex; /* Make content a flex container */
             flex-direction: column; /* Stack children vertically */
-            align-items: center; /* Center-align items horizontally */
+            align-items: left; /* Center-align items horizontally */
             justify-content: start; /* Align items to the start of the flex container */
             gap: 20px; /* Space between items */
             padding: 20px;
             margin-top: 50px;
             margin-left: 8vw; /* Adjusted to ensure it's positioned correctly */
-            max-width: 70vw; /* Ensure content does not stretch too wide */
+            max-width: 75% /* Ensure content does not stretch too wide */
         }
 
         .welcome-title, .listing-title, .info-text, .listings-container, .new-listing-container {
@@ -70,7 +70,7 @@
             height: 13vh;
             margin-bottom: -1vh;
             margin-left: 0vw;
-            width: 90%; /* Increase width of listing box */
+            width: 100%; /* Increase width of listing box */
             border-radius: 5px;
             display: flex;
             flex-direction: column;
@@ -79,7 +79,6 @@
             text-decoration: none; /* Remove underline */
             color: black; /* Set text color */
             transition: background-color 0.3s; /* Smooth transition for background color change */
-            min-width: 50%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
