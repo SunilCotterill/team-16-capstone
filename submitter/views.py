@@ -168,6 +168,11 @@ def reopen_listing(request, listing_id):
     listing.save()
     return redirect('submitter:home')
 
+def delete_listing(request, listing_id):    
+    listing = Listing.objects.get(pk = listing_id)
+    listing.delete()
+    return redirect('submitter:home')
+
 def result(request, listing_id, email):
     listing = Listing.objects.get(id = listing_id)
     if not request.user.id == listing.creator.id:
