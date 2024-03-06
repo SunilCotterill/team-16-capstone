@@ -1,7 +1,106 @@
-<h1>You need to verify your email</h1>
-<form method="post">
-    {% csrf_token %}
-    <input class="btn btn-primary max-btn" type="submit" value="Send verification email">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApartMate</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS for colored border around all text */
+        .colored-border {
+            position: relative; /* Add position relative to contain absolutely positioned elements */
+            border: 2px solid #E6F1F1; /* Change the color to #E6F1F1 */
+            border-radius: 10px;
+            background-color: #E6F1F1; /* Add background color */
+            padding: 20px;
+            border: 2px solid black; /* Add black border */
+        }
 
-<a href="{% url 'submitter:logout' %}">Logout</a>
+        /* Custom CSS for centered square */
+        .centered-square {
+            width: 65vw; /* Adjust the width of the square */
+            height: fit-content; /* Adjust the height of the square */
+            margin: 50px auto 20px auto; /* Center horizontally and move down with reduced space between title and text */
+            text-align: center; /* Align text to the center */
+            display: flex; /* Use flexbox for vertical centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            flex-direction: column; /* Stack elements vertically */
+            min-height: 80vh;
+        }
+
+        /* Custom CSS for stacked form inputs */
+        .form-group {
+            margin-bottom: 20px; /* Add margin between stacked inputs */
+            text-align: left; /* Align text to the left */
+            min-width: 206px;
+            width: 24vw;
+            max-width: 350px;
+
+        }
+
+        /* Custom CSS for additional text */
+        .additional-text {
+            font-size: max(1vw, 15px); /* Adjust font size */
+            margin-top: 10px; /* Reduce space between title and additional text */
+            text-align: center; /* Align text to the center */
+        }
+
+        /* Custom CSS for larger title */
+        .larger-title {
+            font-size: max(3.5vw, 35px); /* Adjust font size for larger title */
+            margin-bottom: 10px; /* Reduce space between title and additional text */
+        }
+
+        /* Custom CSS for login button */
+        .btn-login {
+            background-color: #1FBCBC; /* Set background color */
+            color: white; /* Set font color */
+            font-size: 15px; /* Set font size */
+            padding: 10px 40px; /* Adjust padding */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Add border radius */
+        }
+
+        /* Custom CSS for SVG logo */
+        .logo {
+            position: absolute; /* Position the logo absolutely */
+            top: 5%; /* Adjust top position */
+            right: 5%; /* Adjust right position */
+            width: 10%; /* Adjust width */
+            max-width: 100px;
+            height: auto; /* Maintain aspect ratio */
+            z-index: 1; /* Ensure logo is above other content */
+        }
+
+        /* Custom CSS for longer textboxes */
+        input[type="text"] {
+            width: 22vw; /* Adjust the width of the textboxes */
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="colored-border centered-square"> <!-- Change blue-border to colored-border -->
+                    {% load static %}
+                    <img src="{% static 'submitter/images/logo.svg' %}" alt="home" class="logo"> <!-- Updated SVG logo path and added logo class -->
+                    <h3 class="red-border larger-title">ApartMate</h3>
+                    <br>
+                    <h6>You need to verify your email. Please click the button below to send a verification email.</h6>
+                    <br>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-primary max-btn" type="submit" value="Send verification email">
+                    </form>
+                    <br>
+                    <a href="{% url 'submitter:logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap"></script>
+</body>
