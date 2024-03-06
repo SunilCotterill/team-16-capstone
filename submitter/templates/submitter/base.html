@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="shortcut icon" type="image/png" href="{% static 'submitter/images/favican.png' %}"/> <!-- Updated favicon link -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'submitter/images/favican.png' %}"/>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        /* Font */
         body {
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Styles for the logo */
         .logo {
             position: fixed;
             top: 20px;
@@ -23,7 +21,6 @@
             width: 10vw;
         }
 
-        /* Styles for the vertical rectangle */
         .vertical-rectangle {
             background-color: #E6F1F1;
             width: 16vw;
@@ -35,7 +32,6 @@
             z-index: 1000;
         }
 
-        /* Styles for the login container */
         .login-container {
             position: fixed;
             top: 50%;
@@ -48,92 +44,102 @@
             border-radius: 5px;
         }
 
-        /* Styles for the logout button */
-        .logout-btn {
-            position: fixed; /* Changed to fixed */
-            bottom: 2vh; /* Adjusted the position */
-            left: 1.2vw; /* Adjusted the position */
+        /* Flex Container for Buttons */
+        .side-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20vh;
+            position: fixed;
+            top: 18vh; /* Adjust based on your layout */
+            left: 1.2vw;
             z-index: 1001;
-            background-color: #E6F1F1;
-            padding: 15px 30px;
-            border: 1px solid #908d92;
-            border-radius: 10px;
-            width: 13.5vw;
-            height: 7vh;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            color: black;
-            text-decoration: none;
         }
 
         .home-btn {
-            position: fixed; /* Changed to fixed */
-            bottom: 75vh; /* Adjusted the position */
-            left: 1.2vw; /* Adjusted the position */
-            z-index: 1001;
+            position: fixed !important;
             background-color: #E6F1F1;
             padding: 15px 30px;
             border: 1px solid #908d92;
             border-radius: 10px;
             width: 13.5vw;
-            height: 7vh;
+            height: 8vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
             font-family: 'Poppins', sans-serif;
             color: black;
+            font-size: 1.1vw;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin-top: 0vh; 
         }
 
-        .home-btn:hover {
-            background-color: #c3d5d5; /* Dark blue background color on hover */
-            color: black; /* Change text color to white on hover */
-        }
-
-        /* Logout button hover effect */
-        .logout-btn:hover {
-            background-color: #c3d5d5; /* Dark blue background color on hover */
-            color: black; /* Change text color to white on hover */
-        }
-
-        .change-password-btn {
-            position: fixed; /* Changed to fixed */
-            bottom: 13vh; /* Adjusted the position */
-            left: 1.2vw; /* Adjusted the position */
-            z-index: 1001;
+        .logout-btn {
+            position: fixed !important;
             background-color: #E6F1F1;
             padding: 15px 30px;
             border: 1px solid #908d92;
             border-radius: 10px;
             width: 13.5vw;
-            height: 10.5vh;
-            color: black;
+            height: 8vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            
+            font-family: 'Poppins', sans-serif;
+            color: black;
+            font-size: 1.1vw;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+            bottom: 2vh;
+            /*margin-top: 72vh; THIS IS THE ISSUE IF ISSUE WITH BUTTONS */
         }
 
-        /* Logout Button Hover Effect */
-        .change-password-btn:hover {
-            background-color: #c3d5d5; /* Dark blue background color on hover */
-            color: black; /* Change text color to white on hover */
+        .change-password-btn {
+            position: fixed !important;
+            background-color: #E6F1F1;
+            padding: 15px 30px;
+            border: 1px solid #908d92;
+            border-radius: 10px;
+            width: 13.5vw;
+            height: 10vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            color: black;
+            font-size: 1.1vw;    
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+            bottom: 14vh;
+        }
+
+        .home-btn:hover, .change-password-btn:hover, .logout-btn:hover {
+            background-color: #8fcfcf;
+            color: black;
         }
     </style>
 </head>
 <body>
     <a href="{% url 'submitter:home' %}">
-        <img src="{% static 'submitter/images/logo.svg' %}" alt="home" class="logo"> <!-- Updated SVG logo path and added logo class -->
+        <img src="{% static 'submitter/images/logo.svg' %}" alt="home" class="logo">
     </a>
 
-    <!-- Vertical Rectangle -->
     <div class="vertical-rectangle"></div>
 
-    <!-- Home Button -->
-    <a href="{% url 'submitter:home' %}" class="home-btn"><i class="fas fa-home" style="color: #000000;"></i> &nbsp;Home</a>
+    <!-- Flex Container for Buttons -->
+    <div class="side-buttons">
+        
+        <!-- Home Button -->
+        <a href="{% url 'submitter:home' %}" class="home-btn"><i class="fas fa-home" style="color: #000000;"></i> &nbsp; Home</a>
 
-    <!-- Change Pasword Button -->
-    <a href="{% url 'submitter:change-password' %}" class="change-password-btn">Change Password</a>
+        <!-- Change Password Button -->
+        <a href="{% url 'submitter:change-password' %}" class="change-password-btn">Change Password</a>
 
-    <!-- Logout Button -->
-    <a href="{% url 'submitter:logout' %}" class="logout-btn"><i style="color: #000000;"></i>Logout</a>
+        <!-- Logout Button -->
+        <a href="{% url 'submitter:logout' %}" class="logout-btn">Logout</a>
+    </div>
 
-    <!-- Bootstrap JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
