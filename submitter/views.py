@@ -160,13 +160,13 @@ def close_listing(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
     listing.is_closed = True
     listing.save()
-    return redirect('submitter:home')
+    return redirect('submitter:results', listing_id)
 
 def reopen_listing(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
     listing.is_closed = False
     listing.save()
-    return redirect('submitter:home')
+    return redirect('submitter:results', listing_id)
 
 def result(request, listing_id, email):
     listing = Listing.objects.get(id = listing_id)
@@ -358,7 +358,7 @@ def update_shortlist(request, listing_id, listing_response_id):
         listingResponse.is_shortlisted = not listingResponse.is_shortlisted  # Toggle the shortlisted field
         listingResponse.save()
         
-        return results(request, listing_id)
+        return redirect('submitter:results', listing_id)
 
     except listingResponse.DoesNotExist:
         return render(request, "submitter/homepage.html", context)
