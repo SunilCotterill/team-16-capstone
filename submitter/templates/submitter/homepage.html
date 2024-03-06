@@ -20,7 +20,7 @@
             flex-direction: row;
             align-items: left; /* Ensure items are aligned at the top */
             align-items: left;
-            gap: 5%; /* Adjust the gap between items as needed */
+            gap: 10%; /* Adjust the gap between items as needed */
             margin-top: 20px; /* Space from the top or previous content */
             /* Adjust padding or margins as necessary */
         }
@@ -73,7 +73,6 @@
             margin-bottom: -1vh;
             margin-left: 0vw;
             width: 100%; /* Increase width of listing box */
-            
             border-radius: 5px;
             display: flex;
             flex-direction: column;
@@ -110,7 +109,7 @@
             margin-right: auto;
             flex: 1;
             overflow-x: hidden;
-            min-width: 37vw;
+            min-width: 35vw;
         }
 
         .new-listing-container {
@@ -131,7 +130,7 @@
             color: black;
             max-height: 25vh;
             min-height: 12vh;
-            max-width: 25vw;
+            max-width: 30vw;
             min-width: 15vw;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -152,6 +151,13 @@
         .info-text {
             text-align: left;
             margin-left: 0vw; /* Match the left margin of welcome title */
+        }
+
+        .no-listing-text {
+            text-align: left;
+             /* Match the left margin of welcome title */
+            padding-left: 10vw;
+            padding-right: 10vw;
         }
 
         .create-listing-section {
@@ -212,6 +218,7 @@
             {% else %}
             <div>
                 <h3 class="listing-title">Your Listings:</h3>
+                <p class="no-listing-text">You Have No Listings!</p>
             </div>
             
             <div class="create-listing-section"> <!-- Wrapper for title and button -->
