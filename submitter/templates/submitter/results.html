@@ -456,6 +456,11 @@
                 <button type="submit" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 2px solid rgb(234, 15, 15); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Reopen Listing">Listing Closed</button>
             </form>
             {% endif %}
+            <form method="POST" action="{% url 'submitter:delete-listing' listing_id %}">
+                {% csrf_token %}
+                <button type="submit" style="border: 2px solid #000000; border-radius: 5px; margin-left: 10px; padding: 0.5vw; background-color: transparent; color: #000000; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">
+                    <i class="fa-solid fa-trash-can"></i> Delete Listing</button>
+            </form>
         </div>
         <!-- Shareable Link Section -->
         <p class="submission-url" style="margin-top: 20px">Shareable Link: {% if request.is_secure %}https{% else %}http{% endif %}://{{ domain }}/apartmate/{{listing_id}}/submission
