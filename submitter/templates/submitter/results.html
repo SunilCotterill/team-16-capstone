@@ -24,7 +24,6 @@
           font-family: 'Poppins', sans-serif !important;
           padding-left: 0vw;
         }
-
         
         details {
             border: 1px solid #ddd;
@@ -46,30 +45,28 @@
         /* Hide the content by default */
         details {
             border: 1px solid #ddd;
-            padding: 10px;
-            margin-left: 1vw; /* Shorten from the right by setting margin-right to auto */
-            width: 17vw; /* Default width */
+            width: 25vw; /* Default width */
             max-width: 25%; /* Limit maximum width */
             font-size: 1.1vw ;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 2vh;
-
+            margin-left: 8vw;
         }
 
         /* Style for the content within the details element */
         
         details[open] {
-            width: 17vw; /* Adjust width as needed when expanded */
-            max-width: 80%; /* Limit maximum width when expanded */
+            width: 25vw; /* Adjust width as needed when expanded */
+            max-width: 25%; /* Limit maximum width when expanded */
         }
 
-        @media (min-width: 1440px) { 
+/*         @media (min-width: 1440px) { 
             details {
                 border: 1px solid #ddd;
                 padding: 10px;
-                margin-left: 1vw; /* Shorten from the right by setting margin-right to auto */
-                width: 17vw; /* Default width */
-                max-width: 25%; /* Limit maximum width */
+                margin-left: 1vw; 
+                width: 17vw; 
+                max-width: 25%; 
                 font-size: 1.1vw ;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 margin-bottom: 2vh;
@@ -80,14 +77,14 @@
             details {
                 border: 1px solid #ddd;
                 padding: 10px;
-                margin-left: 8vw; /* Shorten from the right by setting margin-right to auto */
-                width: 17vw; /* Default width */
-                max-width: 25%; /* Limit maximum width */
+                margin-left: 8vw; 
+                width: 17vw; 
+                max-width: 25%; 
                 font-size: 1.1vw ;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 margin-bottom: 2vh;
             }
-        }
+        } */
 
 
         .True {
@@ -118,40 +115,41 @@
 
         .main-title {
             font-weight: bold;
-            margin-left: -5vw;
             font-size: 3vw;
+            padding-left: 8vw;
         }
 
-        @media (min-width: 1440px) { 
+        /* @media (min-width: 1440px) { 
             .main-title {
                 font-weight: bold;
-                margin-left: -5vw; /* Keeps the original styling for larger screens */
+                margin-left: -5vw; 
                 font-size: 3vw;
             }
         }
 
-        @media (max-width: 1440px) { 
+        /* @media (max-width: 1440px) {
             .main-title {
                 margin-left: 2vw; /* Adjusts positioning for smaller or equal to 13-inch screens */
                 /* Other styles can remain unchanged or be adjusted as needed */
-            }
-        }
+         /*    }
+        } */ 
+        
 
         /* Move the submission URL text to the right */
         .submission-url {
           margin-top: 3vh;  
           margin-bottom:3vh;
-          margin-left: 1vw; /* Move text 8% of viewport width from the left */
           font-size: 1.3vw;
+          padding-left: 8vw;
           
         }
 
 
-        @media (min-width: 1440px) { 
+/*         @media (min-width: 1440px) { 
             .submission-url {
                 margin-top: 3vh;  
                 margin-bottom:3vh;
-                margin-left: 1vw; /* Move text 8% of viewport width from the left */
+                margin-left: 1vw; 
                 font-size: 1.3vw;
             }
         }
@@ -161,10 +159,10 @@
             .submission-url {
                 margin-top: 3vh;  
                 margin-bottom:3vh;
-                margin-left: 8vw; /* Move text 8% of viewport width from the left */
+                margin-left: 8vw; 
                 font-size: 1.3vw;
             }
-        }
+        } */
 
         /* Move the filter button to the right */
         .filter-btn {
@@ -217,6 +215,7 @@
             font-size: 1.1vw;
             font-weight: 300;
             padding-bottom: 3vh;
+            padding-left: 8vw;
         }
 
         /* Adjust table cell positioning */
@@ -226,6 +225,7 @@
             padding-bottom: 5px; /* Add padding bottom */
             padding: 20px 0px; /* Add padding to all sides of the cell */
             font-size: 1.1vw;
+            padding-left: 8vw;
         }
 
         /* Remove button styling */
@@ -246,6 +246,7 @@
         /* Move the Response title to the left */
         .response-header {
             text-align: left; /* Align to the left */
+            
         }
 
         .heart-icon-bigger {
@@ -405,6 +406,8 @@
 
         table tr {
             border-bottom: 0.3px solid #e5e5e5;
+        
+            
         }
 
         .title-and-action-container {
