@@ -338,7 +338,7 @@
         {% endif %}
         <form method="POST" action="{% url 'submitter:delete-listing' listing_id %}">
             {% csrf_token %}
-            <button type="submit" style="border: 2px solid #1FBCBC; border-radius: 5px; margin-left: 10px; padding: 5px; background-color: transparent; color: #0c6262; font-weight: bold; cursor: pointer;" title="Delete Listing" onclick="return confirm('Are you sure you want to delete this listing?')">Delete Listing</button>
+            <button type="submit" style="border: 2px solid #1FBCBC; border-radius: 5px; margin-left: 10px; padding: 5px; background-color: transparent; color: #0c6262; font-weight: bold; cursor: pointer;" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">Delete Listing</button>
         </form>
     </div>
         <!-- Shareable Link Section -->
