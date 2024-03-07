@@ -57,7 +57,13 @@ class CustomUser(AbstractUser):
         super().save(*args, **kwargs)
 
 class Question(models.Model):
+    class Category(models.TextChoices):
+        DEMOGRAPHIC = 'Demographic',
+        SOCIAL = 'Social',
+        HOUSEHOLD = 'Household',
+      
     question_text = models.CharField(max_length=200)
+    category = models.CharField(max_length = 200, choices=Category.choices, default = Category.DEMOGRAPHIC)
     def __str__(self):
         return self.question_text
 

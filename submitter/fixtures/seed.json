@@ -3,7 +3,8 @@
         "model": "submitter.question",
         "pk": 1,
         "fields": {
-            "question_text": "What is your gender identity?"
+            "question_text": "What is your gender identity?",
+            "category" : "Demographic"
         }
     },
     {
@@ -52,7 +53,8 @@
         "model": "submitter.question",
         "pk": 2,
         "fields": {
-            "question_text": "How old are you?"
+            "question_text": "How old are you?",
+            "category" : "Demographic"
         }
     },
     {
@@ -93,7 +95,8 @@
         "model": "submitter.question",
         "pk": 3,
         "fields": {
-            "question_text": "What is your program of study?"
+            "question_text": "What is your program of study?",
+            "category" : "Demographic"
         }
     },
     {
@@ -134,7 +137,8 @@
         "model": "submitter.question",
         "pk": 4,
         "fields": {
-            "question_text": "How do you typically prefer to recharge?"
+            "question_text": "How do you typically prefer to recharge?",
+            "category" : "Social"
         }
     },
     {
@@ -159,7 +163,8 @@
         "model": "submitter.question",
         "pk": 5,
         "fields": {
-            "question_text": "How do you prefer to spend your time at home?"
+            "question_text": "How do you prefer to spend your time at home?",
+            "category" : "Social"
         }
     },
     {
@@ -184,7 +189,8 @@
         "model": "submitter.question",
         "pk": 6,
         "fields": {
-            "question_text": "How do you handle messes in common spaces?"
+            "question_text": "How do you handle messes in common spaces?",
+            "category" : "Household"
         }
     },
     {
@@ -209,7 +215,8 @@
         "model": "submitter.question",
         "pk": 7,
         "fields": {
-            "question_text": "Where do you prefer to eat your meals at home?"
+            "question_text": "Where do you prefer to eat your meals at home?",
+            "category" : "Household"
         }
     },
     {
@@ -234,7 +241,8 @@
         "model": "submitter.question",
         "pk": 8,
         "fields": {
-            "question_text": "Where do you prefer to do schoolwork?"
+            "question_text": "Where do you prefer to do schoolwork?",
+            "category" : "Social"
         }
     },
     {
@@ -259,7 +267,8 @@
         "model": "submitter.question",
         "pk": 9,
         "fields": {
-            "question_text": "How should household costs and supplies be split?"
+            "question_text": "How should household costs and supplies be split?",
+            "category" : "Household"
         }
     },
     {
@@ -284,7 +293,8 @@
         "model": "submitter.question",
         "pk": 10,
         "fields": {
-            "question_text": "How do you feel about marijuana usage inside?"
+            "question_text": "How do you feel about marijuana usage inside?",
+            "category" : "Social"
         }
     },
     {
@@ -309,7 +319,8 @@
         "model": "submitter.question",
         "pk": 11,
         "fields": {
-            "question_text": "How do you feel about drinking alcohol?"
+            "question_text": "How do you feel about drinking alcohol?",
+            "category" : "Social"
         }
     },
     {
@@ -333,7 +344,8 @@
         "model": "submitter.question",
         "pk": 12,
         "fields": {
-            "question_text": "How do you feel about smoking cigarettes?"
+            "question_text": "How do you feel about smoking cigarettes?",
+            "category" : "Social"
         }
     },
     {
@@ -358,7 +370,8 @@
         "model": "submitter.question",
         "pk": 13,
         "fields": {
-            "question_text": "How do you feel about music being played out loud?"
+            "question_text": "How do you feel about music being played out loud?",
+            "category" : "Household"
         }
     },
     {
@@ -383,7 +396,8 @@
         "model": "submitter.question",
         "pk": 14,
         "fields": {
-            "question_text": "Would you like to live with somebody who shares similar political or religious beliefs? (We do not need to know your affiliations. That is a conversation to have with your potential roommates.)"
+            "question_text": "Would you like to live with somebody who shares similar political or religious beliefs? (We do not need to know your affiliations. That is a conversation to have with your potential roommates.)",
+            "category" : "Household"
         }
     },
     {
@@ -408,7 +422,8 @@
         "model": "submitter.question",
         "pk": 15,
         "fields": {
-            "question_text": "Do you want to become friends with your roommates?"
+            "question_text": "Do you want to become friends with your roommates?",
+            "category" : "Social"
         }
     },
     {
@@ -433,7 +448,8 @@
         "model": "submitter.question",
         "pk": 16,
         "fields": {
-            "question_text": "If planning a social night with friends, my first choice would be:"
+            "question_text": "If planning a social night with friends, my first choice would be:",
+            "category" : "Social"
         }
     },
     {
@@ -474,7 +490,8 @@
         "model": "submitter.question",
         "pk": 17,
         "fields": {
-            "question_text": "On average, how often do you have guests in the house?"
+            "question_text": "On average, how often do you have guests in the house?",
+            "category" : "Social"
         }
     },
     {
@@ -515,7 +532,8 @@
         "model": "submitter.question",
         "pk": 18,
         "fields": {
-            "question_text": "How often do you cook at home?"
+            "question_text": "How often do you cook at home?",
+            "category" : "Household"
         }
     },
     {
@@ -556,7 +574,8 @@
         "model": "submitter.question",
         "pk": 19,
         "fields": {
-            "question_text": "When do you typically prepare/eat dinner?"
+            "question_text": "When do you typically prepare/eat dinner?",
+            "category" : "Household"
         }
     },
     {
@@ -589,7 +608,8 @@
         "model": "submitter.question",
         "pk": 20,
         "fields": {
-            "question_text": "On average, what time do you wake up?"
+            "question_text": "On average, what time do you wake up?",
+            "category" : "Household"
         }
     },
     {
@@ -630,7 +650,8 @@
         "model": "submitter.question",
         "pk": 21,
         "fields": {
-            "question_text": "On average, what time do you go to bed?"
+            "question_text": "On average, what time do you go to bed?",
+            "category" : "Household"
         }
     },
     {
@@ -671,7 +692,8 @@
         "model": "submitter.question",
         "pk": 22,
         "fields": {
-            "question_text": "On average, how much time do you spend in the bathroom in the morning?"
+            "question_text": "On average, how much time do you spend in the bathroom in the morning?",
+            "category" : "Household"
         }
     },
     {
@@ -704,7 +726,8 @@
         "model": "submitter.question",
         "pk": 23,
         "fields": {
-            "question_text": "On average, how much time do you need to spend in the bathroom at night?"
+            "question_text": "On average, how much time do you need to spend in the bathroom at night?",
+            "category" : "Household"
         }
     },
     {
@@ -737,7 +760,8 @@
         "model": "submitter.question",
         "pk": 24,
         "fields": {
-            "question_text": "On average, how much time do you typically spend per day in class/doing schoolwork?"
+            "question_text": "On average, how much time do you typically spend per day in class/doing schoolwork?",
+            "category" : "Household"
         }
     },
     {
@@ -778,7 +802,8 @@
         "model": "submitter.question",
         "pk": 25,
         "fields": {
-            "question_text": "On average, how often do you consume alcohol?"
+            "question_text": "On average, how often do you consume alcohol?",
+            "category" : "Social"
         }
     },
     {
@@ -819,7 +844,8 @@
         "model": "submitter.question",
         "pk": 26,
         "fields": {
-            "question_text": "On average, how often do you consume marijuana?"
+            "question_text": "On average, how often do you consume marijuana?",
+            "category" : "Social"
         }
     },
     {
@@ -860,7 +886,8 @@
         "model": "submitter.question",
         "pk": 27,
         "fields": {
-            "question_text": "On average, how often do you smoke cigarettes?"
+            "question_text": "On average, how often do you smoke cigarettes?",
+            "category" : "Social"
         }
     },
     {
@@ -900,7 +927,8 @@
         "model": "submitter.question",
         "pk": 28,
         "fields": {
-            "question_text": "What chores do you think should be shared between roommates? (Shared between roommates means that you will share the responsibility.)"
+            "question_text": "What chores do you think should be shared between roommates? (Shared between roommates means that you will share the responsibility.)",
+            "category" : "Household"
         }
     },
     {
@@ -949,7 +977,8 @@
         "model": "submitter.question",
         "pk": 29,
         "fields": {
-            "question_text": "Please list up to five hobbies of yours. They should be separated by a comma (i.e.: alien hunting, underwater basket weaving)."
+            "question_text": "Please list up to five hobbies of yours. They should be separated by a comma (i.e.: alien hunting, underwater basket weaving).",
+            "category" : "Social"
         }
     },
     {
