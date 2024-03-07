@@ -203,7 +203,7 @@
                         <div class="col-md-12 mb-4">
                             <a href="{% url 'submitter:results' listing.id %}" class="listing-box">
                                 <h5 class="listing-name">Name: {{listing.name}}</h5>
-                                <p class="listing-details">Applicants: {{listing.applicants}} &nbsp;&nbsp;&nbsp;&nbsp; Shortlist: {{listing.shortlist}}</p>
+                                <p class="listing-details"> Applicants: {{listing.applicant_count}} &nbsp;&nbsp; Shortlist: {{listing.shortlist_count}} </p>
                             </a>
                         </div>
                         {% endfor %}
