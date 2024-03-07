@@ -483,10 +483,10 @@
                         {% for answer in listing_answers_list %}
                             {% if answer.question_id == question.id %}
                                 {% if answer.id in filtered_answers %}
-                                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
+                                    <input type="checkbox" name="question_{{ question.id }}_{{ answer.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
                                     <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
                                 {% else %}
-                                    <input type="radio" name="question_{{ question.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" >
+                                    <input type="checkbox" name="question_{{ question.id }}_{{ answer.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" >
                                     <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
                                 {% endif %}
 
