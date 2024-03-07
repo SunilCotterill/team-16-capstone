@@ -415,10 +415,15 @@
             flex-direction: row; /* Align items in a row */
             align-items: left; /* Center items vertically */
             justify-content: space-between; /* Space between title and button */
-            width: 80%; /* Full width of its parent */
+            width: 100%; /* Full width of its parent */
             margin-bottom: 0vh; /* Optional: adds some space below the container */
             margin-left: 0vw;
+            flex-wrap: nowrap;
             gap: 5%;
+        }
+
+        button {
+            white-space: nowrap; /* Prevent text from wrapping */
         }
 
         button[type="submit"] {
@@ -448,18 +453,18 @@
             {% if not listing_status %}
             <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="color: rgb(12, 135, 39); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 2px solid rgb(12, 135, 39); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Close Listing">Listing Open</button>
+                <button type="submit" style="color: rgb(12, 135, 39); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 1px solid rgb(12, 135, 39); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Close Listing">Listing Open</button>
             </form>
             {% else %}
             <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 2px solid rgb(234, 15, 15); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Reopen Listing">Listing Closed</button>
+                <button type="submit" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 1px solid rgb(234, 15, 15); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Reopen Listing">Listing Closed</button>
             </form>
             {% endif %}
             <form method="POST" action="{% url 'submitter:delete-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="border: 2px solid #000000; border-radius: 5px; margin-left: 10px; padding: 0.5vw; background-color: transparent; color: #000000; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">
-                    <i class="fa-solid fa-trash-can"></i> Delete Listing</button>
+                <button type="submit" style="border: 1px solid #000000; border-radius: 5px; margin-left: 1vw; margin-right: 2vw; padding: 0.5vw; background-color: transparent; color: #000000; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">
+                    <i class="fa-solid fa-trash-can"></i> Delete</button>
             </form>
         </div>
         <!-- Shareable Link Section -->
