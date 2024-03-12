@@ -33,6 +33,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 
+STATES = {
+    "is_submitting": False,
+}
+
 # password reset class override
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'submitter/password_reset.html'
@@ -107,6 +111,8 @@ def submission(request, listing_id):
     error_messages = list(messages.get_messages(request))
     if error_messages:
         context['error_message'] = error_messages[0]
+
+    STATES['is_submitting'] = True
     
     return render(request, "submitter/submission.html", context)
 
@@ -256,7 +262,8 @@ def submit(request, listing_id):
 
         request.session["info"] = "Please create an account with us so we can save these responses for future quizzes. We promise not to spam with mailing lists, even if you want us to."
         return redirect(reverse('submitter:register'))
-    
+
+    STATES['is_submitting'] = False
     redirect_url = reverse("submitter:submission_complete", args = [listing_id])
     return redirect(redirect_url)
 
@@ -333,7 +340,11 @@ def loginPage(request):
                 if "submit" in request.session:
                     submit_from_redirect(request, user)
                 login(request, user)
-                return redirect('submitter:home')
+                if STATES['is_submitting']:
+                    STATES['is_submitting'] = False
+                    return render(request, "submitter/submission_complete.html")
+                else:
+                    return redirect('submitter:home')
             else:
                 form.add_error(None, "Invalid credentials")
 
@@ -397,12 +408,16 @@ def verify_email_confirm(request, uidb64, token):
             user.email_is_verified = True  
             user.save()
             login(request, user)  
-            messages.success(request, 'Your email has been verified. You are now logged in.')  
-            return redirect('submitter:home')  
+            messages.success(request, 'Your email has been verified. You are now logged in.')
+            if STATES['is_submitting']:
+                STATES['is_submitting'] = False
+                return render(request, "submitter/submission_complete.html")
+            else:
+                return redirect('submitter:home')
 
     messages.warning(request, 'Failed to verify email. Please try again later.')
     print("this did not work")
-    return redirect('submitter:home') 
+    return redirect('submitter:home')
 
 def change_password(request):
    form = PasswordChangeForm(user=request.user, data=request.POST or None)
