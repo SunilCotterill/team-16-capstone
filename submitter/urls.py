@@ -15,6 +15,7 @@ urlpatterns = [
     path("<int:listing_id>/results", views.results, name="results"),
     path("<int:listing_id>/results/<str:email>", views.result, name="result"),
     path('<int:listing_id>/results/switch_shortlist/<int:listing_response_id>/', views.update_shortlist, name='update_shortlist'),
+    path('<int:listing_id>/result/switch_shortlist/<int:listing_response_id>/', views.update_shortlist_result, name='update_shortlist_result'),
     path("<int:listing_id>/submission_complete", views.submission_complete, name ="submission_complete"),
 
     path('register/', views.registerPage, name = "register"),

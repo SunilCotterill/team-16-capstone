@@ -11,6 +11,7 @@
         .title-container {
             display: flex;
             align-items: center; /* Align items vertically */
+            flex-direction: row;
         }
 
         .title {
@@ -18,8 +19,8 @@
             font-weight: 500; /* Make the title bold */
             margin-bottom: 1vh;
             font-family: 'Poppins', sans-serif;
-            margin-left: 20vw;
-            margin-top: 8vh;
+            padding-left: 20vw;
+            padding-top: 8vh;
         }
         
         /* CSS for the form and legends */
@@ -55,6 +56,32 @@
         body {
             padding-bottom: 10vh; /* Adjust the margin as needed */
         }
+        
+        .heart-icon {
+            font-size: 3vw; /* Set the size of the heart icon */
+            background-color: rgb(255, 255, 255);
+            padding-top: 7vh;
+            padding-left: 1vw;
+            margin-top: 0vh;
+            margin-left: 0vw;
+        }
+
+        .True {
+        background-color: transparent; /* Removes background color */
+        border: none; /* Removes border */
+        padding: 0; /* Removes padding if any */
+        }
+
+        .False {
+        background-color: transparent; /* Removes background color */
+        border: none; /* Removes border */
+        padding: 0; /* Removes padding if any */
+        }
+
+        .True:focus, .True:active, .False:focus, .False:active {
+        outline: none; /* Removes outline on focus or active */
+        box-shadow: none; /* Removes any box-shadow which might simulate a border */
+        }
     </style>
 </head>
 <body>
@@ -62,14 +89,19 @@
     <div class="title-container">
         <!-- Display filled or regular heart icon based on shortlisted status -->
         {% if listing_response.is_shortlisted %}
-            <h1 class="title">{{ first_name }} {{ last_name }} &nbsp; <i class="fas fa-heart" style="color: #20bdbc;"></i></h1>
+            <h1 class="title">{{ first_name }} {{ last_name }} </h1>
+            <form action="{% url 'submitter:update_shortlist_result' listing_id listing_response.id %}" method="get"> 
+                <button type="submit" class="True"><i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></button>
+            </form>
         {% else %}
-            <h1 class="title">{{ first_name }} {{ last_name }} &nbsp; <i class="far fa-heart" style="color: #20bdbc;"></i></h1>
+            <h1 class="title">{{ first_name }} {{ last_name }} </h1>
+            <form action="{% url 'submitter:update_shortlist_result' listing_id listing_response.id %}" method="get">
+                <button type="submit" class="False"><i class="far fa-heart heart-icon" style="color:#00B3B3;"></i></i></button>
+            </form>
         {% endif %}
         <!-- Link -->
         <a href="{% url 'submitter:results' listing_id %}" class="link"><i class="fas fa-arrow-left"></i>  Return to: {{ listing_name }} </a>
     </div>
-
     <!-- Form -->
     <form disabled class="form-container">
         {% block header %}
