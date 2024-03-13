@@ -75,6 +75,25 @@
             margin-top: 0vh; 
         }
 
+        .info-btn {
+            position: fixed !important;
+            background-color: #E6F1F1;
+            padding: 15px 30px;
+            border: 1px solid #908d92;
+            border-radius: 10px;
+            width: 13.5vw;
+            height: 8vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            color: black;
+            font-size: 1.1vw;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin-top: 12vh; 
+        }
+
         .logout-btn {
             position: fixed !important;
             background-color: #E6F1F1;
@@ -132,6 +151,9 @@
         
         <!-- Home Button -->
         <a href="{% url 'submitter:home' %}" class="home-btn"><i class="fas fa-home" style="color: #000000;"></i> &nbsp; Home</a>
+
+        <!-- Info Button -->
+        <a href="{% url 'submitter:info' %}" class="info-btn">Info</a>
 
         <!-- Change Password Button -->
         <a href="{% url 'submitter:change-password' %}" class="change-password-btn">Change Password</a>

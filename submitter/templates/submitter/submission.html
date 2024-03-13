@@ -99,6 +99,10 @@
                     {{ error_message }}
                 </div>
             {% endif %}
+            <p> You are seeing this questionnaire because somebody would like to know a little bit more information about you and other applicants before deciding on the perfect sublet.
+                Fill out each question honestly and the sublet poster will contact you if they would like any further information.
+                In order for your submission to be finalized, you must create an account with us with your uWaterloo or WLU email. We do this to ensure that listings are not being spammed.
+                Your account will also save your responses for each question, to save you time future submissions!</p>
             <form action="{% url 'submitter:submit' listing_id%}" method="post">
                 {% csrf_token %}
 

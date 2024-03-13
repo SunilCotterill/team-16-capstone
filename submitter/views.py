@@ -206,7 +206,10 @@ def submit_from_redirect(request,user):
         listingResponse = ListingResponse()
         listingResponse.listing = Listing.objects.get(pk = listing_id)
         listingResponse.responder =  user
-        listingResponse.save()
+        try:
+            listingResponse.save()
+        except Exception as e:
+            return redirect('submitter:login')
         keys_to_del = ["submit", "listing_id"]
         for key in request.session.keys():
             if key.startswith('question_'):
@@ -398,10 +401,9 @@ def verify_email_confirm(request, uidb64, token):
             user.save()
             login(request, user)  
             messages.success(request, 'Your email has been verified. You are now logged in.')  
-            return redirect('submitter:home')  
+            return redirect('submitter:info')  
 
     messages.warning(request, 'Failed to verify email. Please try again later.')
-    print("this did not work")
     return redirect('submitter:home') 
 
 def change_password(request):
@@ -413,4 +415,8 @@ def change_password(request):
    return render(request, 'submitter/change_password.html', {'form': form})
 
 def info(request):
+    if not request.user.is_authenticated:
+        return redirect("submitter:home")
+    elif not request.user.email_is_verified:
+        return redirect("submitter:verify-email")
     return render(request, 'submitter/info.html')
