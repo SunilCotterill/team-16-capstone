@@ -33,9 +33,6 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 
-STATES = {
-    "is_submitting": False,
-}
 
 # password reset class override
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
@@ -91,7 +88,7 @@ def submission(request, listing_id):
     previous_answers = None
     if request.user.is_authenticated:
         responses = Response.objects.filter(listing_response__responder=request.user.id)
-        
+
         latest_responses = responses.values('question').annotate(
             latest_response_timestamp=Max('created_timestamp')
             ).order_by()
@@ -112,8 +109,8 @@ def submission(request, listing_id):
     if error_messages:
         context['error_message'] = error_messages[0]
 
-    STATES['is_submitting'] = True
-    
+    request.session['is_submitting'] = True
+
     return render(request, "submitter/submission.html", context)
 
 def results(request, listing_id):
@@ -126,7 +123,7 @@ def results(request, listing_id):
         for key in request.POST.keys():
             if key.startswith('question_'):
                 filters.append(int(request.POST.get(key)))
-        
+
     listing_responses_temp = ListingResponse.objects.filter(listing_id=listing_id).filter(responder__email_is_verified=True)
     user_ids = listing_responses_temp.values_list('responder', flat=True).distinct()
 
@@ -174,7 +171,7 @@ def reopen_listing(request, listing_id):
     listing.save()
     return redirect('submitter:results', listing_id)
 
-def delete_listing(request, listing_id):    
+def delete_listing(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
     listing.delete()
     return redirect('submitter:home')
@@ -183,7 +180,7 @@ def result(request, listing_id, email):
     listing = Listing.objects.get(id = listing_id)
     if not request.user.id == listing.creator.id:
         return redirect("submitter:home")
-    
+
     responder = CustomUser.objects.get(email=email)
     listingResponse = ListingResponse.objects.filter(listing=listing_id).get(responder=responder)
     answered_ids = Response.objects.filter(listing_response = listingResponse).values_list('answer__id', flat=True)
@@ -226,7 +223,7 @@ def submit_from_redirect(request,user):
                 keys_to_del.append(key)
         for key in keys_to_del:
             del request.session[key]
-            
+
 def submit(request, listing_id):
     if request.user.is_authenticated:
         # Get the CSRF token from the POST request
@@ -241,7 +238,7 @@ def submit(request, listing_id):
             messages.error(request, "Naughty naughty naughty, you are doing something you shouldn't")
             return submission(request, listing_id)
 
-            
+
         # Loop through all the keys in the POST data
         for key in request.POST.keys():
             # email = request.POST.get('email')
@@ -263,7 +260,7 @@ def submit(request, listing_id):
         request.session["info"] = "Please create an account with us so we can save these responses for future quizzes. We promise not to spam with mailing lists, even if you want us to."
         return redirect(reverse('submitter:register'))
 
-    STATES['is_submitting'] = False
+    del request.session['is_submitting']
     redirect_url = reverse("submitter:submission_complete", args = [listing_id])
     return redirect(redirect_url)
 
@@ -307,7 +304,7 @@ def registerPage(request):
         if "info" in request.session and request.session["info"]:
             messages.add_message(request, messages.INFO, request.session["info"])
             del request.session["info"]
-        
+
         if request.method == "POST":
             form = CreateUserForm(request.POST)
             if form.is_valid():
@@ -340,8 +337,8 @@ def loginPage(request):
                 if "submit" in request.session:
                     submit_from_redirect(request, user)
                 login(request, user)
-                if STATES['is_submitting']:
-                    STATES['is_submitting'] = False
+                if "is_submitting" in request.session:
+                    del request.session['is_submitting']
                     return render(request, "submitter/submission_complete.html")
                 else:
                     return redirect('submitter:home')
@@ -377,12 +374,12 @@ def update_shortlist(request, listing_id, listing_response_id):
         listingResponse = ListingResponse.objects.get(pk=listing_response_id)
         listingResponse.is_shortlisted = not listingResponse.is_shortlisted  # Toggle the shortlisted field
         listingResponse.save()
-        
+
         return redirect('submitter:results', listing_id)
 
     except listingResponse.DoesNotExist:
         return render(request, "submitter/homepage.html", context)
-    
+
 def verify_email_done(request):
     return render(request, 'submitter/verify_email_done.html')
 
@@ -405,12 +402,12 @@ def verify_email_confirm(request, uidb64, token):
             user = None
 
         if user is not None and account_activation_token.check_token(user, token):
-            user.email_is_verified = True  
+            user.email_is_verified = True
             user.save()
-            login(request, user)  
+            login(request, user)
             messages.success(request, 'Your email has been verified. You are now logged in.')
-            if STATES['is_submitting']:
-                STATES['is_submitting'] = False
+            if "is_submitting" in request.session:
+                del request.session['is_submitting']
                 return render(request, "submitter/submission_complete.html")
             else:
                 return redirect('submitter:home')
@@ -422,7 +419,7 @@ def verify_email_confirm(request, uidb64, token):
 def change_password(request):
    form = PasswordChangeForm(user=request.user, data=request.POST or None)
    if form.is_valid():
-     form.save()
-     update_session_auth_hash(request, form.user)
-     return redirect('submitter:home')
+       form.save()
+       update_session_auth_hash(request, form.user)
+       return redirect('submitter:home')
    return render(request, 'submitter/change_password.html', {'form': form})
