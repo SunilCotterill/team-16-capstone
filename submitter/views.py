@@ -209,7 +209,10 @@ def submit_from_redirect(request,user):
         listingResponse = ListingResponse()
         listingResponse.listing = Listing.objects.get(pk = listing_id)
         listingResponse.responder =  user
-        listingResponse.save()
+        try:
+            listingResponse.save()
+        except Exception as e:
+            return redirect('submitter:login')
         keys_to_del = ["submit", "listing_id"]
         for key in request.session.keys():
             if key.startswith('question_'):
@@ -430,7 +433,14 @@ def verify_email_confirm(request, uidb64, token):
 def change_password(request):
    form = PasswordChangeForm(user=request.user, data=request.POST or None)
    if form.is_valid():
-       form.save()
-       update_session_auth_hash(request, form.user)
-       return redirect('submitter:home')
+     form.save()
+     update_session_auth_hash(request, form.user)
+     return redirect('submitter:home')
    return render(request, 'submitter/change_password.html', {'form': form})
+
+def info(request):
+    if not request.user.is_authenticated:
+        return redirect("submitter:home")
+    elif not request.user.email_is_verified:
+        return redirect("submitter:verify-email")
+    return render(request, 'submitter/info.html')

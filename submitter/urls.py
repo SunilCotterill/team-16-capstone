@@ -46,6 +46,8 @@ urlpatterns = [
 
     path('delete-listing/<int:listing_id>/complete/', views.delete_listing, name='delete-listing'),
 
+    path('info/', views.info, name='info'),
+
     # Catch all for unknown links
     re_path(r'^.*$', RedirectView.as_view(url='/'), name='redirect-to-home'),
 ]
