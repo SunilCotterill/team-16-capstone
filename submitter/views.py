@@ -411,3 +411,6 @@ def change_password(request):
      update_session_auth_hash(request, form.user)
      return redirect('submitter:home')
    return render(request, 'submitter/change_password.html', {'form': form})
+
+def info(request):
+    return render(request, 'submitter/info.html')
