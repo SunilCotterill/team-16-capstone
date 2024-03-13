@@ -374,8 +374,19 @@ def update_shortlist(request, listing_id, listing_response_id):
         listingResponse = ListingResponse.objects.get(pk=listing_response_id)
         listingResponse.is_shortlisted = not listingResponse.is_shortlisted  # Toggle the shortlisted field
         listingResponse.save()
-
         return redirect('submitter:results', listing_id)
+
+    except listingResponse.DoesNotExist:
+        return render(request, "submitter/homepage.html", context)
+    
+@login_required
+def update_shortlist_result(request, listing_id, listing_response_id):
+    context={}
+    try:
+        listingResponse = ListingResponse.objects.get(pk=listing_response_id)
+        listingResponse.is_shortlisted = not listingResponse.is_shortlisted  # Toggle the shortlisted field
+        listingResponse.save()
+        return redirect('submitter:result', listing_id, listingResponse.responder.email)
 
     except listingResponse.DoesNotExist:
         return render(request, "submitter/homepage.html", context)
