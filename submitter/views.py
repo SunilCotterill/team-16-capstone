@@ -374,7 +374,6 @@ def update_shortlist(request, listing_id, listing_response_id):
         listingResponse = ListingResponse.objects.get(pk=listing_response_id)
         listingResponse.is_shortlisted = not listingResponse.is_shortlisted  # Toggle the shortlisted field
         listingResponse.save()
-# return HttpResponseRedirect(request.path_info)
         return redirect('submitter:results', listing_id)
 
     except listingResponse.DoesNotExist:
