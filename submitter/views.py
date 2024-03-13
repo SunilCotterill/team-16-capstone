@@ -418,14 +418,6 @@ def verify_email_confirm(request, uidb64, token):
         if user is not None and account_activation_token.check_token(user, token):
             user.email_is_verified = True
             user.save()
-<<<<<<< HEAD
-            login(request, user)  
-            messages.success(request, 'Your email has been verified. You are now logged in.')  
-            return redirect('submitter:info')  
-
-    messages.warning(request, 'Failed to verify email. Please try again later.')
-    return redirect('submitter:home') 
-=======
             login(request, user)
             messages.success(request, 'Your email has been verified. You are now logged in.')
             if "is_submitting" in request.session:
@@ -437,12 +429,10 @@ def verify_email_confirm(request, uidb64, token):
     messages.warning(request, 'Failed to verify email. Please try again later.')
     print("this did not work")
     return redirect('submitter:home')
->>>>>>> master
 
 def change_password(request):
    form = PasswordChangeForm(user=request.user, data=request.POST or None)
    if form.is_valid():
-<<<<<<< HEAD
      form.save()
      update_session_auth_hash(request, form.user)
      return redirect('submitter:home')
@@ -454,9 +444,3 @@ def info(request):
     elif not request.user.email_is_verified:
         return redirect("submitter:verify-email")
     return render(request, 'submitter/info.html')
-=======
-       form.save()
-       update_session_auth_hash(request, form.user)
-       return redirect('submitter:home')
-   return render(request, 'submitter/change_password.html', {'form': form})
->>>>>>> master
