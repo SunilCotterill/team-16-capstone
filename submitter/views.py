@@ -360,7 +360,7 @@ def logout_view(request):
     return redirect("submitter:login")
 
 @login_required
-def update_shortlist(request, listing_id, listing_response_id, return_string = 'submitter:results'):
+def update_shortlist(request, listing_id, listing_response_id):
     context={}
     try:
         listingResponse = ListingResponse.objects.get(pk=listing_response_id)
@@ -374,13 +374,11 @@ def update_shortlist(request, listing_id, listing_response_id, return_string = '
     
 @login_required
 def update_shortlist_result(request, listing_id, listing_response_id):
-    print("here")
     context={}
     try:
         listingResponse = ListingResponse.objects.get(pk=listing_response_id)
         listingResponse.is_shortlisted = not listingResponse.is_shortlisted  # Toggle the shortlisted field
         listingResponse.save()
-        # return HttpResponseRedirect(request.path_info)
         return redirect('submitter:result', listing_id, listingResponse.responder.email)
 
     except listingResponse.DoesNotExist:
