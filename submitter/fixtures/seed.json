@@ -95,7 +95,7 @@
         "model": "submitter.question",
         "pk": 3,
         "fields": {
-            "question_text": "What is your program of study?",
+            "question_text": "What is your faculty of study?",
             "category" : "Demographic"
         }
     },
@@ -112,7 +112,7 @@
         "pk": 11,
         "fields": {
             "question": 3,
-            "answer_text": "Business"
+            "answer_text": "Arts"
         }
     },
     {
@@ -120,12 +120,36 @@
         "pk": 12,
         "fields": {
             "question": 3,
-            "answer_text": "Environmental Science"
+            "answer_text": "Environment"
         }
     },   
     {
         "model": "submitter.answer",
         "pk": 13,
+        "fields": {
+            "question": 3,
+            "answer_text": "Science"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 100,
+        "fields": {
+            "question": 3,
+            "answer_text": "Health"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 101,
+        "fields": {
+            "question": 3,
+            "answer_text": "Math"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 102,
         "fields": {
             "question": 3,
             "answer_text": "Other"
@@ -927,7 +951,7 @@
         "model": "submitter.question",
         "pk": 28,
         "fields": {
-            "question_text": "What chores do you think should be shared between roommates? (Shared between roommates means that you will share the responsibility.)",
+            "question_text": "Which of the below chores are you most willing to take full responsibility of?",
             "category" : "Household"
         }
     },
@@ -977,7 +1001,7 @@
         "model": "submitter.question",
         "pk": 29,
         "fields": {
-            "question_text": "Please list up to five hobbies of yours. They should be separated by a comma (i.e.: alien hunting, underwater basket weaving).",
+            "question_text": "Of the below listed hobbies, please select your favourite.",
             "category" : "Social"
         }
     },
@@ -986,7 +1010,7 @@
         "pk": 88,
         "fields": {
             "question": 29,
-            "answer_text": "Movies"
+            "answer_text": "Movies and TV"
         }
     },
     {
@@ -994,7 +1018,7 @@
         "pk": 89,
         "fields": {
             "question": 29,
-            "answer_text": "Reading"
+            "answer_text": "Reading / writing"
         }
     },
     {
@@ -1002,7 +1026,7 @@
         "pk": 90,
         "fields": {
             "question": 29,
-            "answer_text": "Video games"
+            "answer_text": "Gaming (video games, board games etc.)"
         }
     },
     {
@@ -1010,7 +1034,7 @@
         "pk": 91,
         "fields": {
             "question": 29,
-            "answer_text": "Sports"
+            "answer_text": "Sports and fitness"
         }
     },
     {
@@ -1019,6 +1043,14 @@
         "fields": {
             "question": 29,
             "answer_text": "Listing to music"
+        }
+    },
+    {
+        "model": "submitter.answer",
+        "pk": 93,
+        "fields": {
+            "question": 29,
+            "answer_text": "Outdoor activities"
         }
     }
 ]
