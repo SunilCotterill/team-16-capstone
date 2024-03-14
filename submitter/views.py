@@ -353,8 +353,8 @@ def homePage(request):
     if request.user.is_authenticated and request.user.email_is_verified:
         listings = Listing.objects.all().filter(creator=request.user)
         for listing in listings:
-            listing.applicant_count = ListingResponse.objects.filter(listing=listing).count()
-            listing.shortlist_count = ListingResponse.objects.filter(listing=listing, is_shortlisted=True).count()
+            listing.applicant_count = ListingResponse.objects.filter(listing=listing).filter(responder__email_is_verified=True).count()
+            listing.shortlist_count = ListingResponse.objects.filter(listing=listing, is_shortlisted=True).filter(responder__email_is_verified=True).count()
 
         context={'listings':listings, 'first_name': request.user.first_name}
         return render(request, "submitter/homepage.html", context)

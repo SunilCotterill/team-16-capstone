@@ -1,48 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ApartMate</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <!-- Font Awesome CSS -->
     <style>
-        
-        .content {
-            margin-top: 4vh;
-            padding-left: 18vw;
-        }
-        .form-padding {
-            padding-left: 4vw;
-        }
+      .content {
+        margin-top: 4vh;
+        padding-left: 18vw;
+      }
+      .form-padding {
+        padding-left: 4vw;
+      }
 
-        .form-group {
-            margin-bottom: 20px; 
-            text-align: left; 
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .demographic-questions-container {
+        position: relative;
+      }
+
+      .demographic-questions-content {
+        /* display: none; */
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+
+      /* Now define styles for the .hidden class */
+      .demographic-questions-content.hidden {
+        display: none; /* Change display to block when hidden class is applied */
+        opacity: 0; /* Hide content visually with opacity */
+        transition: opacity 0.3s ease-in-out; /* Add a smooth transition effect */
+      }
+
+      .household-questions-container {
+        position: relative;
+      }
+
+      .household-questions-content {
+        /* display: none; */
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+
+      /* Now define styles for the .hidden class */
+      .household-questions-content.hidden {
+        display: none; /* Change display to block when hidden class is applied */
+        opacity: 0; /* Hide content visually with opacity */
+        transition: opacity 0.3s ease-in-out; /* Add a smooth transition effect */
+      }
+
+      .social-questions-container {
+        position: relative;
+      }
+
+      .social-questions-content {
+        /* display: none; */
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+
+      /* Now define styles for the .hidden class */
+      .social-questions-content.hidden {
+        display: none; /* Change display to block when hidden class is applied */
+        opacity: 0; /* Hide content visually with opacity */
+        transition: opacity 0.3s ease-in-out; /* Add a smooth transition effect */
+      }
+
+      .question_btn{
+        border-color: #17A2B8;
+      }
+
+      .btn-submit {
+            background-color: #1FBCBC; /* Set background color */
+            color: white; /* Set font color */
+            font-size: 15px; /* Set font size */
+            padding: 10px 40px; /* Adjust padding */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Add border radius */
         }
-        /* label { font-weight: bold; } */
     </style>
-</head>
-<body>
-
-    {% block header %}
-        {% include 'submitter/base.html' %}
-    {% endblock %}
+  </head>
+  <body>
+    {% block header %} {% include 'submitter/base.html' %} {% endblock %}
 
     <div class="content">
+      <h1>Create a New Listing</h1>
+      <br />
+      <form method="POST" action="" class="form-padding">
+        {% csrf_token %}
+        <div class="form-group">Listing Name: {{ form.name }}</div>
+        
 
-        <h1>Create a New Listing</h1>
-        <br>
-        <form method="POST" action = "" class = "form-padding">
-            {% csrf_token %}
-            {{ form }}
-            <input type = "submit", value = "Create Listing">
-        </form>
+        <details open>
+          <summary style="font-size: larger;"><b>Demographic Questions</b></summary>
+          {{ form.demographic_questions }}
 
+        </details>
+
+        <details>
+          <summary style="font-size: larger;"><b>Household Questions</b></summary>
+          {{ form.household_questions }}
+
+        </details>
+
+
+        <details>
+          <summary style="font-size: larger;"><b>Social Questions</b></summary>
+          {{ form.social_questions }}
+
+        </details>
+        <br> 
+        <input type="submit" class="btn-submit", value="Create Listing" />
+      </form>
     </div>
+  </body>
+</html>
 
+<script>
+  const toggle_demographic = document.getElementById("demographic_questions_toggle");
+  const content_demographic = document.querySelector(".demographic-questions-content");
 
-</body>
+  const toggle_household = document.getElementById("household_questions_toggle");
+  const content_household = document.querySelector(".household-questions-content");
 
+  const toggle_social = document.getElementById("social_questions_toggle");
+  const content_social = document.querySelector(".social-questions-content");
 
+  toggle_demographic.addEventListener("click", () => {
+    content_demographic.classList.toggle("hidden");
+  });
 
+  toggle_household.addEventListener("click", () => {
+    content_household.classList.toggle("hidden");
+  });
+
+  toggle_social.addEventListener("click", () => {
+    content_social.classList.toggle("hidden");
+  });
+</script>

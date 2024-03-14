@@ -27,7 +27,7 @@ class CreateListingForm(forms.ModelForm):
         label='Demographic Questions',
         required = False,
         queryset=Question.objects.filter(category = "Demographic"),
-        widget=forms.CheckboxSelectMultiple()
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-select'})
     )
 
     social_questions = forms.ModelMultipleChoiceField(
