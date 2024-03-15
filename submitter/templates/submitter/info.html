@@ -44,12 +44,12 @@
             margin-top: 50px;
             margin-left: 8vw; /* Adjusted to ensure it's positioned correctly */
             max-width: 70vw; /* Ensure content does not stretch too wide */
+            padding-left: 10vw;
         }
 
         .welcome-title, .listing-title, .info-text, .listings-container, .new-listing-container {
             width: 100%; /* Ensure they take up full width of their container */
             /* Other styling adjustments as necessary */
-            padding-left: 10vw;
         }
 
         .welcome-title {
@@ -181,6 +181,7 @@
             padding-bottom: -1vh;
             text-align: left;
         }
+
     </style>
 </head>
 <body>
@@ -191,6 +192,16 @@
 
     <div class="content">
         <h3 class="welcome-title">Welcome to ApartMate!</h3>
+
+        {% if messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="info" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <p class="info-text">Thank you for choosing our platform for your subletting needs! We are here to streamline the process of finding a compatible roommate.</p>
         
         <h4 class='info-text'> <b>What is ApartMate?</b></h4>
