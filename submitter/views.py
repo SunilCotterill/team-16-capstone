@@ -433,7 +433,7 @@ def verify_email_confirm(request, uidb64, token):
                 del request.session['is_submitting']
                 return render(request, "submitter/submission_complete.html")
             else:
-                return redirect('submitter:home')
+                return redirect('submitter:info')
 
     messages.warning(request, 'Failed to verify email. Please try again later.')
     print("this did not work")
