@@ -435,7 +435,6 @@ def verify_email_confirm(request, uidb64, token):
             else:
                 return render(request, 'submitter/info.html')
 
-    messages.success(request, 'testing and also beans and also silly little leprechauns')
     return redirect('submitter:home')
 
 def change_password(request):
