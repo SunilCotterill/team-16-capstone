@@ -968,7 +968,7 @@
         "pk": 84,
         "fields": {
             "question": 28,
-            "answer_text": "Vacuuming/sweeping"
+            "answer_text": "Vacuuming / sweeping"
         }
     },
     {
@@ -976,7 +976,7 @@
         "pk": 85,
         "fields": {
             "question": 28,
-            "answer_text": "Garbage/recycling"
+            "answer_text": "Garbage / recycling"
         }
     },
     {
@@ -1034,7 +1034,7 @@
         "pk": 91,
         "fields": {
             "question": 29,
-            "answer_text": "Sports and fitness"
+            "answer_text": "Sports / fitness"
         }
     },
     {
@@ -1042,7 +1042,7 @@
         "pk": 92,
         "fields": {
             "question": 29,
-            "answer_text": "Listing to music"
+            "answer_text": "Listening to music"
         }
     },
     {
