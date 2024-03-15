@@ -1,14 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect, reverse
 from .models import Question, Answer, Listing, Response, CustomUser, ListingResponse
-from django.template import loader
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.forms import  PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
-from django.utils.http import url_has_allowed_host_and_scheme
-from django.http import JsonResponse
 from .forms import CreateUserForm
 
 # For email verification
@@ -118,28 +113,38 @@ def results(request, listing_id):
     if not request.user.id == listing.creator.id:
         return redirect("submitter:home")
 
+    # Kept filters for populating checkbox
     filters = []
+    filters_dict = {}
     if request.method == "POST":
         for key in request.POST.keys():
             if key.startswith('question_'):
+                split = key.split('_')
+                question_id = split[1]
+                answer_id = split[2]
+                if question_id in filters_dict:
+                    filters_dict[question_id].append(answer_id)
+                else:
+                    filters_dict[question_id] = [answer_id]
                 filters.append(int(request.POST.get(key)))
 
     listing_responses_temp = ListingResponse.objects.filter(listing_id=listing_id).filter(responder__email_is_verified=True)
-    user_ids = listing_responses_temp.values_list('responder', flat=True).distinct()
 
     listing_questions_list = listing.questions.all()
     question_ids = list(listing_questions_list.values_list("id", flat = True))
     listing_answers_list = Answer.objects.filter(question__in = question_ids)
     listing_responses = []
-    if filters:
+    if filters_dict:
         for listing_response in listing_responses_temp:
             flag = True
             responses_for_email = Response.objects.filter(listing_response=listing_response.id)
-            for filter in filters:
-                if filter not in responses_for_email.values_list('answer_id', flat=True):
-                    flag = False
-                    break
-            if flag:
+            responders_answers = responses_for_email.values_list('answer_id', flat=True)
+            for cur_question_id in question_ids:
+                if cur_question_id in filters_dict:
+                    if not all(x in responders_answers for x in filters_dict[cur_question_id]):
+                        flag = False
+                        break
+            if flag: 
                 listing_responses.append(listing_response)
     else:
         listing_responses = listing_responses_temp
@@ -281,7 +286,11 @@ def new_listing(request):
         form = CreateListingForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
-            questions = form.cleaned_data["questions"]
+            demographic_questions = form.cleaned_data["demographic_questions"]
+            social_questions = form.cleaned_data["social_questions"]
+            household_questions = form.cleaned_data["household_questions"]
+
+            questions = demographic_questions | social_questions | household_questions
 
             listing = Listing()
             listing.name = name
@@ -355,8 +364,8 @@ def homePage(request):
     if request.user.is_authenticated and request.user.email_is_verified:
         listings = Listing.objects.all().filter(creator=request.user)
         for listing in listings:
-            listing.applicant_count = ListingResponse.objects.filter(listing=listing).count()
-            listing.shortlist_count = ListingResponse.objects.filter(listing=listing, is_shortlisted=True).count()
+            listing.applicant_count = ListingResponse.objects.filter(listing=listing).filter(responder__email_is_verified=True).count()
+            listing.shortlist_count = ListingResponse.objects.filter(listing=listing, is_shortlisted=True).filter(responder__email_is_verified=True).count()
 
         context={'listings':listings, 'first_name': request.user.first_name}
         return render(request, "submitter/homepage.html", context)
@@ -424,7 +433,7 @@ def verify_email_confirm(request, uidb64, token):
                 del request.session['is_submitting']
                 return render(request, "submitter/submission_complete.html")
             else:
-                return redirect('submitter:home')
+                return redirect('submitter:info')
 
     messages.warning(request, 'Failed to verify email. Please try again later.')
     print("this did not work")

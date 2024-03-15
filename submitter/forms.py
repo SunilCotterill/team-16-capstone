@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from .models import CustomUser, Question, Listing
+from django.utils.safestring import mark_safe
 
 
 
@@ -22,19 +23,32 @@ class CreateUserForm(UserCreationForm):
 
 class CreateListingForm(forms.ModelForm):
     name = forms.CharField(required=True, label='Name', max_length=200)
-    questions = forms.ModelMultipleChoiceField(
-        label="Questions",
-        required=True,  # Set to True
-        queryset=Question.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"})
+    demographic_questions = forms.ModelMultipleChoiceField(
+        label='Demographic Questions',
+        required = False,
+        queryset=Question.objects.filter(category = "Demographic"),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'checkbox-select'})
     )
+
+    social_questions = forms.ModelMultipleChoiceField(
+        label="Social Questions",
+        required = False,
+        queryset=Question.objects.filter(category = "Social"),
+        widget=forms.CheckboxSelectMultiple()
+    )
+
+    household_questions = forms.ModelMultipleChoiceField(
+        label="Household Questions",
+        required = False,
+        queryset=Question.objects.filter(category = "Household"),
+        widget=forms.CheckboxSelectMultiple()
+    )
+
 
     def clean(self):
         cleaned_data = super().clean()
-        questions = cleaned_data.get('questions')
-        
         # Check if questions are empty
-        if not questions:
+        if not cleaned_data.get('demographic_questions')  and not cleaned_data.get('social_questions') and not cleaned_data.get('household_questions'):
             raise forms.ValidationError("At least one response is required.")
         
         return cleaned_data
@@ -43,6 +57,8 @@ class CreateListingForm(forms.ModelForm):
         model = Listing
         fields = [
             "name",
-            "questions"
+            "demographic_questions",
+            "social_questions",
+            "household_questions"
         ]
 
