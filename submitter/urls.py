@@ -15,6 +15,7 @@ urlpatterns = [
     path("<int:listing_id>/results", views.results, name="results"),
     path("<int:listing_id>/results/<str:email>", views.result, name="result"),
     path('<int:listing_id>/results/switch_shortlist/<int:listing_response_id>/', views.update_shortlist, name='update_shortlist'),
+    path('<int:listing_id>/result/switch_shortlist/<int:listing_response_id>/', views.update_shortlist_result, name='update_shortlist_result'),
     path("<int:listing_id>/submission_complete", views.submission_complete, name ="submission_complete"),
 
     path('register/', views.registerPage, name = "register"),
@@ -44,6 +45,8 @@ urlpatterns = [
     path('listing-reopened/<int:listing_id>/complete', views.reopen_listing, name='reopen-listing'),
 
     path('delete-listing/<int:listing_id>/complete/', views.delete_listing, name='delete-listing'),
+
+    path('info/', views.info, name='info'),
 
     # Catch all for unknown links
     re_path(r'^.*$', RedirectView.as_view(url='/'), name='redirect-to-home'),
