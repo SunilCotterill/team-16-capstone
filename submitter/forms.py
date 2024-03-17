@@ -10,6 +10,11 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 class CreateUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    first_name = forms.CharField(max_length=100, label='First Name', widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
+    last_name = forms.CharField(max_length=100, label='Last Name', widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
+    email = forms.EmailField(max_length=100,label='School Email (UW or WLU)', widget=forms.EmailInput(attrs={'placeholder': 'School Email (UW or WLU)'}))
+    password1 = forms.CharField(max_length=100,label='Password', widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    password2 = forms.CharField(max_length=100, label='Confirm Password', widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
     class Meta:
         model = CustomUser
         fields = ['first_name','last_name','email','password1','password2']
@@ -20,7 +25,7 @@ class CreateUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
+    
 class CreateListingForm(forms.ModelForm):
     name = forms.CharField(required=True, label='Name', max_length=200)
     demographic_questions = forms.ModelMultipleChoiceField(
