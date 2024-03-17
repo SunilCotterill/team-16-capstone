@@ -94,10 +94,13 @@
     <div class="light-blue-section">
         <div class="centered-box">
             <h2 class="listing-name">{{ listing_name }} Application</h2>
-            {% if error_message %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error_message }}
-                </div>
+            {% if messages %}
+            <div class="alert alert-danger alert-dismissible">
+                <a href="submission" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </div>
             {% endif %}
             <p> You are seeing this questionnaire because somebody would like to know a little bit more information about you and other applicants before deciding on the perfect sublet.
                 Fill out each question honestly and the sublet poster will contact you if they would like any further information.

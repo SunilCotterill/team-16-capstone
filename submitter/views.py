@@ -34,8 +34,8 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'submitter/password_reset.html'
     email_template_name = 'submitter/password_reset_email.html'
     subject_template_name = 'submitter/password_reset_subject.txt'
-    success_message = "We've emailed you instructions for setting your password, " \
-                      "if an account exists with the email you entered. You should receive them shortly." \
+    success_message = "We've emailed you instructions for resetting your password. " \
+                      "If an account exists with the email you entered, you should receive one shortly." \
                       " If you don't receive an email, " \
                       "please make sure you've entered the address you registered with, and check your spam folder."
     success_url = reverse_lazy('submitter:home')
@@ -101,9 +101,9 @@ def submission(request, listing_id):
         "listing_answers_list": listing_answers_list,
         "previous_answers": previous_answers
     }
-    error_messages = list(messages.get_messages(request))
-    if error_messages:
-        context['error_message'] = error_messages[0]
+    # messages = list(messages.get_messages(request))
+    # if messages:
+    #     context['message'] = messages[0]
 
     request.session['is_submitting'] = True
 
@@ -244,8 +244,8 @@ def submit(request, listing_id):
         try:
             listingResponse.save()
         except Exception as e:
-            messages.error(request, "Naughty naughty naughty, you are doing something you shouldn't")
-            return submission(request, listing_id)
+            messages.error(request, "You have already submitted to this listing. You cannot submit again.")
+            return redirect("submitter:submission", listing_id)
 
 
         # Loop through all the keys in the POST data
@@ -418,7 +418,7 @@ def verify_email_confirm(request, uidb64, token):
     if request.method == 'POST':
         uidb64 = request.POST.get('uidb64')
         token = request.POST.get('token')
-
+        context = {}
         try:
             uidb64 = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uidb64)
@@ -432,11 +432,10 @@ def verify_email_confirm(request, uidb64, token):
             messages.success(request, 'Your email has been verified. You are now logged in.')
             if "is_submitting" in request.session:
                 del request.session['is_submitting']
-                return render(request, "submitter/submission_complete.html")
+                return redirect("submitter:submission_complete")
             else:
-                return redirect('submitter:info')
+                return render(request, 'submitter/info.html')
 
-    messages.warning(request, 'Failed to verify email. Please try again later.')
     return redirect('submitter:home')
 
 def change_password(request):
