@@ -20,8 +20,12 @@
       }
 
       .form-group {
+        font-size: larger;
         margin-bottom: 20px;
         text-align: left;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px solid #D3D3D3;
       }
 
       .demographic-questions-container {
@@ -29,16 +33,14 @@
       }
 
       .demographic-questions-content {
-        /* display: none; */
         padding: 10px;
         border: 1px solid #ddd;
       }
 
-      /* Now define styles for the .hidden class */
       .demographic-questions-content.hidden {
-        display: none; /* Change display to block when hidden class is applied */
-        opacity: 0; /* Hide content visually with opacity */
-        transition: opacity 0.3s ease-in-out; /* Add a smooth transition effect */
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
       }
 
       .household-questions-container {
@@ -46,16 +48,14 @@
       }
 
       .household-questions-content {
-        /* display: none; */
         padding: 10px;
         border: 1px solid #ddd;
       }
 
-      /* Now define styles for the .hidden class */
       .household-questions-content.hidden {
-        display: none; /* Change display to block when hidden class is applied */
-        opacity: 0; /* Hide content visually with opacity */
-        transition: opacity 0.3s ease-in-out; /* Add a smooth transition effect */
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
       }
 
       .social-questions-container {
@@ -63,30 +63,50 @@
       }
 
       .social-questions-content {
-        /* display: none; */
         padding: 10px;
         border: 1px solid #ddd;
       }
 
-      /* Now define styles for the .hidden class */
       .social-questions-content.hidden {
-        display: none; /* Change display to block when hidden class is applied */
-        opacity: 0; /* Hide content visually with opacity */
-        transition: opacity 0.3s ease-in-out; /* Add a smooth transition effect */
-      }
-
-      .question_btn{
-        border-color: #17A2B8;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
       }
 
       .btn-submit {
-            background-color: #1FBCBC; /* Set background color */
-            color: white; /* Set font color */
-            font-size: 15px; /* Set font size */
-            padding: 10px 40px; /* Adjust padding */
-            border: none; /* Remove default border */
-            border-radius: 5px; /* Add border radius */
-        }
+        background-color: #1FBCBC;
+        color: white;
+        font-size: 15px;
+        margin-top: 5px;
+        padding: 10px 40px;
+        border: none;
+        border-radius: 5px;
+      }
+
+      .btn-submit:hover{
+        color: black;
+      }
+
+      .details {
+        width: 70vw;
+      }
+
+      .question-grouping-header {
+        font-size: larger;
+        padding: 10px 15px;
+        border-radius: 5px;
+        background-color: #E6F1F1;
+        width: 70vw;
+        margin-bottom: 5px;
+      }
+
+      .question-grouping-header:hover {
+        background-color: #8fcfcf;
+      }
+
+      .questions-indent {
+        margin: 0 15px;
+      }
     </style>
   </head>
   <body>
@@ -100,29 +120,30 @@
         Applicants will select their answers to each question and results will be available from within that listing!</p>
         <p style = "padding-right: 20vw">The listing name below will be visible for all applicants, so make it something that represents you. Maybe your own name or the address you are subletting.</p>
       <form method="POST" action="">
+      <br />
+      <form method="POST" action="">
         {% csrf_token %}
-        <div class="form-group">Listing Name: {{ form.name }}</div>
-        
+<!--        <div class="form-group">Listing Name: {{ form.name }}</div>-->
+        <input type="text" class="form-group" name="name" placeholder="Listing Name">
 
-        <details open>
-          <summary style="font-size: larger;"><b>Demographic Questions</b></summary>
-          {{ form.demographic_questions }}
-
-        </details>
-
-        <details>
-          <summary style="font-size: larger;"><b>Household Questions</b></summary>
-          {{ form.household_questions }}
+        <details class="details" open>
+          <summary class="question-grouping-header"><b>Demographic Questions</b></summary>
+          <div class="questions-indent">{{ form.demographic_questions }}</div>
 
         </details>
 
-
-        <details>
-          <summary style="font-size: larger;"><b>Social Questions</b></summary>
-          {{ form.social_questions }}
+        <details class="details">
+          <summary class="question-grouping-header"><b>Household Questions</b></summary>
+          <div class="questions-indent">{{ form.household_questions }}</div>
 
         </details>
-        <br> 
+
+
+        <details class="details">
+          <summary class="question-grouping-header"><b>Social Questions</b></summary>
+          <div class="questions-indent">{{ form.social_questions }}</div>
+
+        </details>
         <input type="submit" class="btn-submit", value="Create Listing" />
       </form>
     </div>
