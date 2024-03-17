@@ -82,16 +82,17 @@ def submission(request, listing_id):
 
     previous_answers = None
     if request.user.is_authenticated:
-        responses = Response.objects.filter(listing_response__responder=request.user.id)
+        responder_prev_responses = Response.objects.filter(listing_response__responder=request.user.id).filter(question__in = listing_questions_list).order_by('-created_timestamp')
+        
+        bad_implementation = {}
+        for res in responder_prev_responses:
+            if res.question.id not in bad_implementation:
+                bad_implementation[res.question.id] = res.answer.id
+        
+        previous_answers = bad_implementation.values()
 
-        latest_responses = responses.values('question').annotate(
-            latest_response_timestamp=Max('created_timestamp')
-            ).order_by()
 
-        # Retrieve the responses corresponding to the latest response for each unique question
-        previous_answers= Response.objects.filter(
-            created_timestamp__in=latest_responses.values('latest_response_timestamp')
-        ).values('answer').values_list('id', flat=True)
+        
 
     context = {
         "listing_id": listing_id,
@@ -362,7 +363,7 @@ def loginPage(request):
 
 def homePage(request):
     if request.user.is_authenticated and request.user.email_is_verified:
-        listings = Listing.objects.all().filter(creator=request.user)
+        listings = Listing.objects.all().filter(creator=request.user).order_by('-id')
         for listing in listings:
             listing.applicant_count = ListingResponse.objects.filter(listing=listing).filter(responder__email_is_verified=True).count()
             listing.shortlist_count = ListingResponse.objects.filter(listing=listing, is_shortlisted=True).filter(responder__email_is_verified=True).count()
