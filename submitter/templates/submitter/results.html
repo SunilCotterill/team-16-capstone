@@ -10,7 +10,7 @@
     <style>
         /* Your existing CSS styles */
         /* Style for the details element */
-        
+
         body, h1, h2, h3, h4, h5, h6, p, a, button, label, summary {
           font-family: 'Poppins', sans-serif !important;
         }
@@ -24,7 +24,7 @@
           font-family: 'Poppins', sans-serif !important;
           padding-left: 0vw;
         }
-        
+
         details {
             border: 1px solid #ddd;
             padding: 10px;
@@ -40,7 +40,7 @@
             font-weight: bold;
             margin-left: 2vw; /* Align to the right */
             margin-right: 2vw; /* Move 8% of viewport width from the left */
-        }   
+        }
 
         /* Hide the content by default */
         details {
@@ -54,7 +54,7 @@
         }
 
         /* Style for the content within the details element */
-        
+
         details[open] {
             width: 25vw; /* Adjust width as needed when expanded */
             max-width: 25%; /* Limit maximum width when expanded */
@@ -94,7 +94,7 @@
 
         /* Move the submission URL text to the right */
         .submission-url {
-          margin-top: 3vh;  
+          margin-top: 3vh;
           margin-bottom:3vh;
           font-size: 1.3vw;
           margin-left: 4vw;
@@ -179,7 +179,7 @@
             margin-right: 5px;
             background-color: 00B3B3;
         }
-        
+
         /* Move the Response title to the left */
         .response-header {
             text-align: left; /* Align to the left */
@@ -405,12 +405,12 @@
     <!-- Main Content -->
     <div class="results-content">
         <div class="title-section">
+            <p class="main-title">Listing: {{listing_name}}</p>
             {% if not listing_status %}
                 <div class="status-circle green" title="Listing Status: Open"></div>
             {% else %}
                 <div class="status-circle red" title="Listing Status: Closed"></div>
             {% endif %}
-            <p class="main-title">Listing: {{listing_name}}</p>
         </div>
         <div class="title-and-action-container">
             {% if not listing_status %}
@@ -440,7 +440,7 @@
         <details style="margin-left: 4vw; width: fit-content;">
             <summary>Apply Filters</summary>
             <div class="filter-dropdown">
-        
+
                 <p style="font-size: 1vw;">Select the answers that you wish to be included in application submissions. If a question is left empty, all options will be considered viable. </p>
                 <form action="{% url 'submitter:results' listing_id%}" method="post">
                     {% csrf_token %}
