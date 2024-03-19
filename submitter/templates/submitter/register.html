@@ -123,7 +123,7 @@
                     <div class="alert alert-danger">
                         {% for field, error_list in form.errors.items %}
                             {% for error in error_list %}
-                                <p>{{ field }}: {{ error }}</p>
+                                <p> {{ error }}</p>
                             {% endfor %}
                         {% endfor %}
                     </div>
