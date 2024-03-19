@@ -87,17 +87,19 @@
                     <h3 class="red-border larger-title">ApartMate</h3>{% load static %}
                     <img src="{% static 'submitter/images/logo.svg' %}" alt="home" class="logo"> <!-- Updated SVG logo path and added logo class -->
                     
-                                        
-                    <p class="additional-text">
                         <h4 class='info-text'> <b>What is ApartMate?</b></h4>
                         <p class = 'info-text'>ApartMate is a new web app focused on helping the students of Waterloo find the best sublet they can. As uWaterloo students ourselves, we understand that the subletting process can be very demanding and time consuming. Our focus is to streamline the subletting process and ensure that you have the best opportunity for a real connection.</p>
                         <h4 class='info-text'> <b>How Do We Help?</b></h4>
                         <p class = 'info-text'>We have hand crafted a questionnaire based on what our users deem to be the most important things about living together. You can create a listing and we will provide a shareable link for you to put on your sublet posting, wherever you choose to do so. Potential sublets will fill out this questionnaire and then you can view and filter all the submissions from directly within our app. You can even shortlist the ones you like!</p>
                         <h4 class='info-text'> <b>Where Do You Start?</b></h4>
-                        <p class = 'info-text'>You can register for an account <a href="{% url 'submitter:register' %}"> here</a>! If you already have an account, then you can login from <a href="{% url 'submitter:login' %}"> here</a>!</p>
+                        <p class = 'info-text'>If you already have an account, then you can login with the button below. Otherwise, you can sign up and begin using ApartMate today!</p>
+                        
+                        <div>
+                            <a href="{% url 'submitter:login' %}" class="btn btn-login">Login</a>
+                            <a href="{% url 'submitter:register' %}" class="btn btn-login">Sign Up</a>
+                        </div>
 
-                    </p>
-                    </form>
+
                 </div>
             </div>
         </div>
