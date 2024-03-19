@@ -480,71 +480,76 @@
                     <a class="nav-link active" id="all-applicants-tab" data-toggle="tab" href="#all-applicants" role="tab" aria-controls="all-applicants" aria-selected="true">All Applicants</a>
                 </li>
 
-                <li class="nav-item shortlist-tab"> <!-- Modified -->
-                  <a class="nav-link" id="shortlist-tab" data-toggle="tab" href="#shortlist" role="tab" aria-controls="shortlist" aria-selected="false">Shortlist &nbsp; <i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></a>
-                </li>
-            </ul>
-            <!-- Tab content -->
-            <div class="tab-content" id="myTabContent">
+                    <li class="nav-item shortlist-tab"> <!-- Modified -->
+                    <a class="nav-link" id="shortlist-tab" data-toggle="tab" href="#shortlist" role="tab" aria-controls="shortlist" aria-selected="false">Shortlist &nbsp; <i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></a>
+                    </li>
+                </ul>
+                <!-- Tab content -->
+                <div class="tab-content" id="myTabContent">
 
-                <!-- All Applicants Tab -->
-                <div class="tab-pane fade show active" id="all-applicants" role="tabpanel" aria-labelledby="all-applicants-tab">
-                    <table>
-                        <tr>
-                            <th></th>
-                            <th>Applicant Name</th>
-                            <th>Email</th>
-                            <th class="response-header">Submission Results</th> <!-- Modified -->
-                        </tr>
-                        {% for listing_response in listing_responses %}
+                    <!-- All Applicants Tab -->
+                    {% if listing_responses %}
+                    <div class="tab-pane fade show active" id="all-applicants" role="tabpanel" aria-labelledby="all-applicants-tab">
+                        <table>
                             <tr>
-                                <td>
-                                    <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get" class="shortlist-form">
-                                        {% if listing_response.is_shortlisted %}
-                                            <button type="submit" class="True"><i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></button>
-                                        {% else %}
-                                            <button type="submit" class="False"><i class="far fa-heart heart-icon" style="color:#00B3B3;"></i></i></button>
-                                        {% endif %}
-                                    </form>
-                                </td>
-                                <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
-                                <td>{{ listing_response.responder.email }}</td>
-                                <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
+                                <th></th>
+                                <th>Applicant Name</th>
+                                <th>Email</th>
+                                <th class="response-header">Submission Results</th> <!-- Modified -->
                             </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-
-                <!-- Shortlist Tab -->
-                <div class="tab-pane fade" id="shortlist" role="tabpanel" aria-labelledby="shortlist-tab">
-                    <table>
-                        <tr>
-                            <th></th>
-                            <th>Applicant Name</th>
-                            <th>Email</th>
-                            <th class="response-header">Submission Results</th> <!-- Modified -->
-                        </tr>
-                        {% for listing_response in listing_responses %}
-                            {% if listing_response.is_shortlisted %}
+                            {% for listing_response in listing_responses %}
                                 <tr>
                                     <td>
-                                        <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get">
-                                            <button type="submit" class="{{ listing_response.is_shortlisted }}"><i class="fa-solid fa-heart heart-icon-bigger" style="color:#00B3B3;"></i></i></i></button>
+                                        <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get" class="shortlist-form">
+                                            {% if listing_response.is_shortlisted %}
+                                                <button type="submit" class="True"><i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></button>
+                                            {% else %}
+                                                <button type="submit" class="False"><i class="far fa-heart heart-icon" style="color:#00B3B3;"></i></i></button>
+                                            {% endif %}
                                         </form>
                                     </td>
                                     <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
-                                    <td>{{ listing_response.responder.email }}</td>
+                                    <td><a href="mailto:{{ listing_response.responder.email }}?subject=ApartMate Application&body=Hi there!%0D%0A%0D%0AI was just reviewing your application for my sublet on ApartMate! I like your answers and I would love to talk more!">{{ listing_response.responder.email }}</a></td>
                                     <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
                                 </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </table>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    {% endif %}
+
+                    <!-- Shortlist Tab -->
+                    {% if listing_responses %}
+                    <div class="tab-pane fade" id="shortlist" role="tabpanel" aria-labelledby="shortlist-tab">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>Applicant Name</th>
+                                <th>Email</th>
+                                <th class="response-header">Submission Results</th> <!-- Modified -->
+                            </tr>
+                            {% for listing_response in listing_responses %}
+                                {% if listing_response.is_shortlisted %}
+                                    <tr>
+                                        <td>
+                                            <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get">
+                                                <button type="submit" class="{{ listing_response.is_shortlisted }}"><i class="fa-solid fa-heart heart-icon-bigger" style="color:#00B3B3;"></i></i></i></button>
+                                            </form>
+                                        </td>
+                                        <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
+                                        <td>{{ listing_response.responder.email }}</td>
+                                        <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                    {% else %}
+                        <br><br>
+                        <p style ="font-size: 1vw;" > There are no applicants yet! Make sure to share the above link with potential applicants!</p>
+                    {% endif %}
                 </div>
             </div>
-        </div>
     </div>
-
-
 
 
     <!-- Bootstrap and JavaScript libraries -->

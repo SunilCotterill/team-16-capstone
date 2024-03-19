@@ -312,14 +312,13 @@ def new_listing(request):
 
 def registerPage(request):
     if not request.user.is_authenticated:
-        form = CreateUserForm()
+        form = CreateUserForm(request.POST or None)
         # We should really use request session to do this but for now I think this works
         if "info" in request.session and request.session["info"]:
             messages.add_message(request, messages.INFO, request.session["info"])
             del request.session["info"]
 
         if request.method == "POST":
-            form = CreateUserForm(request.POST)
             if form.is_valid():
                 form.save()
                 email = form['email'].value()
@@ -329,6 +328,10 @@ def registerPage(request):
                     submit_from_redirect(request, user)
                 login(request, user)
                 return redirect('submitter:verify-email')
+            else:
+                context = {'form': form}
+                return render(request, "submitter/register.html", context)
+
 
         context = {'form': form}
         return render(request, "submitter/register.html", context)
