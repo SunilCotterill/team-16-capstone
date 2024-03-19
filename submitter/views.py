@@ -44,32 +44,6 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 User = get_user_model()
 
 # send email with verification link
-def verify_email(request):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            if request.user.email_is_verified != True:
-                current_site = get_current_site(request)
-                user = request.user
-                email = request.user.email
-                subject = "Verify Email"
-                message = render_to_string('submitter/verify_email_message.html', {
-                    'request': request,
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uidb64':urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token':account_activation_token.make_token(user),
-                })
-                email = EmailMessage(
-                    subject, message, to=[email]
-                )
-                email.content_subtype = 'html'
-                email.send()
-                return redirect('submitter:verify-email-done')
-            else:
-                return redirect('submitter:signup')
-        return render(request, 'submitter/verify_email.html')
-    else:
-        return redirect('submitter:login')
 
 def index(request):
     return render(request, 'submitter/landing.html')
@@ -284,7 +258,7 @@ def new_listing(request):
     if not request.user.is_authenticated:
         return redirect("submitter:home")
     elif not request.user.email_is_verified:
-        return redirect("submitter:verify-email")
+        return redirect("submitter:login")
 
     if request.method == "POST":
         form = CreateListingForm(request.POST)
@@ -330,7 +304,7 @@ def registerPage(request):
                 if "submit" in request.session:
                     submit_from_redirect(request, user)
                 login(request, user)
-                return redirect('submitter:verify-email')
+                return verify_email(request)
             else:
                 context = {'form': form}
                 return render(request, "submitter/register.html", context)
@@ -340,6 +314,34 @@ def registerPage(request):
         return render(request, "submitter/register.html", context)
     else:
         return redirect('submitter:home')
+
+def verify_email(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            if request.user.email_is_verified != True:
+                current_site = get_current_site(request)
+                user = request.user
+                email = request.user.email
+                subject = "Verify Email"
+                message = render_to_string('submitter/verify_email_message.html', {
+                    'request': request,
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uidb64':urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token':account_activation_token.make_token(user),
+                })
+                email = EmailMessage(
+                    subject, message, to=[email]
+                )
+                email.content_subtype = 'html'
+                email.send()
+                return redirect('submitter:verify-email-done')
+            else:
+                return redirect('submitter:signup')
+        return render(request, 'submitter/verify_email.html')
+    else:
+        return redirect('submitter:login')
+
 
 def loginPage(request):
     form = CustomAuthenticationForm()
@@ -359,6 +361,8 @@ def loginPage(request):
                 if "is_submitting" in request.session:
                     del request.session['is_submitting']
                     return render(request, "submitter/submission_complete.html")
+                if not user.email_is_verified:
+                    return verify_email(request)
                 else:
                     return redirect('submitter:home')
             else:
@@ -377,10 +381,9 @@ def homePage(request):
         context={'listings':listings, 'first_name': request.user.first_name}
         return render(request, "submitter/homepage.html", context)
     elif request.user.is_authenticated:
-        return redirect('submitter:verify-email')
+        return redirect('submitter:login')
     else:
         return redirect('submitter:index')
-
 
 def logout_view(request):
     logout(request)
@@ -456,5 +459,5 @@ def info(request):
     if not request.user.is_authenticated:
         return redirect("submitter:home")
     elif not request.user.email_is_verified:
-        return redirect("submitter:verify-email")
+        return redirect("submitter:login")
     return render(request, 'submitter/info.html')
