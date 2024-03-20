@@ -10,7 +10,7 @@
     <style>
         /* Your existing CSS styles */
         /* Style for the details element */
-        
+
         body, h1, h2, h3, h4, h5, h6, p, a, button, label, summary {
           font-family: 'Poppins', sans-serif !important;
         }
@@ -24,7 +24,7 @@
           font-family: 'Poppins', sans-serif !important;
           padding-left: 0vw;
         }
-        
+
         details {
             border: 1px solid #ddd;
             padding: 10px;
@@ -40,7 +40,7 @@
             font-weight: bold;
             margin-left: 2vw; /* Align to the right */
             margin-right: 2vw; /* Move 8% of viewport width from the left */
-        }   
+        }
 
         /* Hide the content by default */
         details {
@@ -54,12 +54,11 @@
         }
 
         /* Style for the content within the details element */
-        
+
         details[open] {
             width: 25vw; /* Adjust width as needed when expanded */
             max-width: 25%; /* Limit maximum width when expanded */
         }
-
 
         .True {
             background-color: cyan;
@@ -75,34 +74,31 @@
             max-width: 84vw; /* Limit maximum width */
             position: relative;
             margin-top: 50px;
-        }     
+        }
 
-        .container {
-            display: flex;
-            flex-direction: column; /* Stack children vertically. Use 'row' for horizontal stacking */
-            align-items: left; /* Center-align items horizontally */
-            justify-content: flex-start; /* Align items to the start of the container vertically */
-            margin-left: 0vw; /* Keep your existing left margin */
-            margin-right: 1vw; /* Keep your existing right margin */
-            width: auto; /* Adjust the width as needed */
+        .results-content {
+            margin-left: max(90px, 20vw);
+            max-width: 76vw;
+            margin-top: 4vw;
+        }
+
+        .table-container {
+            margin-left: 0;
+            width: fit-content;
         }
 
         .main-title {
+            margin: 0;
             font-weight: bold;
-            font-size: 3vw;
-            padding-left: 8vw;
+            font-size: max(3vw, 20px);
         }
-        
 
         /* Move the submission URL text to the right */
         .submission-url {
-          margin-top: 3vh;  
+          margin-top: 3vh;
           margin-bottom:3vh;
-          font-size: 1.3vw;
-          padding-left: 8vw;
-          
+          font-size: max(1.3vw, 11px);
         }
-
 
         /* Move the filter button to the right */
         .filter-btn {
@@ -143,9 +139,9 @@
 
         /* Adjust table positioning */
         table {
-            margin-left: 1vw; /* Align table to the right */
+            margin-left: 0vw; /* Align table to the right */
             margin-right: 10vw; /* Move table 8% of viewport width from the left */
-            margin-top: 3vh;
+            margin-top: 2vh;
             width: 100%; /* Adjust table width */
             white-space: nowrap;
         }
@@ -155,19 +151,17 @@
             text-align: left; /* Align header content to the left */
             font-size: 1.1vw;
             font-weight: 300;
-            padding-bottom: 3vh;
-            padding-left: 8vw;
+            padding-bottom: 2vh;
+            padding-left: 5vw;
             white-space: nowrap;
         }
 
         /* Adjust table cell positioning */
         td {
             text-align: left; /* Align cell content to the left */
-            padding-top: 5px; /* Add padding top */
-            padding-bottom: 5px; /* Add padding bottom */
-            padding: 20px 0px; /* Add padding to all sides of the cell */
+            padding: 1.5vw 0; /* Add padding to all sides of the cell */
             font-size: 1.1vw;
-            padding-left: 8vw;
+            padding-left: 5vw;
             white-space: nowrap;
         }
 
@@ -185,17 +179,16 @@
             margin-right: 5px;
             background-color: 00B3B3;
         }
-        
+
         /* Move the Response title to the left */
         .response-header {
             text-align: left; /* Align to the left */
-            
+            font-size: max(1.1vw, 1.5vh);
         }
 
         .heart-icon-bigger {
-            font-size: 1.5vw; /* Set the size of the heart icon to 2% of the viewport width */
-            margin-right: 2.35vw;
-
+            font-size: max(12px, 1.5vw); /* Set the size of the heart icon to 2% of the viewport width */
+            margin-right: 0vw;
         }
 
         .result-link {
@@ -239,12 +232,13 @@
             font-size: 1.3vw;
             transition: background-color 0.3s;
             padding: 3px 7px;
+            min-height: 30px;
+            min-width: 30px;
         }
 
         .copy-button:hover {
             background-color: #e6e5e5; /* Change background color on hover */
         }
-
 
         .copy-button:hover::before {
             background-color: #fdfbfb;
@@ -272,22 +266,20 @@
             border-radius: 5px;
             opacity: 0; /* Set initial opacity to 0 */
             transition: opacity 0.3s ease-in-out; /* Apply transition effect for opacity */
-            margin-left: 0vw;
+            margin-left: -10px;
             margin-top: 1.3vh;
             min-height: 35vh;
             max-height: 60vh; /* Set maximum height */
             overflow-y: auto;
             padding-top: 3vh;
             padding-left: 2vw;
-            width: 80%;
+            width: 75%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            
         }
 
         details[open] .filter-dropdown {
             display: block; /* Display the dropdown content when details element is open */
             opacity: 1; /* Set opacity to 1 when displayed */
-     
         }
 
         /* Fade out effect for background content */
@@ -321,12 +313,11 @@
             font-weight: 800;
             margin-top: 0; /* Remove default margin for h3 */
             margin-bottom: 5px; /* Add some bottom margin for spacing */
-            
         }
 
         /* Increase font size for filter button and clear filter button */
         .filter-btn {
-            font-size: 0.9vw;
+            font-size: max(1.1vw, 1.5vh);
             margin-top: 2vh;
             margin-bottom: 1vh;
             padding-left: 1vw;
@@ -336,8 +327,20 @@
             border-color: #17A2B8;
         }
 
+        .filter-btn:hover {
+            font-size: max(1.1vw, 1.5vh);
+            margin-top: 2vh;
+            margin-bottom: 1vh;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            background-color: #f5f2f2 ;
+            color: rgb(0, 0, 0);
+            border-color: #17A2B8;
+            text-decoration: underline;
+        }
+
         .clear-filter-btn {
-            font-size: 0.9vw;
+            font-size: max(1.1vw, 1.5vh);
             margin-top: 1vh;
             margin-bottom: 1vh;
             color: #000000;
@@ -345,6 +348,18 @@
             padding-right: 1vw;
             background-color: #ffffff;
             border-color: #17A2B8;
+        }
+
+        .clear-filter-btn:hover {
+            font-size: max(1.1vw, 1.5vh);
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            color: #000000;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            background-color: #f5f2f2 ;
+            border-color: #17A2B8;
+            text-decoration: underline;
         }
 
         table tr {
@@ -355,13 +370,12 @@
             display: flex;
             flex-direction: row; /* Align items in a row */
             align-items: left; /* Center items vertically */
-            justify-content: space-between; /* Space between title and button */
             width: 100%; /* Full width of its parent */
             margin-bottom: 0vh; /* Optional: adds some space below the container */
-            margin-left: 0vw;
             flex-wrap: nowrap;
-            gap: 5%;
+            gap: 2%;
         }
+
 
         button {
             white-space: nowrap; /* Prevent text from wrapping */
@@ -373,11 +387,60 @@
             padding: 5px 10px; /* Adjust padding as needed */
             background-color: transparent;
             color: #0c6262;
-            font-weight: bold;
             cursor: pointer;
         }
 
+        button[type="submit"]:hover {
+            border: 2px;
+            border-radius: 5px;
+            padding: 5px 10px; /* Adjust padding as needed */
+            background-color: transparent;
+            color: #0c6262;
+            text-decoration: underline;
+            cursor: pointer;
+        }
 
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 2%;
+            margin-bottom: 10px;
+        }
+
+        .button-sizing {
+          width: 10vw;
+          height: min(4vw, 7vh);
+          min-width: 85px;
+          min-height: 30px;
+          font-size: max(1.1vw, 1.5vh);
+        }
+
+
+        .status-circle {
+            height: 1vw;
+            width: 1vw;
+            min-height: 10px;
+            min-width: 10px;
+            border-radius: 50%;
+        }
+
+        .status-circle:hover {
+            cursor: pointer;
+        }
+
+        .red {
+            border: 1px solid red;
+            background-color: red;
+        }
+
+        .green {
+            border: 1px solid green;
+            background-color: green;
+        }
+
+        .fa-copy {
+          font-size: max(12px, 1.5vw);
+        }
 
     </style>
 </head>
@@ -388,30 +451,37 @@
     {% endblock %}
 
     <!-- Main Content -->
-    <div class="container content">
+    <div class="results-content">
+        <div class="title-section">
+            <p class="main-title">Listing: {{listing_name}}</p>
+            {% if not listing_status %}
+                <div class="status-circle green" title="Listing Status: Open"></div>
+            {% else %}
+                <div class="status-circle red" title="Listing Status: Closed"></div>
+            {% endif %}
+        </div>
         <div class="title-and-action-container">
-            <h1 class="main-title">Listing: {{listing_name}}</h1>
             {% if not listing_status %}
             <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="color: rgb(12, 135, 39); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 1px solid rgb(12, 135, 39); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Close Listing">Listing Open</button>
+                <button type="submit" class="button-sizing" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); border: 1px solid rgb(234, 15, 15); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Click to close listing">Close Listing</button>
             </form>
             {% else %}
             <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 1px solid rgb(234, 15, 15); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Reopen Listing">Listing Closed</button>
+                <button type="submit" class="button-sizing" style="color: rgb(12, 135, 39); background-color: rgb(255, 255, 255); border: 1px solid rgb(12, 135, 39); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Click to reopen listing">Reopen Listing</button>
             </form>
             {% endif %}
             <form method="POST" action="{% url 'submitter:delete-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="border: 1px solid #000000; border-radius: 5px; font-size: 1.1vw; margin-left: 1vw; margin-right: 2vw; padding: 0.5vw; background-color: transparent; color: #000000; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">
-                    <i class="fa-solid fa-trash-can"></i> Delete</button>
+                <button type="submit" class="button-sizing" style="border: 1px solid #000000; border-radius: 5px; margin-left: 1vw; margin-right: 2vw; padding: 0.5vw; background-color: transparent; color: #000000; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">
+                    <i class="fa-solid fa-trash-can"></i> Delete Listing </button>
             </form>
         </div>
         <!-- Shareable Link Section -->
-        <p class="submission-url" style="margin-top: 20px">Shareable Link: {% if request.is_secure %}https{% else %}http{% endif %}://{{ domain }}/apartmate/{{listing_id}}/submission
+        <p class="submission-url" style="margin-top: 20px; margin-bottom: 20px;">Shareable Link: {% if request.is_secure %}https{% else %}http{% endif %}://{{ domain }}/apartmate/{{listing_id}}/submission
             <!-- Copy Button -->
-            <button class="copy-button" onclick="copyToClipboard()" style="margin-left: 10px;"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
+            <button class="copy-button" onclick="copyToClipboard()"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
         </p>
         <div>Available Bedrooms: {{ listing.available_bedrooms }}</div>
         
@@ -420,25 +490,25 @@
         <div>Rent Amount: {{ listing.rent_amount }}</div>
         <div>Additional Information: {{ listing.additional_information }}</div>
         <!-- Filters -->
-        <details>
+        <details style="margin-left: 0vw; min-width: fit-content; max-width: fit-content; font-size: max(1.1vw, 1.5vh);">
             <summary>Apply Filters</summary>
             <div class="filter-dropdown">
-        
-                <p style="font-size: 1vw;">Select the answers that you wish to be included in application submissions. If a question is left empty, all options will be considered viable. </p>
+
+                <p style="font-size: max(1.1vw, 1.5vh);">Select the answers that you wish to be included in application submissions. If a question is left empty, all options will be considered viable. </p>
                 <form action="{% url 'submitter:results' listing_id%}" method="post">
                     {% csrf_token %}
 
                     {% for question in listing_questions_list %}
-                        <legend><h3 style="font-size: 1vw">{{ question.question_text }}</h3></legend>
+                        <legend><h3 style="font-size: max(1.1vw, 1.5vh);">{{ question.question_text }}</h3></legend>
 
                         {% for answer in listing_answers_list %}
                             {% if answer.question_id == question.id %}
                                 {% if answer.id in filtered_answers %}
                                     <input type="checkbox" name="question_{{ question.id }}_{{ answer.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
-                                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                                    <label for="answer{{ forloop.counter }}" style="font-size: max(1.1vw, 1.5vh);">{{ answer.answer_text }}</label><br>
                                 {% else %}
                                     <input type="checkbox" name="question_{{ question.id }}_{{ answer.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" >
-                                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                                    <label for="answer{{ forloop.counter }}" style="font-size: max(1.1vw, 1.5vh);">{{ answer.answer_text }}</label><br>
                                 {% endif %}
 
                             {% endif %}
@@ -455,16 +525,16 @@
 
         <!-- Add some space -->
         <div style="height: 20px;"></div>
-        
-            <div class="container">
-                <!-- Tab navigation -->
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item all-applicants-tab"> <!-- Modified -->
-                        <a class="nav-link active" id="all-applicants-tab" data-toggle="tab" href="#all-applicants" role="tab" aria-controls="all-applicants" aria-selected="true">All Applicants</a>
-                    </li>
+
+        <div class="table-container">
+            <!-- Tab navigation -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item all-applicants-tab"> <!-- Modified -->
+                    <a class="nav-link active" style="font-size: max(1.1vw, 1.5vh)" id="all-applicants-tab" data-toggle="tab" href="#all-applicants" role="tab" aria-controls="all-applicants" aria-selected="true">All Applicants</a>
+                </li>
 
                     <li class="nav-item shortlist-tab"> <!-- Modified -->
-                    <a class="nav-link" id="shortlist-tab" data-toggle="tab" href="#shortlist" role="tab" aria-controls="shortlist" aria-selected="false">Shortlist &nbsp; <i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></a>
+                    <a class="nav-link" style="font-size: max(1.1vw, 1.5vh)" id="shortlist-tab" data-toggle="tab" href="#shortlist" role="tab" aria-controls="shortlist" aria-selected="false">Shortlist &nbsp; <i class="fas fa-heart heart-icon heart-icon-bigger" style="color:#00B3B3;"></i></a>
                     </li>
                 </ul>
                 <!-- Tab content -->
@@ -476,8 +546,8 @@
                         <table>
                             <tr>
                                 <th></th>
-                                <th>Applicant Name</th>
-                                <th>Email</th>
+                                <th class='response-header'>Applicant Name</th>
+                                <th class="response-header">Email</th>
                                 <th class="response-header">Submission Results</th> <!-- Modified -->
                             </tr>
                             {% for listing_response in listing_responses %}
@@ -485,15 +555,15 @@
                                     <td>
                                         <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get" class="shortlist-form">
                                             {% if listing_response.is_shortlisted %}
-                                                <button type="submit" class="True"><i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></button>
+                                                <button type="submit" class="True"><i class="fas fa-heart heart-icon heart-icon-bigger" style="color:#00B3B3;"></i></button>
                                             {% else %}
-                                                <button type="submit" class="False"><i class="far fa-heart heart-icon" style="color:#00B3B3;"></i></i></button>
+                                                <button type="submit" class="False"><i class="far fa-heart heart-icon heart-icon-bigger" style="color:#00B3B3;"></i></i></button>
                                             {% endif %}
                                         </form>
                                     </td>
-                                    <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
-                                    <td><a href="mailto:{{ listing_response.responder.email }}?subject=ApartMate Application&body=Hi there!%0D%0A%0D%0AI was just reviewing your application for my sublet on ApartMate! I like your answers and I would love to talk more!">{{ listing_response.responder.email }}</a></td>
-                                    <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
+                                    <td class="response-header">{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
+                                    <td class="response-header"><a href="mailto:{{ listing_response.responder.email }}?subject=ApartMate Application&body=Hi there!%0D%0A%0D%0AI was just reviewing your application for my sublet on ApartMate! I like your answers and I would love to talk more!">{{ listing_response.responder.email }}</a></td>
+                                    <td class="response-header"><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
                                 </tr>
                             {% endfor %}
                         </table>
@@ -506,8 +576,8 @@
                         <table>
                             <tr>
                                 <th></th>
-                                <th>Applicant Name</th>
-                                <th>Email</th>
+                                <th class="response-header">Applicant Name</th>
+                                <th class="response-header">Email</th>
                                 <th class="response-header">Submission Results</th> <!-- Modified -->
                             </tr>
                             {% for listing_response in listing_responses %}
@@ -515,12 +585,12 @@
                                     <tr>
                                         <td>
                                             <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get">
-                                                <button type="submit" class="{{ listing_response.is_shortlisted }}"><i class="fa-solid fa-heart heart-icon-bigger" style="color:#00B3B3;"></i></i></i></button>
+                                                <button type="submit" class="{{ listing_response.is_shortlisted }}"><i class="fa-solid fa-heart heart-icon-bigger" style="color:#00B3B3;"></i></button>
                                             </form>
                                         </td>
-                                        <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
-                                        <td>{{ listing_response.responder.email }}</td>
-                                        <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
+                                        <td class="response-header">{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
+                                        <td class="response-header">{{ listing_response.responder.email }}</td>
+                                        <td class="response-header"><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}
@@ -528,7 +598,7 @@
                     </div>
                     {% else %}
                         <br><br>
-                        <p style ="font-size: 1vw;" > There are no applicants yet! Make sure to share the above link with potential applicants!</p>
+                        <p style ="font-size: max(1.1vw, 1.5vh);" > There are no applicants yet! Make sure to share the above link with potential applicants!</p>
                     {% endif %}
                 </div>
             </div>
