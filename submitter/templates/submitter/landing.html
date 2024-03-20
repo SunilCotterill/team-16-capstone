@@ -11,7 +11,7 @@
         .colored-border {
             position: relative; /* Add position relative to contain absolutely positioned elements */
             border: 2px solid #E6F1F1; /* Change the color to #E6F1F1 */
-            border-radius: 10px;
+            border-radius: 5px;
             background-color: #E6F1F1; /* Add background color */
             padding: 20px;
             border: 2px solid black; /* Add black border */
@@ -28,21 +28,18 @@
             align-items: center; /* Center vertically */
             flex-direction: column; /* Stack elements vertically */
             min-height: 80vh;
+            padding: 0 min(80px, 8vw);
         }
 
         /* Custom CSS for stacked form inputs */
         .form-group {
             margin-bottom: 20px; /* Add margin between stacked inputs */
             text-align: left; /* Align text to the left */
-            min-width: 206px;
-            width: 24vw;
-            max-width: 350px;
-
         }
 
         /* Custom CSS for additional text */
         .additional-text {
-            font-size: max(1vw, 15px); /* Adjust font size */
+            font-size: max(1vw, 12px); /* Adjust font size */
             margin-top: 10px; /* Reduce space between title and additional text */
             text-align: center; /* Align text to the center */
         }
@@ -77,7 +74,7 @@
         /* Custom CSS for longer textboxes */
         input[type="text"] {
             width: 22vw; /* Adjust the width of the textboxes */
-            min-width: 200px;
+            min-width: 200px; 
         }
     </style>
 </head>
@@ -86,21 +83,26 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="colored-border centered-square"> <!-- Change blue-border to colored-border -->
-                    {% load static %}
+                    
+                    <h3 class="red-border larger-title">ApartMate</h3>{% load static %}
                     <img src="{% static 'submitter/images/logo.svg' %}" alt="home" class="logo"> <!-- Updated SVG logo path and added logo class -->
-                    <h3 class="red-border larger-title">ApartMate</h3>
-                    <br>
-                    <h6>You still have not verified your email. Please click the button below to send a verification email.</h6>
-                    <br>
-                    <form method="post">
-                        {% csrf_token %}
-                        <input class="btn btn-primary max-btn" type="submit" value="Re-send verification email">
-                    </form>
-                    <br>
-                    <a href="{% url 'submitter:logout' %}">Logout</a>
+                    
+                        <h4 class='info-text'> <b>What is ApartMate?</b></h4>
+                        <p class = 'info-text'>ApartMate is a new web app focused on helping the students of Waterloo find the best sublet they can. As uWaterloo students ourselves, we understand that the subletting process can be very demanding and time consuming. Our focus is to streamline the subletting process and ensure that you have the best opportunity for a real connection.</p>
+                        <h4 class='info-text'> <b>How Do We Help?</b></h4>
+                        <p class = 'info-text'>We have hand crafted a questionnaire based on what our users deem to be the most important things about living together. You can create a listing and we will provide a shareable link for you to put on your sublet posting, wherever you choose to do so. Potential sublets will fill out this questionnaire and then you can view and filter all the submissions from directly within our app. You can even shortlist the ones you like!</p>
+                        <h4 class='info-text'> <b>Where Do You Start?</b></h4>
+                        <p class = 'info-text'>If you already have an account, then you can login with the button below. Otherwise, you can sign up and begin using ApartMate today!</p>
+                        
+                        <div>
+                            <a href="{% url 'submitter:login' %}" class="btn btn-login">Login</a>
+                            <a href="{% url 'submitter:register' %}" class="btn btn-login">Sign Up</a>
+                        </div>
+
+
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap"></script>
-</body>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap">

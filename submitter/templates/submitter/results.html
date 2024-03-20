@@ -583,9 +583,9 @@
                                                 <button type="submit" class="{{ listing_response.is_shortlisted }}"><i class="fa-solid fa-heart heart-icon-bigger" style="color:#00B3B3;"></i></button>
                                             </form>
                                         </td>
-                                        <td class="response-header">{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
-                                        <td class="response-header">{{ listing_response.responder.email }}</td>
-                                        <td class="response-header"><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
+                                        <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
+                                        <td><a href="mailto:{{ listing_response.responder.email }}?subject=ApartMate Application&body=Hi there!%0D%0A%0D%0AI was just reviewing your application for my sublet on ApartMate! I like your answers and I would love to talk more!">{{ listing_response.responder.email }}</a></td>
+                                        <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}
