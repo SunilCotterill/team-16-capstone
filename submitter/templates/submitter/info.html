@@ -12,17 +12,7 @@
             position: relative;
             padding-left: 0vw; /* Remove default margin */
             overflow-y: auto; /* Prevent body from scrolling */
-            
-        }
 
-        .listings-and-create-container {
-            display: flex;
-            flex-direction: row;
-            align-items: left; /* Ensure items are aligned at the top */
-            align-items: left;
-            gap: 10%; /* Adjust the gap between items as needed */
-            margin-top: 20px; /* Space from the top or previous content */
-            /* Adjust padding or margins as necessary */
         }
 
         .logo {
@@ -34,152 +24,28 @@
             width: 10vw;
         }
 
-        .content {
-            display: flex; /* Make content a flex container */
-            flex-direction: column; /* Stack children vertically */
-            align-items: left; /* Center-align items horizontally */
-            justify-content: start; /* Align items to the start of the flex container */
-            gap: 20px; /* Space between items */
-            padding: 20px;
-            margin-top: 50px;
-            margin-left: 8vw; /* Adjusted to ensure it's positioned correctly */
-            max-width: 70vw; /* Ensure content does not stretch too wide */
-            padding-left: 10vw;
+        .info-question {
+          font-size: max(2vw, 17px);
+          text-align: left;
+          margin-left: 0vw;
         }
 
-        .welcome-title, .listing-title, .info-text, .listings-container, .new-listing-container {
-            width: 100%; /* Ensure they take up full width of their container */
-            /* Other styling adjustments as necessary */
+        .info-content {
+          margin-left: max(90px, 20vw);
+          margin-top: 4vw;
+          margin-right: 15vw;
         }
 
         .welcome-title {
             font-size: max(3vw, 20px);
             font-weight: 550;
             margin-bottom: 10px;
-        }
-
-        .listing-title {
-            font-weight: 600;
-            font-size: 1.4vw;
-            margin-top: 2vh; /* Adjusted margin-top */
-            padding-bottom: 1vh;
-        }
-
-        .listing-box {
-            background-color: #F1F2F1;
-            border: 1px solid #1FBCBC;
-            padding-left: 2vw; /* Adjust padding to move content over */
-            height: 13vh;
-            margin-bottom: -1vh;
-            margin-left: 0vw;
-            width: 100%; /* Increase width of listing box */
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: left;
-            text-decoration: none; /* Remove underline */
-            color: black; /* Set text color */
-            transition: background-color 0.3s; /* Smooth transition for background color change */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .listing-box:hover {
-            background-color: #D9E9E9; /* Lighter background color on hover */
-        }
-
-        .listing-name {
-            font-weight: bold;
-            font-size: 1.2vw; /* Increased font size for listing name */
-            margin-bottom: 5px; /* Add some space between name and details */
-            margin-top: 2.5vh;
-        }
-
-        .listing-details {
-            font-size: 1vw; /* Match font size for listing details */
-            margin-top: 1vh;
-        }
-
-        .listings-container {
-            height: 50vh; /* Set a maximum height */
-            overflow-y: auto; /* Enable vertical scrolling */
-            margin-bottom: 15px; /* Add some bottom margin */
-            width: 90%; /* Adjust width to fit content */
-            margin-left: 0;
-            margin-right: auto;
-            flex: 1;
-            overflow-x: hidden;
-            min-width: 35vw;
-        }
-
-        .new-listing-container {
-            font-weight: 550;
-            margin-top: -0.5; 
-            font-size: 1.2vw;
-            flex-basis: 30vw; /* Example fixed width, adjust as necessary */
-            height: 15vh; /* Adjust height as necessary */
-            width: 40%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #E6F1F1; /* Background color for the container */
-            border: 1px solid #908d92; /* Border to create the rectangle effect */
-            border-radius: 5px; /* Rounded corners for the rectangle */
-            padding-left: 2vw; /* Padding inside the container for some space around the text */
-            padding-right: 2vw;
-            transition: background-color 0.3s; /* Smooth transition for background color change */
-            color: black;
-            max-height: 25vh;
-            min-height: 12vh;
-            min-width: 15vw;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .new-listing-container:hover {
-            background-color: #c3d5d5; /* Lighter background color on hover */
-            text-decoration: underline;
-        }
-    
-        /* Plus Icon */
-        .create-listing i {
-            color: #1FBCBC; /* Change color of the icon */
-            font-size: 1.7em; /* Increase size of the icon */
-            vertical-align: -3px; /* Adjust vertical alignment */
-            margin-left: 0.3vw; 
+            width: 100%;
         }
 
         .info-text {
             text-align: left;
             margin-left: 0vw; /* Match the left margin of welcome title */
-        }
-
-        .no-listing-text {
-            text-align: left;
-            /* Match the left margin of welcome title */
-            margin-left: 10vw;
-            padding-left: 4vw;
-            padding-right: 4vw;
-            padding-top: 1vw;
-            padding-bottom: 1vw;
-            border: 1px solid #747474; /* Example: 1px solid black */
-            border-radius: 5px;
-        }
-
-        .create-listing-section {
-            flex-basis: 30vw; /* Adjust width as necessary */
-            display: flex;
-            flex-direction: column;
-            align-items: left;
-            gap: 10px;
-            height: 21vh;
-        }
-
-        .new-listing-title {
-            font-weight: 600;
-            font-size: 1.4vw;
-            margin-top: 1.5vh; /* Adjusted margin-top */
-            padding-bottom: -1vh;
-            text-align: left;
         }
 
     </style>
@@ -190,7 +56,7 @@
         {% include 'submitter/base.html' %}
     {% endblock %}
 
-    <div class="content">
+    <div class="info-content">
         <h3 class="welcome-title">Welcome to ApartMate!</h3>
 
         {% if messages %}
@@ -203,12 +69,12 @@
         {% endif %}
 
         <p class="info-text">Thank you for choosing our platform for your subletting needs! We are here to streamline the process of finding a compatible roommate.</p>
-        
-        <h4 class='info-text'> <b>What is ApartMate?</b></h4>
+
+        <h4 class='info-question'> <b>What is ApartMate?</b></h4>
         <p class = 'info-text'>ApartMate is a new web app focused on helping the students of Waterloo find the best sublet they can. As uWaterloo students ourselves, we understand that the subletting process can be very demanding and time consuming. Our focus is to streamline the subletting process and ensure that you have the best opportunity for a real connection.</p>
-        <h4 class='info-text'> <b>How Do We Help?</b></h4>
+        <h4 class='info-question'> <b>How Do We Help?</b></h4>
         <p class = 'info-text'>We have hand crafted a questionnaire based on what our users deem to be the most important things about living together. You can create a listing and we will provide a shareable link for you to put on your sublet posting, wherever you choose to do so. Potential sublets will fill out this questionnaire and then you can view and filter all the submissions from directly within our app. You can even shortlist the ones you like!</p>
-        <h4 class='info-text'> <b>Where Do You Start?</b></h4>
+        <h4 class='info-question'> <b>Where Do You Start?</b></h4>
         <p class = 'info-text'>You're already registered and logged in! Once you navigate to the home page you can create a listing by clicking on the "New Listing" button or <a href="{% url 'submitter:new_listing' %}">click here</a>. Further instructions are provided throughout our app!</p>
     </div>
 </body>

@@ -15,8 +15,8 @@
     <!-- Font Awesome CSS -->
     <style>
       .content {
-        margin-top: 4vh;
-        padding-left: 18vw;
+        margin-top: 4vw;
+        margin-left: max(90px, 20vw);
       }
 
       .form-group {
@@ -77,7 +77,7 @@
         font-size: 15px;
         margin-top: 5px;
         padding: 10px 40px;
-        margin-top: 30px;
+        margin-top: 20px;
         margin-bottom: 30px;
         border-radius: 5px;
         border: 1px solid #17A2B8; /* Add border */
@@ -114,20 +114,25 @@
       .questions-indent {
         margin: 0 15px;
       }
+
+      .title {
+          font-size: max(3vw, 20px);
+          font-weight: 550;
+          margin-bottom: 10px;
+          width: 100%;
+      }
     </style>
   </head>
   <body>
     {% block header %} {% include 'submitter/base.html' %} {% endblock %}
 
     <div class="content">
-      <h1 style="font-size: 3vw; padding-top: 8px"><strong>Create a New Listing</strong></h1>
-      <br>
+      <h1 class="title"><strong>Create a New Listing</strong></h1>
       <p style = "padding-right: 20vw">This is the page where you will be creating the listing for the room you would like to sublet. Please select the questions that you would like to
-        ask any potential applicants. Each question has a pre-determined set of answers to choose from. A shareable link will be generated which you can include in your sublet listing on Facebook Marketplace or anywhere else you choose to post! 
+        ask any potential applicants. Each question has a pre-determined set of answers to choose from. A shareable link will be generated which you can include in your sublet listing on Facebook Marketplace or anywhere else you choose to post!
         Applicants will select their answers to each question and results will be available from within that listing!</p>
         <p style = "padding-right: 20vw">The listing name below will be visible for all applicants, so make it something that represents you. Maybe your own name or the address you are subletting.</p>
       <form method="POST" action="">
-      <br />
       <form method="POST" action="">
         {% csrf_token %}
 <!--        <div class="form-group">Listing Name: {{ form.name }}</div>-->
