@@ -93,6 +93,16 @@
                     {% load static %}
                     <img src="{% static 'submitter/images/logo.svg' %}" alt="home" class="logo"> <!-- Updated SVG logo path and added logo class -->
                     <h3 class="red-border larger-title">ApartMate</h3>
+
+                    {% if messages %}
+                    <div class="alert alert-info alert-dismissible">
+                        <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
                     <p class="additional-text">
                         We understand that looking for the right sublet or roommate can be complicated.<br>
                         We are here to give you a hand.<br><br>
