@@ -413,7 +413,12 @@
             <!-- Copy Button -->
             <button class="copy-button" onclick="copyToClipboard()" style="margin-left: 10px;"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
         </p>
-
+        <div>Available Bedrooms: {{ listing.available_bedrooms }}</div>
+        
+        <div>Total Bedrooms: {{ listing.total_bedrooms }}</div>
+       <div> Address: {{ listing.address }}</div>
+        <div>Rent Amount: {{ listing.rent_amount }}</div>
+        <div>Additional Information: {{ listing.additional_information }}</div>
         <!-- Filters -->
         <details>
             <summary>Apply Filters</summary>

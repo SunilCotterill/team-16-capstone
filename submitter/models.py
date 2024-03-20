@@ -73,6 +73,20 @@ class Listing(models.Model):
     questions = models.ManyToManyField(Question)
     is_closed = models.BooleanField(default=False)
 
+
+    BEDROOM_CHOICES = [
+        (1, '1 Bedroom'),
+        (2, '2 Bedrooms'),
+        (3, '3 Bedrooms'),
+        (4, '4 Bedrooms'),
+        (5, '5+ Bedrooms')
+    ]
+    total_bedrooms = models.IntegerField(choices=BEDROOM_CHOICES, blank=True, null=True)
+    available_bedrooms = models.IntegerField(choices=BEDROOM_CHOICES)
+    address = models.CharField(max_length = 300, blank=True, null=True)
+    rent_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) 
+    additional_information = models.CharField(max_length = 100, blank=True, null=True)
+
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer_text = models.CharField(max_length=200)

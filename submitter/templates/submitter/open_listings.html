@@ -1,0 +1,87 @@
+﻿<h1>Listings</h1>
+
+<form method="get">
+    <label for="available_bedrooms">Filter by number of available bedrooms:</label>
+    <select name="available_bedrooms" id="available_bedrooms">
+        <option value="" {% if not request.GET.available_bedrooms %}selected{% endif %}>All</option>
+        <option value="1" {% if request.GET.available_bedrooms == "1" %}selected{% endif %}>1 Bedroom</option>
+        <option value="2" {% if request.GET.available_bedrooms == "2" %}selected{% endif %}>2 Bedrooms</option>
+        <option value="3" {% if request.GET.available_bedrooms == "3" %}selected{% endif %}>3 Bedrooms</option>
+        <option value="4" {% if request.GET.available_bedrooms == "4" %}selected{% endif %}>4 Bedrooms</option>
+        <option value="5" {% if request.GET.available_bedrooms == "5" %}selected{% endif %}>5+ Bedrooms</option>
+
+    </select>
+
+
+
+    <label for="rent_bucket">Filter by rent amount:</label>
+    <select name="rent_bucket" id="rent_bucket">
+        <option value="">All</option>
+        <option value="1" {% if request.GET.rent_bucket == "1" %}selected{% endif %}>0-499</option>
+        <option value="2" {% if request.GET.rent_bucket == "2" %}selected{% endif %}>500-999</option>
+        <option value="3" {% if request.GET.rent_bucket == "3" %}selected{% endif %}>1000-1499</option>
+        <option value="4" {% if request.GET.rent_bucket == "4" %}selected{% endif %}>1500-1999</option>
+        <option value="5" {% if request.GET.rent_bucket == "5" %}selected{% endif %}>2000+</option>
+    </select>
+    <button type="submit">Apply Filter</button>
+</form>
+
+<input type="hidden" name="available_bedrooms" value="{{ request.GET.available_bedrooms }}">
+<input type="hidden" name="rent_bucket" value="{{ request.GET.rent_bucket }}">
+
+
+<table>
+    <tr>
+        <th>Listing Name</th>
+        <th>|</th>
+        <th>Bedrooms for Rent</th>
+        <th>|</th>
+        <th>Rent Amount (CAD)</th>
+        <th>|</th>
+        <th>Address</th>
+        <th>|</th>
+        <th>Additional Information</th>
+        <th>|</th>
+        <th></th>
+    </tr>
+
+    {% for listing in page %}
+    <tr>
+        <td>{{ listing.name }}</td>
+        <td>|</td>
+        <td>{{ listing.available_bedrooms }}</td>
+        <td>|</td>
+        <td>{{ listing.rent_amount }}</td>
+        <td>|</td>
+        <td>{{ listing.address }}</td>
+        <td>|</td>
+        <td>{{ listing.additional_information }}</td>
+        <td>|</td>
+        <td><a href="{% url 'submitter:submission' listing.id %}">Apply Here</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- <ul>
+    {% for listing in page %}
+        <li><a href="{% url 'submitter:submission' listing.id %}">{{ listing.name }} - ${{ listing.rent_amount }}</a></li>
+    {% endfor %}
+</ul> -->
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+        </span>
+
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">next</a>
+            <a href="?page={{ page.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>

@@ -27,7 +27,7 @@ class CreateUserForm(UserCreationForm):
         return user
     
 class CreateListingForm(forms.ModelForm):
-    name = forms.CharField(required=True, label='Name', max_length=200)
+    # name = forms.CharField(required=True, label='Name', max_length=200)
     demographic_questions = forms.ModelMultipleChoiceField(
         label='Demographic Questions',
         required = False,
@@ -50,6 +50,7 @@ class CreateListingForm(forms.ModelForm):
     )
 
 
+
     def clean(self):
         cleaned_data = super().clean()
         # Check if questions are empty
@@ -64,6 +65,17 @@ class CreateListingForm(forms.ModelForm):
             "name",
             "demographic_questions",
             "social_questions",
-            "household_questions"
+            "household_questions",
+            "total_bedrooms",
+            "available_bedrooms",
+            "address",
+            "rent_amount",
+            "additional_information"
         ]
+        widgets = {
+            'additional_information': forms.Textarea(attrs={'rows': 5, 'cols': 40, 'maxlength':50}),
+            'name': forms.TextInput(attrs={'placeholder': 'Listing Name',
+                                            "class": "form-group" 
+                                           })
+        }
 
