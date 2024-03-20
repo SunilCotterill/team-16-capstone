@@ -113,7 +113,9 @@
                             <div class="alert alert-danger">
                                 {% for field, error_list in form.errors.items %}
                                     {% for error in error_list %}
-                                        <p>{{ field }}: {{ error }}</p>
+                                        {% if field != "username" %}
+                                            <p> {{ error }}</p>
+                                        {% endif %}
                                     {% endfor %}
                                 {% endfor %}
                             </div>
