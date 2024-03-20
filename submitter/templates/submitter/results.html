@@ -77,27 +77,27 @@
         }
 
         .results-content {
-            margin-left: 16vw;
-            max-width: 80vw;
+            margin-left: max(90px, 20vw);
+            max-width: 76vw;
             margin-top: 4vw;
         }
 
         .table-container {
-            margin-left: 4vw;
+            margin-left: 0;
+            width: fit-content;
         }
 
         .main-title {
             margin: 0;
             font-weight: bold;
-            font-size: 3vw;
+            font-size: max(3vw, 20px);
         }
 
         /* Move the submission URL text to the right */
         .submission-url {
           margin-top: 3vh;
           margin-bottom:3vh;
-          font-size: 1.3vw;
-          margin-left: 4vw;
+          font-size: max(1.3vw, 11px);
         }
 
         /* Move the filter button to the right */
@@ -152,7 +152,7 @@
             font-size: 1.1vw;
             font-weight: 300;
             padding-bottom: 2vh;
-            padding-left: 8vw;
+            padding-left: 5vw;
             white-space: nowrap;
         }
 
@@ -161,7 +161,7 @@
             text-align: left; /* Align cell content to the left */
             padding: 1.5vw 0; /* Add padding to all sides of the cell */
             font-size: 1.1vw;
-            padding-left: 8vw;
+            padding-left: 5vw;
             white-space: nowrap;
         }
 
@@ -183,11 +183,12 @@
         /* Move the Response title to the left */
         .response-header {
             text-align: left; /* Align to the left */
+            font-size: max(1.1vw, 1.5vh);
         }
 
         .heart-icon-bigger {
-            font-size: 1.5vw; /* Set the size of the heart icon to 2% of the viewport width */
-            margin-right: 2.35vw;
+            font-size: max(12px, 1.5vw); /* Set the size of the heart icon to 2% of the viewport width */
+            margin-right: 0vw;
         }
 
         .result-link {
@@ -231,6 +232,8 @@
             font-size: 1.3vw;
             transition: background-color 0.3s;
             padding: 3px 7px;
+            min-height: 30px;
+            min-width: 30px;
         }
 
         .copy-button:hover {
@@ -314,7 +317,7 @@
 
         /* Increase font size for filter button and clear filter button */
         .filter-btn {
-            font-size: 0.9vw;
+            font-size: max(1.1vw, 1.5vh);
             margin-top: 2vh;
             margin-bottom: 1vh;
             padding-left: 1vw;
@@ -324,8 +327,20 @@
             border-color: #17A2B8;
         }
 
+        .filter-btn:hover {
+            font-size: max(1.1vw, 1.5vh);
+            margin-top: 2vh;
+            margin-bottom: 1vh;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            background-color: #f5f2f2 ;
+            color: rgb(0, 0, 0);
+            border-color: #17A2B8;
+            text-decoration: underline;
+        }
+
         .clear-filter-btn {
-            font-size: 0.9vw;
+            font-size: max(1.1vw, 1.5vh);
             margin-top: 1vh;
             margin-bottom: 1vh;
             color: #000000;
@@ -333,6 +348,18 @@
             padding-right: 1vw;
             background-color: #ffffff;
             border-color: #17A2B8;
+        }
+
+        .clear-filter-btn:hover {
+            font-size: max(1.1vw, 1.5vh);
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            color: #000000;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            background-color: #f5f2f2 ;
+            border-color: #17A2B8;
+            text-decoration: underline;
         }
 
         table tr {
@@ -345,7 +372,6 @@
             align-items: left; /* Center items vertically */
             width: 100%; /* Full width of its parent */
             margin-bottom: 0vh; /* Optional: adds some space below the container */
-            margin-left: 4vw;
             flex-wrap: nowrap;
             gap: 2%;
         }
@@ -361,21 +387,40 @@
             padding: 5px 10px; /* Adjust padding as needed */
             background-color: transparent;
             color: #0c6262;
-            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            border: 2px;
+            border-radius: 5px;
+            padding: 5px 10px; /* Adjust padding as needed */
+            background-color: transparent;
+            color: #0c6262;
+            text-decoration: underline;
             cursor: pointer;
         }
 
         .title-section {
             display: flex;
             align-items: center;
-            margin-left: 4vw;
             gap: 2%;
             margin-bottom: 10px;
         }
 
+        .button-sizing {
+          width: 10vw;
+          height: min(4vw, 7vh);
+          min-width: 85px;
+          min-height: 30px;
+          font-size: max(1.1vw, 1.5vh);
+        }
+
+
         .status-circle {
             height: 1vw;
             width: 1vw;
+            min-height: 10px;
+            min-width: 10px;
             border-radius: 50%;
         }
 
@@ -393,6 +438,9 @@
             background-color: green;
         }
 
+        .fa-copy {
+          font-size: max(12px, 1.5vw);
+        }
 
     </style>
 </head>
@@ -416,46 +464,46 @@
             {% if not listing_status %}
             <form method="POST" action="{% url 'submitter:close-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 1px solid rgb(234, 15, 15); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Click to close listing">Close Listing</button>
+                <button type="submit" class="button-sizing" style="color: rgb(238, 8, 8); background-color: rgb(255, 255, 255); border: 1px solid rgb(234, 15, 15); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Click to close listing">Close Listing</button>
             </form>
             {% else %}
             <form method="POST" action="{% url 'submitter:reopen-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="color: rgb(12, 135, 39); background-color: rgb(255, 255, 255); font-size: 1.1vw; border: 1px solid rgb(12, 135, 39); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Click to reopen listing">Reopen Listing</button>
+                <button type="submit" class="button-sizing" style="color: rgb(12, 135, 39); background-color: rgb(255, 255, 255); border: 1px solid rgb(12, 135, 39); padding: 0.5vw 1vw; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Click to reopen listing">Reopen Listing</button>
             </form>
             {% endif %}
             <form method="POST" action="{% url 'submitter:delete-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" style="border: 1px solid #000000; border-radius: 5px; font-size: 1.1vw; margin-left: 1vw; margin-right: 2vw; padding: 0.5vw; background-color: transparent; color: #000000; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">
+                <button type="submit" class="button-sizing" style="border: 1px solid #000000; border-radius: 5px; margin-left: 1vw; margin-right: 2vw; padding: 0.5vw; background-color: transparent; color: #000000; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">
                     <i class="fa-solid fa-trash-can"></i> Delete Listing </button>
             </form>
         </div>
         <!-- Shareable Link Section -->
         <p class="submission-url" style="margin-top: 20px; margin-bottom: 20px;">Shareable Link: {% if request.is_secure %}https{% else %}http{% endif %}://{{ domain }}/apartmate/{{listing_id}}/submission
             <!-- Copy Button -->
-            <button class="copy-button" onclick="copyToClipboard()" style="margin-left: 10px;"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
+            <button class="copy-button" onclick="copyToClipboard()"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
         </p>
 
         <!-- Filters -->
-        <details style="margin-left: 4vw; width: fit-content;">
+        <details style="margin-left: 0vw; min-width: fit-content; max-width: fit-content; font-size: max(1.1vw, 1.5vh);">
             <summary>Apply Filters</summary>
             <div class="filter-dropdown">
 
-                <p style="font-size: 1vw;">Select the answers that you wish to be included in application submissions. If a question is left empty, all options will be considered viable. </p>
+                <p style="font-size: max(1.1vw, 1.5vh);">Select the answers that you wish to be included in application submissions. If a question is left empty, all options will be considered viable. </p>
                 <form action="{% url 'submitter:results' listing_id%}" method="post">
                     {% csrf_token %}
 
                     {% for question in listing_questions_list %}
-                        <legend><h3 style="font-size: 1vw">{{ question.question_text }}</h3></legend>
+                        <legend><h3 style="font-size: max(1.1vw, 1.5vh);">{{ question.question_text }}</h3></legend>
 
                         {% for answer in listing_answers_list %}
                             {% if answer.question_id == question.id %}
                                 {% if answer.id in filtered_answers %}
                                     <input type="checkbox" name="question_{{ question.id }}_{{ answer.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" checked="checked">
-                                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                                    <label for="answer{{ forloop.counter }}" style="font-size: max(1.1vw, 1.5vh);">{{ answer.answer_text }}</label><br>
                                 {% else %}
                                     <input type="checkbox" name="question_{{ question.id }}_{{ answer.id }}" id="answer{{ forloop.counter }}" value="{{ answer.id }}" >
-                                    <label for="answer{{ forloop.counter }}">{{ answer.answer_text }}</label><br>
+                                    <label for="answer{{ forloop.counter }}" style="font-size: max(1.1vw, 1.5vh);">{{ answer.answer_text }}</label><br>
                                 {% endif %}
 
                             {% endif %}
@@ -477,11 +525,11 @@
             <!-- Tab navigation -->
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item all-applicants-tab"> <!-- Modified -->
-                    <a class="nav-link active" id="all-applicants-tab" data-toggle="tab" href="#all-applicants" role="tab" aria-controls="all-applicants" aria-selected="true">All Applicants</a>
+                    <a class="nav-link active" style="font-size: max(1.1vw, 1.5vh)" id="all-applicants-tab" data-toggle="tab" href="#all-applicants" role="tab" aria-controls="all-applicants" aria-selected="true">All Applicants</a>
                 </li>
 
                     <li class="nav-item shortlist-tab"> <!-- Modified -->
-                    <a class="nav-link" id="shortlist-tab" data-toggle="tab" href="#shortlist" role="tab" aria-controls="shortlist" aria-selected="false">Shortlist &nbsp; <i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></a>
+                    <a class="nav-link" style="font-size: max(1.1vw, 1.5vh)" id="shortlist-tab" data-toggle="tab" href="#shortlist" role="tab" aria-controls="shortlist" aria-selected="false">Shortlist &nbsp; <i class="fas fa-heart heart-icon heart-icon-bigger" style="color:#00B3B3;"></i></a>
                     </li>
                 </ul>
                 <!-- Tab content -->
@@ -493,8 +541,8 @@
                         <table>
                             <tr>
                                 <th></th>
-                                <th>Applicant Name</th>
-                                <th>Email</th>
+                                <th class='response-header'>Applicant Name</th>
+                                <th class="response-header">Email</th>
                                 <th class="response-header">Submission Results</th> <!-- Modified -->
                             </tr>
                             {% for listing_response in listing_responses %}
@@ -502,15 +550,15 @@
                                     <td>
                                         <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get" class="shortlist-form">
                                             {% if listing_response.is_shortlisted %}
-                                                <button type="submit" class="True"><i class="fas fa-heart heart-icon" style="color:#00B3B3;"></i></button>
+                                                <button type="submit" class="True"><i class="fas fa-heart heart-icon heart-icon-bigger" style="color:#00B3B3;"></i></button>
                                             {% else %}
-                                                <button type="submit" class="False"><i class="far fa-heart heart-icon" style="color:#00B3B3;"></i></i></button>
+                                                <button type="submit" class="False"><i class="far fa-heart heart-icon heart-icon-bigger" style="color:#00B3B3;"></i></i></button>
                                             {% endif %}
                                         </form>
                                     </td>
-                                    <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
-                                    <td><a href="mailto:{{ listing_response.responder.email }}?subject=ApartMate Application&body=Hi there!%0D%0A%0D%0AI was just reviewing your application for my sublet on ApartMate! I like your answers and I would love to talk more!">{{ listing_response.responder.email }}</a></td>
-                                    <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
+                                    <td class="response-header">{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
+                                    <td class="response-header"><a href="mailto:{{ listing_response.responder.email }}?subject=ApartMate Application&body=Hi there!%0D%0A%0D%0AI was just reviewing your application for my sublet on ApartMate! I like your answers and I would love to talk more!">{{ listing_response.responder.email }}</a></td>
+                                    <td class="response-header"><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
                                 </tr>
                             {% endfor %}
                         </table>
@@ -523,8 +571,8 @@
                         <table>
                             <tr>
                                 <th></th>
-                                <th>Applicant Name</th>
-                                <th>Email</th>
+                                <th class="response-header">Applicant Name</th>
+                                <th class="response-header">Email</th>
                                 <th class="response-header">Submission Results</th> <!-- Modified -->
                             </tr>
                             {% for listing_response in listing_responses %}
@@ -532,12 +580,12 @@
                                     <tr>
                                         <td>
                                             <form action="{% url 'submitter:update_shortlist' listing_id listing_response.id %}" method="get">
-                                                <button type="submit" class="{{ listing_response.is_shortlisted }}"><i class="fa-solid fa-heart heart-icon-bigger" style="color:#00B3B3;"></i></i></i></button>
+                                                <button type="submit" class="{{ listing_response.is_shortlisted }}"><i class="fa-solid fa-heart heart-icon-bigger" style="color:#00B3B3;"></i></button>
                                             </form>
                                         </td>
-                                        <td>{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
-                                        <td>{{ listing_response.responder.email }}</td>
-                                        <td><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
+                                        <td class="response-header">{{ listing_response.responder.first_name }} {{ listing_response.responder.last_name }}</td>
+                                        <td class="response-header">{{ listing_response.responder.email }}</td>
+                                        <td class="response-header"><a href="{% url 'submitter:result' listing_id listing_response.responder.email %}" class="result-link">View Results</a></td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}
@@ -545,7 +593,7 @@
                     </div>
                     {% else %}
                         <br><br>
-                        <p style ="font-size: 1vw;" > There are no applicants yet! Make sure to share the above link with potential applicants!</p>
+                        <p style ="font-size: max(1.1vw, 1.5vh);" > There are no applicants yet! Make sure to share the above link with potential applicants!</p>
                     {% endif %}
                 </div>
             </div>
