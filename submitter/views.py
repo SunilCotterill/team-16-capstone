@@ -481,7 +481,7 @@ def info(request):
         return redirect("submitter:verify-email")
     return render(request, 'submitter/info.html')
 
-def all_listings(request):
+def browse_listings(request):
     if not request.user.is_authenticated:
         return redirect("submitter:home")
     elif not request.user.email_is_verified:
@@ -492,7 +492,6 @@ def all_listings(request):
 
     bedrooms_filter = request.GET.get('available_bedrooms')
     if bedrooms_filter:
-        print("HI")
         all_listings = all_listings.filter(available_bedrooms=bedrooms_filter)
 
     rent_bucket_filter = request.GET.get('rent_bucket')

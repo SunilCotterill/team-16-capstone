@@ -48,7 +48,7 @@ urlpatterns = [
 
     path('info/', views.info, name='info'),
 
-    path('listings/', views.all_listings, name='listings'),
+    path('listings/', views.browse_listings, name='browse_listings'),
 
     # Catch all for unknown links
     re_path(r'^.*$', RedirectView.as_view(url='/'), name='redirect-to-home'),
