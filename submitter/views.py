@@ -252,9 +252,15 @@ def submit(request, listing_id):
         # Get the CSRF token from the POST request
         csrf_token = request.POST.get('csrfmiddlewaretoken')
 
-        listingResponse = ListingResponse()
-        listingResponse.listing = Listing.objects.get(pk = listing_id)
-        listingResponse.responder =  request.user
+        listing = Listing.objects.get(pk=listing_id)
+
+        if ListingResponse.objects.filter(responder=request.user, listing=listing).exists():
+            messages.error(request, "You have already submitted to this listing. You cannot submit again.")
+            return redirect("submitter:submission", listing_id)
+        else:
+            listingResponse = ListingResponse()
+            listingResponse.listing = Listing.objects.get(pk = listing_id)
+            listingResponse.responder =  request.user
         try:
             listingResponse.save()
         except Exception as e:
