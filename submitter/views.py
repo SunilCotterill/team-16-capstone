@@ -280,7 +280,7 @@ def submit(request, listing_id):
             request.session["listing_id"] = listing_id
             request.session["submit"] = "true"
 
-        request.session["info"] = "Please create an account with us so we can save these responses for future quizzes. We promise not to spam with mailing lists, even if you want us to."
+        request.session["info"] = "Please create an account with us so we can save these responses for future quizzes. If you already have an account with us then you can log in to submit your response!"
         return redirect(reverse('submitter:register'))
 
     del request.session['is_submitting']
