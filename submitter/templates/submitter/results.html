@@ -188,7 +188,7 @@
 
         .heart-icon-bigger {
             font-size: max(12px, 1.5vw); /* Set the size of the heart icon to 2% of the viewport width */
-            margin-right: 2.35vw;
+            margin-right: 0vw;
         }
 
         .result-link {
@@ -327,6 +327,18 @@
             border-color: #17A2B8;
         }
 
+        .filter-btn:hover {
+            font-size: max(1.1vw, 1.5vh);
+            margin-top: 2vh;
+            margin-bottom: 1vh;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            background-color: #f5f2f2 ;
+            color: rgb(0, 0, 0);
+            border-color: #17A2B8;
+            text-decoration: underline;
+        }
+
         .clear-filter-btn {
             font-size: max(1.1vw, 1.5vh);
             margin-top: 1vh;
@@ -336,6 +348,18 @@
             padding-right: 1vw;
             background-color: #ffffff;
             border-color: #17A2B8;
+        }
+
+        .clear-filter-btn:hover {
+            font-size: max(1.1vw, 1.5vh);
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            color: #000000;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            background-color: #f5f2f2 ;
+            border-color: #17A2B8;
+            text-decoration: underline;
         }
 
         table tr {
@@ -363,7 +387,16 @@
             padding: 5px 10px; /* Adjust padding as needed */
             background-color: transparent;
             color: #0c6262;
-            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            border: 2px;
+            border-radius: 5px;
+            padding: 5px 10px; /* Adjust padding as needed */
+            background-color: transparent;
+            color: #0c6262;
+            text-decoration: underline;
             cursor: pointer;
         }
 
@@ -381,6 +414,7 @@
           min-height: 30px;
           font-size: max(1.1vw, 1.5vh);
         }
+
 
         .status-circle {
             height: 1vw;
@@ -440,7 +474,7 @@
             {% endif %}
             <form method="POST" action="{% url 'submitter:delete-listing' listing_id %}">
                 {% csrf_token %}
-                <button type="submit" class="button-sizing" style="border: 1px solid #000000; border-radius: 5px; margin-left: 1vw; margin-right: 2vw; padding: 0.5vw; background-color: transparent; color: #000000; font-weight: bold; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">
+                <button type="submit" class="button-sizing" style="border: 1px solid #000000; border-radius: 5px; margin-left: 1vw; margin-right: 2vw; padding: 0.5vw; background-color: transparent; color: #000000; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" title="Delete Listing" onclick="return confirm('Are you sure you want to permanently delete this listing?')">
                     <i class="fa-solid fa-trash-can"></i> Delete Listing </button>
             </form>
         </div>
