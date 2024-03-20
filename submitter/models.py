@@ -69,7 +69,7 @@ class Question(models.Model):
 
 class Listing(models.Model):
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    name = models.CharField(max_length = 200)
+    name = models.CharField(max_length = 30)
     questions = models.ManyToManyField(Question)
     is_closed = models.BooleanField(default=False)
 
@@ -81,9 +81,9 @@ class Listing(models.Model):
         (4, '4 Bedrooms'),
         (5, '5+ Bedrooms')
     ]
-    total_bedrooms = models.IntegerField(choices=BEDROOM_CHOICES, blank=True, null=True)
+
     available_bedrooms = models.IntegerField(choices=BEDROOM_CHOICES)
-    address = models.CharField(max_length = 300, blank=True, null=True)
+    address = models.CharField(max_length = 30, blank=True, null=True)
     rent_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) 
     additional_information = models.CharField(max_length = 100, blank=True, null=True)
 

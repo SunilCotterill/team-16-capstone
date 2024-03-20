@@ -132,29 +132,35 @@
         ask any potential applicants. Each question has a pre-determined set of answers to choose from. A shareable link will be generated which you can include in your sublet listing on Facebook Marketplace or anywhere else you choose to post!
         Applicants will select their answers to each question and results will be available from within that listing!</p>
         <p style = "padding-right: 20vw">The listing name below will be visible for all applicants, so make it something that represents you. Maybe your own name or the address you are subletting.</p>
+        <p style = "padding-right: 20vw">* = Required field </p>
       <form method="POST" action="">
       <form method="POST" action="">
         {% csrf_token %}
 <!--        <div class="form-group">Listing Name: {{ form.name }}</div>-->
         <!-- <input type="text" class="form-group" name="name" placeholder="Listing Name"> -->
-
+        {% if form.errors %}
+        <div class="alert alert-danger" style="width: 87%;">
+            {% for field, error_list in form.errors.items %}
+                {% for error in error_list %}
+                    {% if field != "username" %}
+                        <p> {{ error }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
         {{ form.name }}
+       
 
-        <div>
-          Bedrooms Available for Rent: {{ form.available_bedrooms }}
+        <div >
+          {{ form.available_bedrooms }}
         </div>
         <br>
         <div>
-          Total Bedrooms: {{ form.total_bedrooms }}
+          {{ form.address }}
         </div>
-
-        <br>
         <div>
-          Address: {{ form.address }}
-        </div>
-        <br>
-        <div>
-          Rent Amount (CAD): {{ form.rent_amount }}
+        {{ form.rent_amount }}
         </div>
         <br>
 
@@ -175,13 +181,9 @@
           <summary class="question-grouping-header"><b>Social Questions</b></summary>
           <div class="questions-indent">{{ form.social_questions }}</div>
         </details>
-
+        <br>
         <div>
-          Additional Information/Relevant Links: <br>
           {{ form.additional_information }}
-        </div>
-        <div>
-          {{ form.errors }}
         </div>
         <input type="submit" class="btn-submit", value="Create Listing" />
       </form>
