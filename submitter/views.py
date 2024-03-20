@@ -141,8 +141,8 @@ def results(request, listing_id):
             responses_for_email = Response.objects.filter(listing_response=listing_response.id)
             responders_answers = responses_for_email.values_list('answer_id', flat=True)
             for cur_question_id in question_ids:
-                if cur_question_id in filters_dict:
-                    if not all(x in responders_answers for x in filters_dict[cur_question_id]):
+                if str(cur_question_id) in filters_dict:
+                    if not any(int(x) in responders_answers for x in filters_dict[str(cur_question_id)]):
                         flag = False
                         break
             if flag: 
