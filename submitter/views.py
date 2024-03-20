@@ -72,6 +72,8 @@ def verify_email(request):
         return redirect('submitter:login')
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect("submitter:home")
     return render(request, 'submitter/landing.html')
 
 def submission(request, listing_id):
