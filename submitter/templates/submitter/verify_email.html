@@ -90,11 +90,11 @@
                     <img src="{% static 'submitter/images/logo.svg' %}" alt="home" class="logo"> <!-- Updated SVG logo path and added logo class -->
                     <h3 class="red-border larger-title">ApartMate</h3>
                     <br>
-                    <h6>You need to verify your email. Please click the button below to send a verification email.</h6>
+                    <h6>You still have not verified your email. Please click the button below to send a verification email.</h6>
                     <br>
                     <form method="post">
                         {% csrf_token %}
-                        <input class="btn btn-primary max-btn" type="submit" value="Send verification email">
+                        <input class="btn btn-primary max-btn" type="submit" value="Re-send verification email">
                     </form>
                     <br>
                     <a href="{% url 'submitter:logout' %}">Logout</a>

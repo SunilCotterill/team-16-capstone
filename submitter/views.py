@@ -113,7 +113,10 @@ def submission(request, listing_id):
     return render(request, "submitter/submission.html", context)
 
 def results(request, listing_id):
+
     listing = Listing.objects.get(id = listing_id)
+    if not listing:
+        return redirect("submitter:home")
     if not request.user.id == listing.creator.id:
         return redirect("submitter:home")
 
@@ -170,18 +173,24 @@ def results(request, listing_id):
 
 def close_listing(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
+    if not request.user.id == listing.creator.id:
+        return redirect("submitter:home")
     listing.is_closed = True
     listing.save()
     return redirect('submitter:results', listing_id)
 
 def reopen_listing(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
+    if not request.user.id == listing.creator.id:
+        return redirect("submitter:home")
     listing.is_closed = False
     listing.save()
     return redirect('submitter:results', listing_id)
 
 def delete_listing(request, listing_id):
     listing = Listing.objects.get(pk = listing_id)
+    if not request.user.id == listing.creator.id:
+        return redirect("submitter:home")
     listing.delete()
     return redirect('submitter:home')
 
@@ -330,7 +339,7 @@ def registerPage(request):
                 if "submit" in request.session:
                     submit_from_redirect(request, user)
                 login(request, user)
-                return redirect('submitter:verify-email')
+                return verify_email(request)
             else:
                 context = {'form': form}
                 return render(request, "submitter/register.html", context)
