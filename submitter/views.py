@@ -14,6 +14,7 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from django.db.models import Max
 
@@ -153,7 +154,7 @@ def results(request, listing_id):
                     if not any(int(x) in responders_answers for x in filters_dict[str(cur_question_id)]):
                         flag = False
                         break
-            if flag: 
+            if flag:
                 listing_responses.append(listing_response)
     else:
         listing_responses = listing_responses_temp
@@ -169,6 +170,7 @@ def results(request, listing_id):
         "listing_questions_list": listing_questions_list,
         "listing_answers_list": listing_answers_list,
         "filtered_answers": filters,
+        "listing": listing,
         'domain': current_site.domain
     }
     return render(request, "submitter/results.html", context)
@@ -305,11 +307,20 @@ def new_listing(request):
             social_questions = form.cleaned_data["social_questions"]
             household_questions = form.cleaned_data["household_questions"]
 
+            available_bedrooms = form.cleaned_data["available_bedrooms"]
+
             questions = demographic_questions | social_questions | household_questions
+
 
             listing = Listing()
             listing.name = name
             listing.creator = request.user
+            listing.available_bedrooms = available_bedrooms
+            listing.total_bedrooms = form.cleaned_data["total_bedrooms"] if "total_bedrooms" in form.cleaned_data else None
+            listing.address = form.cleaned_data["address"] if "address" in form.cleaned_data else None
+            listing.rent_amount = form.cleaned_data["rent_amount"] if "rent_amount" in form.cleaned_data else None
+            listing.additional_information = form.cleaned_data["additional_information"] if "additional_information" in form.cleaned_data else None
+
             listing.save()
             for question in questions.iterator():
                 listing.questions.add(question)
@@ -469,3 +480,37 @@ def info(request):
     elif not request.user.email_is_verified:
         return redirect("submitter:verify-email")
     return render(request, 'submitter/info.html')
+
+def browse_listings(request):
+    if not request.user.is_authenticated:
+        return redirect("submitter:home")
+    elif not request.user.email_is_verified:
+        return redirect("submitter:verify-email")
+    
+    
+    all_listings = Listing.objects.all().filter(is_closed = False).order_by('-pk')
+
+    bedrooms_filter = request.GET.get('available_bedrooms')
+    if bedrooms_filter:
+        all_listings = all_listings.filter(available_bedrooms=bedrooms_filter)
+
+    rent_bucket_filter = request.GET.get('rent_bucket')
+    if rent_bucket_filter:
+        if rent_bucket_filter == '1':
+            all_listings = all_listings.filter(rent_amount__lte=499)  # Example: Rent up to $1000
+        elif rent_bucket_filter == '2':
+            all_listings = all_listings.filter(rent_amount__gt=500, rent_amount__lte=999)  # Example: Rent $1000-$2000
+        elif rent_bucket_filter == '3':
+            all_listings = all_listings.filter(rent_amount__gt=1000, rent_amount__lte=1499)
+        elif rent_bucket_filter == '4':
+            all_listings = all_listings.filter(rent_amount__gt=1500, rent_amount__lte=1999)
+        elif rent_bucket_filter == '5':
+            all_listings = all_listings.filter(rent_amount__gt=2000)
+    
+    paginator = Paginator(all_listings, 10)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+
+    
+    return render(request, 'submitter/open_listings.html', {'page': page })
+

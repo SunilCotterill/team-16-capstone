@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from .models import CustomUser, Question, Listing
 from django.utils.safestring import mark_safe
+from django.core.validators import MaxLengthValidator
 
 
 
@@ -27,7 +28,6 @@ class CreateUserForm(UserCreationForm):
         return user
     
 class CreateListingForm(forms.ModelForm):
-    name = forms.CharField(required=True, label='Name', max_length=200)
     demographic_questions = forms.ModelMultipleChoiceField(
         label='Demographic Questions',
         required = False,
@@ -49,12 +49,25 @@ class CreateListingForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple()
     )
 
+    BEDROOM_CHOICES = [
+        ('', "Number of Available Bedrooms*"),
+        (1, '1 Bedroom'),
+        (2, '2 Bedrooms'),
+        (3, '3 Bedrooms'),
+        (4, '4 Bedrooms'),
+        (5, '5+ Bedrooms')
+    ]
+
+
+
+    available_bedrooms = forms.ChoiceField(choices=BEDROOM_CHOICES)
+
 
     def clean(self):
         cleaned_data = super().clean()
         # Check if questions are empty
         if not cleaned_data.get('demographic_questions')  and not cleaned_data.get('social_questions') and not cleaned_data.get('household_questions'):
-            raise forms.ValidationError("At least one response is required.")
+            raise forms.ValidationError("You must select at least one question")
         
         return cleaned_data
 
@@ -64,6 +77,21 @@ class CreateListingForm(forms.ModelForm):
             "name",
             "demographic_questions",
             "social_questions",
-            "household_questions"
+            "household_questions",
+            "available_bedrooms",
+            "address",
+            "rent_amount",
+            "additional_information"
         ]
+        widgets = {
+            'additional_information': forms.Textarea(attrs={'rows': 5, 'cols': 40, 'maxlength':50, 'placeholder': 'Additional Information/Relevant Links'}),
+            'name': forms.TextInput(attrs={'placeholder': 'Listing Name*',
+                                            "class": "form-group"
+                                           }),
+            'available_bedrooms': forms.Select(attrs={"class": "form-group"}),
+            'address': forms.TextInput(attrs={'placeholder': 'Address', "class": "form-group"}),
+            'rent_amount': forms.NumberInput(attrs={'placeholder': 'Rent Amount (CAD)', "class": "form-group"})
+
+        }
+
 

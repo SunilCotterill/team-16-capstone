@@ -132,11 +132,37 @@
         ask any potential applicants. Each question has a pre-determined set of answers to choose from. A shareable link will be generated which you can include in your sublet listing on Facebook Marketplace or anywhere else you choose to post!
         Applicants will select their answers to each question and results will be available from within that listing!</p>
         <p style = "padding-right: 20vw">The listing name below will be visible for all applicants, so make it something that represents you. Maybe your own name or the address you are subletting.</p>
+        <p style = "padding-right: 20vw">* = Required field </p>
       <form method="POST" action="">
       <form method="POST" action="">
         {% csrf_token %}
 <!--        <div class="form-group">Listing Name: {{ form.name }}</div>-->
-        <input type="text" class="form-group" name="name" placeholder="Listing Name">
+        <!-- <input type="text" class="form-group" name="name" placeholder="Listing Name"> -->
+        {% if form.errors %}
+        <div class="alert alert-danger" style="width: 87%;">
+            {% for field, error_list in form.errors.items %}
+                {% for error in error_list %}
+                    {% if field != "username" %}
+                        <p> {{ error }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+        {{ form.name }}
+       
+
+        <div >
+          {{ form.available_bedrooms }}
+        </div>
+        <br>
+        <div>
+          {{ form.address }}
+        </div>
+        <div>
+        {{ form.rent_amount }}
+        </div>
+        <br>
 
         <details class="details" open>
           <summary class="question-grouping-header"><b>Demographic Questions</b></summary>
@@ -154,33 +180,15 @@
         <details class="details">
           <summary class="question-grouping-header"><b>Social Questions</b></summary>
           <div class="questions-indent">{{ form.social_questions }}</div>
-
         </details>
+        <br>
+        <div>
+          {{ form.additional_information }}
+        </div>
         <input type="submit" class="btn-submit", value="Create Listing" />
       </form>
+      <br>
     </div>
   </body>
 </html>
 
-<script>
-  const toggle_demographic = document.getElementById("demographic_questions_toggle");
-  const content_demographic = document.querySelector(".demographic-questions-content");
-
-  const toggle_household = document.getElementById("household_questions_toggle");
-  const content_household = document.querySelector(".household-questions-content");
-
-  const toggle_social = document.getElementById("social_questions_toggle");
-  const content_social = document.querySelector(".social-questions-content");
-
-  toggle_demographic.addEventListener("click", () => {
-    content_demographic.classList.toggle("hidden");
-  });
-
-  toggle_household.addEventListener("click", () => {
-    content_household.classList.toggle("hidden");
-  });
-
-  toggle_social.addEventListener("click", () => {
-    content_social.classList.toggle("hidden");
-  });
-</script>

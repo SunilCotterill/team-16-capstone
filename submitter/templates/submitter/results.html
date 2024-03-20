@@ -424,10 +424,6 @@
             border-radius: 50%;
         }
 
-        .status-circle:hover {
-            cursor: pointer;
-        }
-
         .red {
             border: 1px solid red;
             background-color: red;
@@ -453,7 +449,7 @@
     <!-- Main Content -->
     <div class="results-content">
         <div class="title-section">
-            <p class="main-title">Listing: {{listing_name}}</p>
+            <p class="main-title">Listing: {{listing_name}} </p>
             {% if not listing_status %}
                 <div class="status-circle green" title="Listing Status: Open"></div>
             {% else %}
@@ -483,6 +479,12 @@
             <!-- Copy Button -->
             <button class="copy-button" onclick="copyToClipboard()"><i class="fa-regular fa-copy" style="color: #2b9191;"></i></button>
         </p>
+
+            <!-- <div>Available Bedrooms: {{ listing.available_bedrooms }}</div>
+            <div>Total Bedrooms: {{ listing.total_bedrooms }}</div>
+            <div> Address: {{ listing.address }}</div>
+            <div>Rent Amount: {{ listing.rent_amount }}</div>
+            <div>Additional Information: {{ listing.additional_information }}</div> -->
 
         <!-- Filters -->
         <details style="margin-left: 0vw; min-width: fit-content; max-width: fit-content; font-size: max(1.1vw, 1.5vh);">

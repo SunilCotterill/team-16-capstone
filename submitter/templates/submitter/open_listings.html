@@ -1,0 +1,124 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApartMate</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CSS -->
+    <style>
+    .content {
+        margin-top: 2vw;
+        margin-left: max(90px, 20vw);
+      }
+      
+      .table-container {
+    margin-left: 0;
+    max-width: 95%;
+    overflow-x: auto; /* Enable horizontal scrolling if content overflows */
+}
+
+table {
+    margin-top: 2vh;
+    white-space: nowrap;
+    table-layout: fixed; /* Fixed layout to prevent content-based table resizing */
+    width: 100%; /* Ensure table fills its container */
+}
+
+th, td {
+    padding: 1vw; /* Adjust padding for better spacing */
+    font-size: 0.9vw;
+    overflow-x: scroll; /* Hide horizontal overflow */
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+table tr {
+            border-bottom: 0.3px solid #e5e5e5;
+        }
+
+    </style>
+</head>
+<body>
+{% block header %} {% include 'submitter/base.html' %} {% endblock %}
+<div class="content">
+<h1>Listings (Beta)</h1>
+
+<form method="get">
+    <label for="available_bedrooms">Filter by number of available bedrooms:</label>
+    <select name="available_bedrooms" id="available_bedrooms">
+        <option value="" {% if not request.GET.available_bedrooms %}selected{% endif %}>All</option>
+        <option value="1" {% if request.GET.available_bedrooms == "1" %}selected{% endif %}>1 Bedroom</option>
+        <option value="2" {% if request.GET.available_bedrooms == "2" %}selected{% endif %}>2 Bedrooms</option>
+        <option value="3" {% if request.GET.available_bedrooms == "3" %}selected{% endif %}>3 Bedrooms</option>
+        <option value="4" {% if request.GET.available_bedrooms == "4" %}selected{% endif %}>4 Bedrooms</option>
+        <option value="5" {% if request.GET.available_bedrooms == "5" %}selected{% endif %}>5+ Bedrooms</option>
+
+    </select>
+
+<br>
+
+    <label for="rent_bucket">Filter by rent amount:</label>
+    <select name="rent_bucket" id="rent_bucket">
+        <option value="">All</option>
+        <option value="1" {% if request.GET.rent_bucket == "1" %}selected{% endif %}>0-499</option>
+        <option value="2" {% if request.GET.rent_bucket == "2" %}selected{% endif %}>500-999</option>
+        <option value="3" {% if request.GET.rent_bucket == "3" %}selected{% endif %}>1000-1499</option>
+        <option value="4" {% if request.GET.rent_bucket == "4" %}selected{% endif %}>1500-1999</option>
+        <option value="5" {% if request.GET.rent_bucket == "5" %}selected{% endif %}>2000+</option>
+    </select>
+    <br>
+    <button type="submit">Apply Filters</button>
+</form>
+
+<input type="hidden" name="available_bedrooms" value="{{ request.GET.available_bedrooms }}">
+<input type="hidden" name="rent_bucket" value="{{ request.GET.rent_bucket }}">
+
+<div class="table-container">
+<table rules=rows>
+    <tr>
+        <th>Listing Name</th>
+        <th>Bedrooms for Rent</th>
+        <th>Rent Amount (CAD)</th>
+        <th>Address</th>
+        <th>Additional Information</th>
+        <th></th>
+    </tr>
+
+    {% for listing in page %}
+    <tr>
+        <td>{{ listing.name }}</td>
+        <td>{{ listing.available_bedrooms }}</td>
+        <td>{% if listing.rent_amount %} ${{ listing.rent_amount }} {% else %} N/A {% endif %}</td>
+        <td>{% if listing.address %} {{ listing.address }} {% else %} N/A {% endif %}</td>
+        <td>{{ listing.additional_information }}</td>
+        <td><a href="{% url 'submitter:submission' listing.id %}">Apply Here</a></td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+<!-- <ul>
+    {% for listing in page %}
+        <li><a href="{% url 'submitter:submission' listing.id %}">{{ listing.name }} - ${{ listing.rent_amount }}</a></li>
+    {% endfor %}
+</ul> -->
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}">prev</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}
+        </span>
+
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+</body>
+</html>
