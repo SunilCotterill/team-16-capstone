@@ -67,6 +67,7 @@
             margin-left: 0vw;
             width: 100%; /* Increase width of listing box */
             max-width: 350px;
+            min-width: 230px;
             border-radius: 5px;
             display: flex;
             flex-direction: column;
@@ -213,7 +214,7 @@
     <div class="home-content">
         <h3 class="welcome-title">Welcome Home, {{ first_name }}!</h3>
         <p class="info-text">Thank you for choosing our platform for your subletting needs! We are here to streamline the process of finding a compatible roommate. A shareable link will be generated each time a new listing is created!</p>
-
+        <br>
         <div class="listings-and-create-container">
             {% if listings %}
             <div>
