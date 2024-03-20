@@ -12,7 +12,6 @@
             position: relative;
             padding-left: 0vw; /* Remove default margin */
             overflow-y: auto; /* Prevent body from scrolling */
-            
         }
 
         .listings-and-create-container {
@@ -20,8 +19,8 @@
             flex-direction: row;
             align-items: left; /* Ensure items are aligned at the top */
             align-items: left;
-            gap: 10%; /* Adjust the gap between items as needed */
-            margin-top: 20px; /* Space from the top or previous content */
+            gap: 0%; /* Adjust the gap between items as needed */
+            margin-top: 0px; /* Space from the top or previous content */
             /* Adjust padding or margins as necessary */
         }
 
@@ -34,22 +33,16 @@
             width: 10vw;
         }
 
-        .content {
-            display: flex; /* Make content a flex container */
-            flex-direction: column; /* Stack children vertically */
-            align-items: left; /* Center-align items horizontally */
-            justify-content: start; /* Align items to the start of the flex container */
-            gap: 20px; /* Space between items */
-            padding: 20px;
-            margin-top: 50px;
-            margin-left: 8vw; /* Adjusted to ensure it's positioned correctly */
-            max-width: 70vw; /* Ensure content does not stretch too wide */
+        .home-content {
+          margin-left: max(90px, 20vw);
+          max-width: 80vw;
+          margin-top: 4vw;
+          margin-right: 15vw;
         }
 
         .welcome-title, .listing-title, .info-text, .listings-container, .new-listing-container {
             width: 100%; /* Ensure they take up full width of their container */
             /* Other styling adjustments as necessary */
-            padding-left: 10vw;
         }
 
         .welcome-title {
@@ -60,7 +53,7 @@
 
         .listing-title {
             font-weight: 600;
-            font-size: 1.4vw;
+            font-size: max(1.3vw, 2.5vh);
             margin-top: 2vh; /* Adjusted margin-top */
             padding-bottom: 1vh;
         }
@@ -73,6 +66,7 @@
             margin-bottom: -1vh;
             margin-left: 0vw;
             width: 100%; /* Increase width of listing box */
+            max-width: 350px;
             border-radius: 5px;
             display: flex;
             flex-direction: column;
@@ -90,67 +84,102 @@
 
         .listing-name {
             font-weight: bold;
-            font-size: 1.2vw; /* Increased font size for listing name */
+            font-size: max(1.1vw, 2vh); /* Increased font size for listing name */
             margin-bottom: 5px; /* Add some space between name and details */
             margin-top: 2.5vh;
+            min-width: 200px;
         }
 
         .listing-details {
-            font-size: 1vw; /* Match font size for listing details */
+            font-size: max(1.1vw, 2vh); /* Match font size for listing details */
             margin-top: 1vh;
         }
 
         .listings-container {
-            height: 50vh; /* Set a maximum height */
+            height: 65vh; /* Set a maximum height */
             overflow-y: auto; /* Enable vertical scrolling */
             margin-bottom: 15px; /* Add some bottom margin */
-            width: 90%; /* Adjust width to fit content */
+            width: 100%; /* Adjust width to fit content */
             margin-left: 0;
             margin-right: auto;
             flex: 1;
             overflow-x: hidden;
-            min-width: 35vw;
+            max-width: 375px;
         }
 
-        .new-listing-container {
+        @media screen and (min-width: 1000px) {
+          .new-listing-container {
+              font-weight: 550;
+              font-size: max(1.1vw, 2vh);
+              height: 13vh;
+              width: 40%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background-color: #E6F1F1;
+              border: 1px solid #908d92;
+              border-radius: 5px;
+              padding-left: 2vw;
+              padding-right: 2vw;
+              transition: background-color 0.3s;
+              color: black;
+              max-height: 25vh;
+              min-height: 12vh;
+              min-width: 15vw;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          }
+          .new-listing-title {
+              font-weight: 600;
+              font-size: max(1.3vw, 2.1vh);
+              margin-top: 2vh; /* Adjusted margin-top */
+              padding-bottom: 1vh;
+              text-align: left;
+          }
+        }
+
+        @media screen and (max-width: 999px) {
+          .new-listing-title {
+            display: none;
+          }
+          .new-listing-container {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
             font-weight: 550;
-            margin-top: -0.5; 
-            font-size: 1.2vw;
-            flex-basis: 30vw; /* Example fixed width, adjust as necessary */
-            height: 15vh; /* Adjust height as necessary */
-            width: 40%;
+            font-size: max(1.1vw, 2vh);
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #E6F1F1; /* Background color for the container */
-            border: 1px solid #908d92; /* Border to create the rectangle effect */
-            border-radius: 5px; /* Rounded corners for the rectangle */
-            padding-left: 2vw; /* Padding inside the container for some space around the text */
-            padding-right: 2vw;
-            transition: background-color 0.3s; /* Smooth transition for background color change */
+            background-color: #E6F1F1;
+            border: 3px solid #908d92;
+            border-radius: 15px;
+            transition: background-color 0.3s;
             color: black;
-            max-height: 25vh;
-            min-height: 12vh;
-            min-width: 15vw;
+            width: 30vw;
+            height: 20vw;
+            max-width: 130px;
+            max-height: 80px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          }
         }
 
         .new-listing-container:hover {
             background-color: #c3d5d5; /* Lighter background color on hover */
             text-decoration: underline;
         }
-    
+
         /* Plus Icon */
         .create-listing i {
             color: #1FBCBC; /* Change color of the icon */
-            font-size: 1.7em; /* Increase size of the icon */
+            font-size: max(15px, 1.5vw); /* Increase size of the icon */
             vertical-align: -3px; /* Adjust vertical alignment */
-            margin-left: 0.3vw; 
+            margin-left: 0.3vw;
         }
 
         .info-text {
             text-align: left;
             margin-left: 0vw; /* Match the left margin of welcome title */
+            margin-bottom: 0px;
         }
 
         .no-listing-text {
@@ -166,20 +195,12 @@
         }
 
         .create-listing-section {
-            flex-basis: 30vw; /* Adjust width as necessary */
+            margin-left: 4vw;
+            flex-basis: 30vw;
             display: flex;
             flex-direction: column;
             align-items: left;
-            gap: 10px;
             height: 21vh;
-        }
-
-        .new-listing-title {
-            font-weight: 600;
-            font-size: 1.4vw;
-            margin-top: 1.5vh; /* Adjusted margin-top */
-            padding-bottom: -1vh;
-            text-align: left;
         }
     </style>
 </head>
@@ -189,10 +210,10 @@
         {% include 'submitter/base.html' %}
     {% endblock %}
 
-    <div class="content">
+    <div class="home-content">
         <h3 class="welcome-title">Welcome Home, {{ first_name }}!</h3>
         <p class="info-text">Thank you for choosing our platform for your subletting needs! We are here to streamline the process of finding a compatible roommate. A shareable link will be generated each time a new listing is created!</p>
-        
+
         <div class="listings-and-create-container">
             {% if listings %}
             <div>
@@ -210,7 +231,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="create-listing-section"> <!-- Wrapper for title and button -->
                 <h3 class="new-listing-title">New Listing:</h3> <!-- Title for the Create New Listing section -->
                 <a href="{% url 'submitter:new_listing' %}" class="new-listing-container">
@@ -225,7 +246,7 @@
                 <h3 class="listing-title">Your Listings:</h3>
                 <p class="no-listing-text">You Have No Listings!</p>
             </div>
-            
+
             <div class="create-listing-section"> <!-- Wrapper for title and button -->
                 <h3 class="new-listing-title">New Listing:</h3> <!-- Title for the Create New Listing section -->
                 <a href="{% url 'submitter:new_listing' %}" class="new-listing-container">

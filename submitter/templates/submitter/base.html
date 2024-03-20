@@ -24,7 +24,7 @@
         .vertical-rectangle {
             background-color: #E6F1F1;
             width: 16vw;
-            min-width: fit-content;
+            min-width: 11vh;
             height: 100%;
             position: fixed;
             top: 0;
@@ -65,6 +65,7 @@
             border-radius: 10px;
             width: 13.5vw;
             height: min(5vw, 8vh);
+            min-height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -73,7 +74,7 @@
             color: black;
             font-size: max(1.1vw, 2vh);
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            margin-top: 0vh; 
+            margin-top: 0vh;
         }
 
         .info-btn {
@@ -84,6 +85,7 @@
             border-radius: 10px;
             width: 13.5vw;
             height: min(5vw, 8vh);
+            min-height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -92,7 +94,7 @@
             color: black;
             font-size: max(1.1vw, 2vh);
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            margin-top: 12vh; 
+            margin-top: 12vh;
         }
 
         .logout-btn {
@@ -103,6 +105,7 @@
             border-radius: 10px;
             width: 13.5vw;
             height: min(5vw, 8vh);
+            min-height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -110,7 +113,7 @@
             font-family: 'Poppins', sans-serif;
             color: black;
             font-size: max(1.1vw, 2vh);
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             bottom: 2vh;
             /*margin-top: 72vh; THIS IS THE ISSUE IF ISSUE WITH BUTTONS */
         }
@@ -123,21 +126,40 @@
             border-radius: 10px;
             width: 13.5vw;
             height: min(5vw, 10vh);
-            min-height: fit-content;
+            min-height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
             font-family: 'Poppins', sans-serif;
             color: black;
-            font-size: max(1.1vw, 1.8vh);    
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+            font-size: max(1.1vw, 1.8vh);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             bottom: 14vh;
         }
 
         .home-btn:hover, .change-password-btn:hover, .logout-btn:hover, .info-btn:hover{
             background-color: #8fcfcf;
             color: black;
+        }
+
+        @media screen and (min-width: 1000px) {
+            .hide-on-small-image {
+                display: inline;
+            }
+            .hide-on-small-text::after {
+                margin-left: 5px;
+                content: "Home";
+            }
+        }
+
+        @media screen and (max-width: 999px) {
+            .hide-on-small-image {
+                display: none;
+            }
+            .hide-on-small-text::after {
+                content: "Home";
+            }
         }
     </style>
 </head>
@@ -148,20 +170,22 @@
 
     <div class="vertical-rectangle"></div>
 
-    <!-- Flex Container for Buttons -->
-    <div class="side-buttons">
-        
-        <!-- Home Button -->
-        <a href="{% url 'submitter:home' %}" class="home-btn"><i class="fas fa-home" style="color: #000000;"></i> &nbsp; Home</a>
+      <!-- Flex Container for Buttons -->
+      <div class="side-buttons">
 
-        <!-- Info Button -->
-        <a href="{% url 'submitter:info' %}" class="info-btn">Info</a>
+          <!-- Home Button -->
 
-        <!-- Change Password Button -->
-        <a href="{% url 'submitter:change-password' %}" class="change-password-btn">Change Password</a>
+          <a href="{% url 'submitter:home' %}" class="home-btn hide-on-small-text"><i class="fas fa-home hide-on-small-image" style="color: #000000;"></i></a>
 
-        <!-- Logout Button -->
-        <a href="{% url 'submitter:logout' %}" class="logout-btn">Logout</a>
+          <!-- Info Button -->
+          <a href="{% url 'submitter:info' %}" class="info-btn">Info</a>
+
+          <!-- Change Password Button -->
+          <a href="{% url 'submitter:change-password' %}" class="change-password-btn">Change Password</a>
+
+          <!-- Logout Button -->
+          <a href="{% url 'submitter:logout' %}" class="logout-btn">Logout</a>
+      </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
