@@ -2,10 +2,25 @@ from django.test import TestCase, Client, RequestFactory
 
 from .models import Question, CustomUser, Answer, Listing, ListingResponse
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import AnonymousUser
 
-from .views import close_listing, reopen_listing, delete_listing
+from .views import close_listing, reopen_listing, delete_listing, update_shortlist
 
+def _create_user():
+    user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
+    user.email_is_verified = True
+    user.save()
+    return user
+def _create_listing(user):
+    listing = Listing()
+    listing.name = "Test Listing"
+    listing.creator = user
+    listing.available_bedrooms = 2
+    listing.total_bedrooms = None
+    listing.address = None
+    listing.rent_amount = None
+    listing.additional_information =  None
+    listing.save()
+    return listing
 class CustomUserModelTests(TestCase):
     def test_str_method_returns_email(self):
         email = "test@example.com"
@@ -54,9 +69,7 @@ class IntegrationTest(TestCase):
         self.assertTemplateUsed(response, 'submitter/landing.html')
 
     def test_index_logged_in_verified(self):
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
+        user = _create_user()
         self.client.force_login(user)
 
         # self.assertTrue(login_result)
@@ -65,18 +78,8 @@ class IntegrationTest(TestCase):
     
 
     def test_submission(self):
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
-        listing = Listing()
-        listing.name = "Test Listing"
-        listing.creator = user
-        listing.available_bedrooms = 2
-        listing.total_bedrooms = None
-        listing.address = None
-        listing.rent_amount = None
-        listing.additional_information =  None
-        listing.save()
+        user = _create_user()
+        listing = _create_listing(user)
 
         self.client.force_login(user)
 
@@ -84,18 +87,8 @@ class IntegrationTest(TestCase):
         self.assertTemplateUsed(response, 'submitter/submission.html')
    
     def test_results(self):
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
-        listing = Listing()
-        listing.name = "Test Listing"
-        listing.creator = user
-        listing.available_bedrooms = 2
-        listing.total_bedrooms = None
-        listing.address = None
-        listing.rent_amount = None
-        listing.additional_information =  None
-        listing.save()
+        user = _create_user()
+        listing = _create_listing(user)
 
         self.client.force_login(user)
 
@@ -103,18 +96,8 @@ class IntegrationTest(TestCase):
         self.assertTemplateUsed(response, 'submitter/results.html')
     
     def test_results_incorrect_user(self):
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
-        listing = Listing()
-        listing.name = "Test Listing"
-        listing.creator = user
-        listing.available_bedrooms = 2
-        listing.total_bedrooms = None
-        listing.address = None
-        listing.rent_amount = None
-        listing.additional_information =  None
-        listing.save()
+        user = _create_user()
+        listing = _create_listing(user)
 
         user2 = CustomUser.objects.create_user(email='test2@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
         user2.email_is_verified = True
@@ -127,18 +110,8 @@ class IntegrationTest(TestCase):
     # MAYBE ADD FILTER CHECK
 
     def test_close_listing(self):
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
-        listing = Listing()
-        listing.name = "Test Listing"
-        listing.creator = user
-        listing.available_bedrooms = 2
-        listing.total_bedrooms = None
-        listing.address = None
-        listing.rent_amount = None
-        listing.additional_information =  None
-        listing.save()
+        user = _create_user()
+        listing = _create_listing(user)
 
         request = RequestFactory().get('/')
         request.user = user
@@ -147,9 +120,7 @@ class IntegrationTest(TestCase):
         self.assertTrue(listing_get.is_closed)
     
     def test_reopen_listing(self):
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
+        user = _create_user()
         listing = Listing()
         listing.name = "Test Listing"
         listing.creator = user
@@ -168,19 +139,8 @@ class IntegrationTest(TestCase):
         self.assertFalse(listing_get.is_closed)
     
     def test_delete_listing(self):
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
-        listing = Listing()
-        listing.name = "Test Listing"
-        listing.creator = user
-        listing.available_bedrooms = 2
-        listing.total_bedrooms = None
-        listing.address = None
-        listing.rent_amount = None
-        listing.additional_information =  None
-        listing.is_closed = True
-        listing.save()
+        user = _create_user()
+        listing = _create_listing(user)
 
         request = RequestFactory().get('/')
         request.user = user
@@ -191,19 +151,8 @@ class IntegrationTest(TestCase):
             pass
     
     def test_result(self):
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
-        listing = Listing()
-        listing.name = "Test Listing"
-        listing.creator = user
-        listing.available_bedrooms = 2
-        listing.total_bedrooms = None
-        listing.address = None
-        listing.rent_amount = None
-        listing.additional_information =  None
-        listing.is_closed = True
-        listing.save()
+        user = _create_user()
+        listing = _create_listing(user)
 
         user2 = CustomUser.objects.create_user(email='test2@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
         user2.email_is_verified = True
@@ -228,19 +177,8 @@ class IntegrationTest(TestCase):
         a.question = q
         a.save()
 
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
-        listing = Listing()
-        listing.name = "Test Listing"
-        listing.creator = user
-        listing.available_bedrooms = 2
-        listing.total_bedrooms = None
-        listing.address = None
-        listing.rent_amount = None
-        listing.additional_information =  None
-        listing.is_closed = True
-        listing.save()
+        user = _create_user()
+        listing = _create_listing(user)
         listing.questions.add(q)
 
         user2 = CustomUser.objects.create_user(email='test2@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
@@ -276,9 +214,7 @@ class IntegrationTest(TestCase):
         a.question = q
         a.save()
 
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
+        user = _create_user()
 
         form_data = {
             'name':'test',
@@ -320,9 +256,7 @@ class IntegrationTest(TestCase):
     def test_login(self):
         response = self.client.get(f'/apartmate/login/')
         self.assertTemplateUsed(response, 'submitter/login.html')
-        user = CustomUser.objects.create_user(email='test@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
-        user.email_is_verified = True
-        user.save()
+        user = _create_user()
 
         form_data = {
             'email':'test@uwaterloo.ca',
@@ -331,9 +265,46 @@ class IntegrationTest(TestCase):
 
         response = self.client.post(f'/apartmate/login/', form_data)
         self.assertEqual(response.url, '/apartmate/home/')
+    
+    def test_update_shortlist(self):
+        user = _create_user()
+        listing = _create_listing(user)
 
+        user2 = CustomUser.objects.create_user(email='test2@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
+        user2.email_is_verified = True
+        user2.save()
+        self.client.force_login(user)
 
+        listingResponse = ListingResponse()
+        listingResponse.listing = listing
+        listingResponse.responder = user2
+        listingResponse.save()
 
+        request = RequestFactory().get('/')
+        request.user = user
+        update_shortlist(request,listing.id, listingResponse.id)
 
+        lr = ListingResponse.objects.get(pk = 1)
+        self.assertTrue(lr.is_shortlisted)
+    
+    def test_update_shortlist_unshortlist(self):
+        user = _create_user()
+        listing = _create_listing(user)
 
-        
+        user2 = CustomUser.objects.create_user(email='test2@uwaterloo.ca', password='FakePWord123!', first_name='test', last_name='user')
+        user2.email_is_verified = True
+        user2.save()
+        self.client.force_login(user)
+
+        listingResponse = ListingResponse()
+        listingResponse.listing = listing
+        listingResponse.responder = user2
+        listingResponse.is_shortlisted = True
+        listingResponse.save()
+
+        request = RequestFactory().get('/')
+        request.user = user
+        update_shortlist(request,listing.id, listingResponse.id)
+
+        lr = ListingResponse.objects.get(pk = 1)
+        self.assertFalse(lr.is_shortlisted)
