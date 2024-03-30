@@ -16,7 +16,6 @@ from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.core.paginator import Paginator
 
-from django.db.models import Max
 
 from .forms import CreateUserForm, CustomAuthenticationForm, CreateListingForm
 
