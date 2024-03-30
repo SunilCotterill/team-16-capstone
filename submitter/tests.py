@@ -6,42 +6,42 @@ from django.contrib.auth.models import AnonymousUser
 
 from .views import close_listing, reopen_listing, delete_listing
 
-# class CustomUserModelTests(TestCase):
-#     def test_str_method_returns_email(self):
-#         email = "test@example.com"
-#         user = CustomUser(email=email)
-#         self.assertEqual(str(user), email)
+class CustomUserModelTests(TestCase):
+    def test_str_method_returns_email(self):
+        email = "test@example.com"
+        user = CustomUser(email=email)
+        self.assertEqual(str(user), email)
 
-#     def test_email_field_validation(self):
-#         invalid_email = "invalidemail.com"
-#         password = "FakePWord123!"
-#         with self.assertRaises(ValidationError):
-#             CustomUser(email=invalid_email, password=password).full_clean()
+    def test_email_field_validation(self):
+        invalid_email = "invalidemail.com"
+        password = "FakePWord123!"
+        with self.assertRaises(ValidationError):
+            CustomUser(email=invalid_email, password=password).full_clean()
     
-#     def test_waterloo_email_field_validation(self):
-#         invalid_email = "fail@gmail.com"
-#         password = "FakePWord123!"
-#         with self.assertRaises(ValidationError):
-#             CustomUser(email=invalid_email, password=password).full_clean()
+    def test_waterloo_email_field_validation(self):
+        invalid_email = "fail@gmail.com"
+        password = "FakePWord123!"
+        with self.assertRaises(ValidationError):
+            CustomUser(email=invalid_email, password=password).full_clean()
     
-#     def test_correct_email_field_validation(self):
-#         invalid_email = "pass@uwaterloo.ca"
-#         password = "FakePWord123!"
-#         CustomUser(email=invalid_email, password=password).full_clean()
+    def test_correct_email_field_validation(self):
+        invalid_email = "pass@uwaterloo.ca"
+        password = "FakePWord123!"
+        CustomUser(email=invalid_email, password=password).full_clean()
 
 
-# class QuestionModelTests(TestCase):
-#     def test_str_method_returns_question_text(self):
-#         question_text = "What is your age?"
-#         category = Question.Category.DEMOGRAPHIC
-#         question = Question(question_text=question_text, category=category)
-#         self.assertEqual(str(question), question_text)
+class QuestionModelTests(TestCase):
+    def test_str_method_returns_question_text(self):
+        question_text = "What is your age?"
+        category = Question.Category.DEMOGRAPHIC
+        question = Question(question_text=question_text, category=category)
+        self.assertEqual(str(question), question_text)
 
-# class AnswerModelTests(TestCase):
-#     def test_str_method_returns_answer_text(self):
-#         answer_text = "Six and a half"
-#         answer = Answer(answer_text=answer_text)
-#         self.assertEqual(str(answer), answer_text)
+class AnswerModelTests(TestCase):
+    def test_str_method_returns_answer_text(self):
+        answer_text = "Six and a half"
+        answer = Answer(answer_text=answer_text)
+        self.assertEqual(str(answer), answer_text)
 
 
 class IntegrationTest(TestCase):
