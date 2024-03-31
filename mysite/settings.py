@@ -78,10 +78,22 @@ ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'apartmate$default',
+        'USER': 'apartmate',
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
+        'HOST': 'apartmate.mysql.pythonanywhere-services.com',  # This is usually 'localhost'
+        'PORT': '3306',  # This is usually '3306'
     }
 }
+
+# UNCOMMENT FOR LOCAL DEV
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 AUTH_USER_MODEL = 'submitter.CustomUser'
 AUTHENTICATION_BACKENDS = ['submitter.backends.EmailBackend']
