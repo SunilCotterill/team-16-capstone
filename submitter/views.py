@@ -301,6 +301,7 @@ def new_listing(request):
     if request.method == "POST":
         form = CreateListingForm(request.POST)
         if form.is_valid():
+            print(form.cleaned_data)
             name = form.cleaned_data["name"]
             demographic_questions = form.cleaned_data["demographic_questions"]
             social_questions = form.cleaned_data["social_questions"]
@@ -319,6 +320,7 @@ def new_listing(request):
             listing.address = form.cleaned_data["address"] if "address" in form.cleaned_data else None
             listing.rent_amount = form.cleaned_data["rent_amount"] if "rent_amount" in form.cleaned_data else None
             listing.additional_information = form.cleaned_data["additional_information"] if "additional_information" in form.cleaned_data else None
+            listing.rent_term = form.cleaned_data["rent_term"]
 
             listing.save()
             for question in questions.iterator():

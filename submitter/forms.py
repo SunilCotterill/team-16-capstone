@@ -81,7 +81,8 @@ class CreateListingForm(forms.ModelForm):
             "available_bedrooms",
             "address",
             "rent_amount",
-            "additional_information"
+            "additional_information",
+            "rent_term"
         ]
         widgets = {
             'additional_information': forms.Textarea(attrs={'rows': 5, 'cols': 40, 'maxlength':50, 'placeholder': 'Additional Information/Relevant Links'}),
@@ -90,7 +91,8 @@ class CreateListingForm(forms.ModelForm):
                                            }),
             'available_bedrooms': forms.Select(attrs={"class": "form-group"}),
             'address': forms.TextInput(attrs={'placeholder': 'Address', "class": "form-group"}),
-            'rent_amount': forms.NumberInput(attrs={'placeholder': 'Rent Amount (CAD)', "class": "form-group"})
+            'rent_amount': forms.NumberInput(attrs={'placeholder': 'Rent Amount (CAD)', "class": "form-group"}),
+            'rent_term': forms.TextInput(attrs={'placeholder': 'Rent Term*', "class": "form-group"})
 
         }
 

@@ -83,6 +83,7 @@ class Listing(models.Model):
     ]
 
     available_bedrooms = models.IntegerField(choices=BEDROOM_CHOICES)
+    rent_term = models.CharField(max_length = 300)
     address = models.CharField(max_length = 30, blank=True, null=True)
     rent_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) 
     additional_information = models.CharField(max_length = 100, blank=True, null=True)

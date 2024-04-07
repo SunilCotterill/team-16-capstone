@@ -6,7 +6,6 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 from submitter.views import ResetPasswordView
 
-
 app_name = "submitter"
 urlpatterns = [
     path("", views.index, name="index", ),

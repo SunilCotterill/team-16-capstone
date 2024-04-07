@@ -28,7 +28,7 @@ table {
 
 th, td {
     padding: 1vw; /* Adjust padding for better spacing */
-    font-size: 0.9vw;
+    font-size: 0.85vw;
     overflow-x: scroll; /* Hide horizontal overflow */
     white-space: nowrap;
     scrollbar-width: none;
@@ -77,10 +77,11 @@ table tr {
 <div class="table-container">
 <table rules=rows>
     <tr>
-        <th>Listing Name</th>
+        <th>Name</th>
         <th>Bedrooms for Rent</th>
-        <th>Rent Amount (CAD)</th>
+        <th>Rent (CAD)</th>
         <th>Address</th>
+        <th>Rental Term</th>
         <th>Additional Information</th>
         <th></th>
     </tr>
@@ -91,6 +92,7 @@ table tr {
         <td>{{ listing.available_bedrooms }}</td>
         <td>{% if listing.rent_amount %} ${{ listing.rent_amount }} {% else %} N/A {% endif %}</td>
         <td>{% if listing.address %} {{ listing.address }} {% else %} N/A {% endif %}</td>
+        <td>{% if listing.rent_term %} {{ listing.rent_term }} {% else %} N/A {% endif %}</td>
         <td>{{ listing.additional_information }}</td>
         <td><a href="{% url 'submitter:submission' listing.id %}">Apply Here</a></td>
     </tr>
